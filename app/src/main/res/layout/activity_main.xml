@@ -12,6 +12,10 @@
         <android.support.design.widget.BottomNavigationView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@color/primary"
+            android:theme="@style/Theme.AppCompat"
+            app:itemIconTint="@color/navigation_item"
+            app:itemTextColor="@color/accent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

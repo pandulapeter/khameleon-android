@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/chat"
+        android:icon="@drawable/ic_chat_24dp"
+        android:title="@string/chat" />
+
+    <item
+        android:id="@+id/calendar"
+        android:icon="@drawable/ic_calendar_24dp"
+        android:title="@string/calendar" />
+
+    <item
+        android:id="@+id/songs"
+        android:icon="@drawable/ic_songs_24dp"
+        android:title="@string/songs" />
+
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_settings_24dp"
+        android:title="@string/settings" />
+
+</menu>

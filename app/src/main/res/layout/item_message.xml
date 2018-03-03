@@ -9,63 +9,62 @@
             name="model"
             type="com.pandulapeter.khameleon.data.model.Message" />
 
+        <import type="com.pandulapeter.khameleon.R" />
+
     </data>
 
-    <android.support.v7.widget.CardView
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/content_padding"
-        app:cardBackgroundColor="@{model.isImportant ? @color/accent : @color/white}"
-        app:contentPadding="@dimen/content_padding">
+        android:background="@{model.isImportant ? R.color.accent : 0}"
+        android:padding="@dimen/content_padding">
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/avatar_size"
+            android:layout_height="@dimen/avatar_size"
+            android:layout_marginStart="@dimen/content_padding"
+            android:contentDescription="@{model.sender.name}"
+            app:avatar="@{model.sender.avatar}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/avatar"
-                android:layout_width="@dimen/avatar_size"
-                android:layout_height="@dimen/avatar_size"
-                android:contentDescription="@{model.sender.name}"
-                app:avatar="@{model.sender.avatar}" />
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/content_padding"
+            android:layout_marginStart="@dimen/large_content_padding"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center_vertical"
+            android:text="@{model.sender.name}"
+            android:textColor="@color/primary"
+            app:layout_constraintEnd_toEndOf="@+id/date"
+            app:layout_constraintStart_toEndOf="@id/avatar"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/content_padding"
-                android:layout_marginStart="@dimen/large_content_padding"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center_vertical"
-                android:text="@{model.sender.name}"
-                android:textColor="@color/primary"
-                app:layout_constraintEnd_toEndOf="@+id/date"
-                app:layout_constraintStart_toEndOf="@id/avatar"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/content_padding"
+            android:fontFamily="sans-serif-thin"
+            android:textSize="@dimen/text_small"
+            app:date="@{model.timestamp}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/name" />
 
-            <TextView
-                android:id="@id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-thin"
-                android:textSize="@dimen/text_small"
-                app:date="@{model.timestamp}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/name" />
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@{model.text}"
+            app:layout_constraintEnd_toEndOf="@id/name"
+            app:layout_constraintStart_toEndOf="@id/avatar"
+            app:layout_constraintStart_toStartOf="@id/name"
+            app:layout_constraintTop_toBottomOf="@id/name" />
 
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="@{model.text}"
-                app:layout_constraintEnd_toEndOf="@id/name"
-                app:layout_constraintStart_toEndOf="@id/avatar"
-                app:layout_constraintStart_toStartOf="@id/name"
-                app:layout_constraintTop_toBottomOf="@id/name" />
-
-        </android.support.constraint.ConstraintLayout>
-
-    </android.support.v7.widget.CardView>
+    </android.support.constraint.ConstraintLayout>
 
 </layout>

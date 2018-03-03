@@ -1,6 +1,7 @@
 package com.pandulapeter.khameleon.feature.home.chat
 
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.firebase.ui.database.FirebaseRecyclerOptions
@@ -45,6 +46,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         binding.recyclerView.let {
             it.layoutManager = LinearLayoutManager(context)
             it.adapter = adapter
+            it.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
     }
 

@@ -1,12 +1,14 @@
 package com.pandulapeter.khameleon.util
 
 import android.databinding.BindingAdapter
+import android.support.annotation.ColorRes
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.format.DateFormat
 import android.text.style.ForegroundColorSpan
 import android.text.style.TextAppearanceSpan
 import android.text.style.TypefaceSpan
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.request.RequestOptions
@@ -43,4 +45,13 @@ fun setTitleDescription(view: TextView, title: String?, description: String?) {
 @BindingAdapter("date")
 fun setDate(view: TextView, date: Long) {
     view.text = DateFormat.format("MMM d, HH:mm", Date(date))
+}
+
+@BindingAdapter("android:background")
+fun setBackground(view: View, @ColorRes color: Int) {
+    if (color == 0) {
+        view.background = null
+    } else {
+        view.setBackgroundColor(view.context.color(color))
+    }
 }

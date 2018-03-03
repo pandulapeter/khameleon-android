@@ -1,7 +1,6 @@
 package com.pandulapeter.khameleon.feature.home.chat
 
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -31,7 +30,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     private var isScrolledToBottom = true
     private val userRepository by inject<UserRepository>()
     private val linearLayoutManager = LinearLayoutManager(context).apply { stackFromEnd = true }
-    private val adapter = MessageAdapter(
+    private val messageAdapter = MessageAdapter(
         options = FirebaseRecyclerOptions.Builder<Message>()
             .setQuery(
                 FirebaseDatabase.getInstance()
@@ -55,10 +54,10 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.floatingActionButton.setOnClickListener { MessageInputDialogFragment.show(childFragmentManager) }
-        binding.recyclerView.let {
-            it.layoutManager = linearLayoutManager
-            it.adapter = adapter
-            it.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        binding.recyclerView.run {
+            layoutManager = linearLayoutManager
+            adapter = messageAdapter
+            context?.let { addItemDecoration(DividerItemDecoration(it)) }
         }
         binding.newMessagesIndicator.setOnClickListener { scrollToBottom() }
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -70,12 +69,12 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
 
     override fun onStart() {
         super.onStart()
-        adapter.startListening()
+        messageAdapter.startListening()
     }
 
     override fun onStop() {
         super.onStop()
-        adapter.stopListening()
+        messageAdapter.stopListening()
     }
 
     override fun onTextEntered(text: String, isImportant: Boolean) {
@@ -99,7 +98,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         .setValue("${user.name}: $message")
 
     private fun scrollToBottom() {
-        binding.recyclerView.smoothScrollToPosition(adapter.itemCount)
+        binding.recyclerView.smoothScrollToPosition(messageAdapter.itemCount)
     }
 
     private fun updateNewMessagesIndicatorVisibility() {

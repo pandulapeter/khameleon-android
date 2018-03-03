@@ -11,12 +11,11 @@ import com.pandulapeter.khameleon.data.model.Message
 import com.pandulapeter.khameleon.data.model.User
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
-import com.pandulapeter.khameleon.feature.home.shared.TextInputDialogFragment
 import com.pandulapeter.khameleon.util.showSnackbar
 import org.koin.android.ext.android.inject
 
 
-class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.layout.fragment_chat), TextInputDialogFragment.OnDialogTextEnteredListener {
+class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.layout.fragment_chat), MessageInputDialogFragment.OnDialogTextEnteredListener {
 
     companion object {
         private const val CHAT = "chat"
@@ -42,16 +41,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.floatingActionButton.setOnClickListener {
-            TextInputDialogFragment.show(
-                childFragmentManager,
-                R.string.new_message,
-                R.string.enter_your_message,
-                R.string.send,
-                R.string.cancel,
-                false
-            )
-        }
+        binding.floatingActionButton.setOnClickListener { MessageInputDialogFragment.show(childFragmentManager) }
         binding.recyclerView.let {
             it.layoutManager = LinearLayoutManager(context)
             it.adapter = adapter
@@ -68,18 +58,18 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         adapter.stopListening()
     }
 
-    override fun onTextEntered(text: String) {
+    override fun onTextEntered(text: String, isImportant: Boolean) {
         userRepository.getSignedInUser()?.let {
-            sendMessage(it, text)
+            sendMessage(it, text, isImportant)
             sendNotification(it, text)
         }
     }
 
-    private fun sendMessage(user: User, message: String) = FirebaseDatabase.getInstance()
+    private fun sendMessage(user: User, message: String, isImportant: Boolean) = FirebaseDatabase.getInstance()
         .reference
         .child(CHAT)
         .push()
-        .setValue(Message(message, user))
+        .setValue(Message(message, user, isImportant))
 
     private fun sendNotification(user: User, message: String) = FirebaseDatabase.getInstance()
         .reference

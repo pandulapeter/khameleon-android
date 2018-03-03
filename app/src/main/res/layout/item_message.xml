@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/content_padding"
+        app:cardBackgroundColor="@{model.isImportant ? @color/accent : @color/white}"
         app:contentPadding="@dimen/content_padding">
 
         <android.support.constraint.ConstraintLayout

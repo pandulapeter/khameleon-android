@@ -26,14 +26,12 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
-            applicationIdSuffix '.debug'
             versionNameSuffix '-debug'
         }
         internal {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.internal
-            applicationIdSuffix '.internal'
             versionNameSuffix '-internal'
         }
         release {

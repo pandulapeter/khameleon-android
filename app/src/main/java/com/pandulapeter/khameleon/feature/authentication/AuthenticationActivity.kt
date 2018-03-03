@@ -7,8 +7,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
 import com.google.android.gms.common.api.ApiException
+import com.pandulapeter.khameleon.AuthenticationActivityBinding
+import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.feature.home.HomeActivity
 import com.pandulapeter.khameleon.feature.shared.KhameleonActivity
+import com.pandulapeter.khameleon.util.showSnackbar
 
 
 class AuthenticationActivity : KhameleonActivity<AuthenticationActivityBinding>(R.layout.activity_authentication) {

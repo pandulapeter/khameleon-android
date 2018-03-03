@@ -15,7 +15,7 @@
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
 
         <activity
-            android:name=".feature.login.LoginActivity"
+            android:name=".feature.authentication.AuthenticationActivity"
             android:theme="@style/Splash">
 
             <intent-filter>

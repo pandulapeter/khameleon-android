@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import com.pandulapeter.khameleon.BR
 
 abstract class KhameleonFragment<B : ViewDataBinding, out VM : KhameleonViewModel>(@LayoutRes private val layoutResourceId: Int) : Fragment() {
+
     protected abstract val viewModel: VM
     protected abstract val title: Int
     protected lateinit var binding: B

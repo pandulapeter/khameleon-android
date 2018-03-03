@@ -15,6 +15,7 @@ import com.pandulapeter.khameleon.util.consume
 class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_home) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
             supportFragmentManager.handleReplace { ChatFragment() }

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- General -->
     <string name="khameleon">Khameleon</string>
+    <string name="something_went_wrong">Something went wrong</string>
 
+    <!-- Authentication -->
+    <string name="authentication">Authentication</string>
+
+    <!-- Home -->
     <string name="chat">Chat</string>
     <string name="calendar">Calendar</string>
     <string name="songs">Songs</string>

@@ -3,6 +3,7 @@ package com.pandulapeter.khameleon.feature.home
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import com.pandulapeter.khameleon.HomeActivityBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.feature.home.calendar.CalendarFragment
@@ -39,6 +40,7 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
                 findFragmentByTag(T::class.java.name) ?: newInstance.invoke(),
                 T::class.java.name
             )
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
     }
 }

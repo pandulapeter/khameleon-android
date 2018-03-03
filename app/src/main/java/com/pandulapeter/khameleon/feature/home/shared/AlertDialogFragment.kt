@@ -13,27 +13,6 @@ import com.pandulapeter.khameleon.util.BundleArgumentDelegate
 import com.pandulapeter.khameleon.util.setArguments
 
 class AlertDialogFragment : AppCompatDialogFragment() {
-    private val onDialogItemsSelectedListener get() = parentFragment as? OnDialogItemsSelectedListener ?: activity as? OnDialogItemsSelectedListener
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        context?.let { context ->
-            arguments?.let { arguments ->
-                return AlertDialog.Builder(context, R.style.AlertDialog)
-                    .setTitle(arguments.title)
-                    .setMessage(arguments.message)
-                    .setPositiveButton(arguments.positiveButton, { _, _ -> onDialogItemsSelectedListener?.onPositiveButtonSelected() })
-                    .setNegativeButton(arguments.negativeButton, null)
-                    .create()
-            }
-        }
-        return super.onCreateDialog(savedInstanceState)
-    }
-
-
-    interface OnDialogItemsSelectedListener {
-
-        fun onPositiveButtonSelected()
-    }
 
     companion object {
         private var Bundle?.title by BundleArgumentDelegate.Int("title")
@@ -55,5 +34,27 @@ class AlertDialogFragment : AppCompatDialogFragment() {
                 it.negativeButton = negativeButton
             }.run { (this as DialogFragment).show(fragmentManager, tag) }
         }
+    }
+
+    private val onDialogItemsSelectedListener get() = parentFragment as? OnDialogItemsSelectedListener ?: activity as? OnDialogItemsSelectedListener
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        context?.let { context ->
+            arguments?.let { arguments ->
+                return AlertDialog.Builder(context, R.style.AlertDialog)
+                    .setTitle(arguments.title)
+                    .setMessage(arguments.message)
+                    .setPositiveButton(arguments.positiveButton, { _, _ -> onDialogItemsSelectedListener?.onPositiveButtonSelected() })
+                    .setNegativeButton(arguments.negativeButton, null)
+                    .create()
+            }
+        }
+        return super.onCreateDialog(savedInstanceState)
+    }
+
+
+    interface OnDialogItemsSelectedListener {
+
+        fun onPositiveButtonSelected()
     }
 }

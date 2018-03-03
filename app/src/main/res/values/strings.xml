@@ -6,12 +6,18 @@
 
     <!-- Authentication -->
     <string name="authentication">Authentication</string>
-    <string name="something_went_wrong">Something went wrong (%s)</string>
+    <string name="something_went_wrong_reason">Something went wrong (%s)</string>
 
     <!-- Home -->
     <string name="chat">Chat</string>
     <string name="calendar">Calendar</string>
     <string name="songs">Songs</string>
     <string name="settings">Settings</string>
+
+    <!-- Settings -->
+    <string name="sign_out">Sign out</string>
+    <string name="sign_out_confirmation_title">Are you sure?</string>
+    <string name="sign_out_confirmation_message">Are you sure you want to sign out of the application?</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

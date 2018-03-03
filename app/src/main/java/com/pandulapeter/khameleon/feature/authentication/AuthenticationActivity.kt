@@ -21,10 +21,10 @@ class AuthenticationActivity : KhameleonActivity<AuthenticationActivityBinding>(
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme_Authentication)
+        super.onCreate(savedInstanceState)
         val account = GoogleSignIn.getLastSignedInAccount(this)
         if (account == null) {
-            setTheme(R.style.AppTheme_Authentication)
-            super.onCreate(savedInstanceState)
             setTitle(R.string.authentication)
             val googleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build())
             binding.signInButton.setOnClickListener { startActivityForResult(googleSignInClient.signInIntent, AUTHENTICATION_REQUEST) }
@@ -38,7 +38,7 @@ class AuthenticationActivity : KhameleonActivity<AuthenticationActivityBinding>(
             try {
                 startHomeScreen(GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException::class.java))
             } catch (exception: ApiException) {
-                binding.root.showSnackbar(getString(R.string.something_went_wrong, GoogleSignInStatusCodes.getStatusCodeString(exception.statusCode)))
+                binding.root.showSnackbar(getString(R.string.something_went_wrong_reason, GoogleSignInStatusCodes.getStatusCodeString(exception.statusCode)))
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)

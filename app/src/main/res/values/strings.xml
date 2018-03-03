@@ -31,6 +31,29 @@
     <string name="delete_message_message">This will permanently delete the message.</string>
     <string name="delete">Delete</string>
 
+    <!-- Calendar -->
+    <string name="material_calendar_monday">Mo</string>
+    <string name="material_calendar_tuesday">Tu</string>
+    <string name="material_calendar_wednesday">We</string>
+    <string name="material_calendar_thursday">Th</string>
+    <string name="material_calendar_friday">Fr</string>
+    <string name="material_calendar_saturday">Sa</string>
+    <string name="material_calendar_sunday">Su</string>
+    <array name="material_calendar_months_array">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </array>
+
     <!-- Settings -->
     <string name="notifications">Notifications</string>
     <string name="push_chat_enabled">You will receive notifications about all messages.</string>

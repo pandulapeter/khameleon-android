@@ -21,6 +21,9 @@
     <string name="this_is_an_announcement">This is an announcement</string>
     <string name="send">Send</string>
     <string name="new_messages">New messages</string>
+    <string name="message_modification_error">You can only modify your own messages</string>
+    <string name="edit_message">Edit message</string>
+    <string name="delete_message">Delete message</string>
 
     <!-- Settings -->
     <string name="notifications">Notifications</string>

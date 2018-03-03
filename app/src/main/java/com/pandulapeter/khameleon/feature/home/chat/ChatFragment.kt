@@ -20,7 +20,8 @@ import org.koin.android.ext.android.inject
 import java.util.*
 
 
-class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.layout.fragment_chat), MessageInputDialogFragment.OnDialogTextEnteredListener {
+class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.layout.fragment_chat), MessageInputDialogFragment.OnDialogTextEnteredListener,
+    MessageEditBottomSheetFragment.OnDialogItemSelectedListener {
 
     companion object {
         private const val CHAT = "chat"
@@ -54,9 +55,9 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         onItemClickedCallback = { message ->
             userRepository.getSignedInUser()?.let { user ->
                 if (message.sender?.id == user.id) {
-                    deleteMessage(message.id)
+                    editMessage(message)
                 } else {
-                    binding.root.showSnackbar("You can only delete your own messages.")
+                    binding.root.showSnackbar(R.string.message_modification_error)
                 }
             }
         }
@@ -96,6 +97,31 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         }
     }
 
+    override fun onEditSelected(message: Message) {
+        //TODO
+    }
+
+    override fun onDeleteSelected(message: Message) {
+        //TODO
+    }
+
+    private fun deleteMessage(message: Message) = FirebaseDatabase.getInstance()
+        .reference
+        .child(CHAT)
+        .orderByChild("id")
+        .equalTo(message.id)
+        .addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError?) = Unit
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                p0?.let {
+                    if (it.hasChildren()) {
+                        it.children.iterator().next().ref.removeValue()
+                    }
+                }
+            }
+        })
+
     private fun sendMessage(user: User, message: String, isImportant: Boolean) = FirebaseDatabase.getInstance()
         .reference
         .child(CHAT)
@@ -108,22 +134,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         .push()
         .setValue("${user.name}: $message")
 
-    private fun deleteMessage(id: String) = FirebaseDatabase.getInstance()
-        .reference
-        .child(CHAT)
-        .orderByChild("id")
-        .equalTo(id)
-        .addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError?) = Unit
-
-            override fun onDataChange(p0: DataSnapshot?) {
-                p0?.let {
-                    if (it.hasChildren()) {
-                        it.children.iterator().next().ref.removeValue()
-                    }
-                }
-            }
-        })
+    private fun editMessage(message: Message) = MessageEditBottomSheetFragment.show(childFragmentManager, message)
 
     private fun scrollToBottom() {
         binding.recyclerView.smoothScrollToPosition(messageAdapter.itemCount)

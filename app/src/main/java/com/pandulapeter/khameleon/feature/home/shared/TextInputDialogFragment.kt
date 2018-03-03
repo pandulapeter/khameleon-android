@@ -14,7 +14,9 @@ import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.TextInputDialogBinding
+import com.pandulapeter.khameleon.data.repository.MessageRepository
 import com.pandulapeter.khameleon.util.*
+import org.koin.android.ext.android.inject
 
 class TextInputDialogFragment : AppCompatDialogFragment() {
 
@@ -46,6 +48,7 @@ class TextInputDialogFragment : AppCompatDialogFragment() {
     private lateinit var binding: TextInputDialogBinding
     private val positiveButton by lazy { (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE) }
     private val onDialogTextEnteredListener get() = parentFragment as? OnDialogTextEnteredListener ?: activity as? OnDialogTextEnteredListener
+    private val messageRepository by inject<MessageRepository>()
 
     override fun onCreateDialog(savedInstanceState: Bundle?) = context?.let { context ->
         binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_text_input, null, false)
@@ -53,6 +56,7 @@ class TextInputDialogFragment : AppCompatDialogFragment() {
 
             override fun afterTextChanged(text: Editable?) {
                 positiveButton.isEnabled = text.isTextValid()
+                messageRepository.workInProgressMessageText = text.toString()
             }
 
             override fun beforeTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
@@ -64,13 +68,14 @@ class TextInputDialogFragment : AppCompatDialogFragment() {
             .setView(binding.root)
             .setTitle(arguments.title)
             .setPositiveButton(arguments.positiveButton, { _, _ -> onOkButtonPressed() })
-            .setNegativeButton(arguments.negativeButton, null)
+            .setNegativeButton(arguments.negativeButton, { _, _ -> messageRepository.workInProgressMessageText = "" })
             .create()
     } ?: super.onCreateDialog(savedInstanceState)
 
     override fun onStart() {
         super.onStart()
         dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        binding.inputField.setText(messageRepository.workInProgressMessageText)
         binding.root.post {
             showKeyboard(binding.inputField)
             binding.inputField.setSelection(binding.inputField.text?.length ?: 0)
@@ -97,6 +102,7 @@ class TextInputDialogFragment : AppCompatDialogFragment() {
         binding.inputField.text?.let {
             if (it.isTextValid()) {
                 onDialogTextEnteredListener?.onTextEntered(it.toString())
+                messageRepository.workInProgressMessageText = ""
                 dismiss()
             }
         }

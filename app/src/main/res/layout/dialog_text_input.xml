@@ -18,13 +18,14 @@
             android:layout_height="wrap_content"
             android:paddingEnd="12dp"
             android:paddingStart="20dp"
-            app:errorEnabled="true">
+            app:errorEnabled="true"
+            app:hintTextAppearance="@style/TextInputLayout">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/input_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapSentences" />
+                android:inputType="textCapSentences|textMultiLine" />
 
         </android.support.design.widget.TextInputLayout>
 

@@ -53,6 +53,10 @@
         <item>November</item>
         <item>December</item>
     </array>
+    <string name="busy">Busy</string>
+    <string name="gig">Gig</string>
+    <string name="meetup">Meetup</string>
+    <string name="rehearsal">Rehearsal</string>
 
     <!-- Settings -->
     <string name="notifications">Notifications</string>

@@ -25,7 +25,7 @@ import java.util.*
 
 class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.layout.fragment_chat),
     MessageInputDialogFragment.OnDialogTextEnteredListener,
-    MessageEditBottomSheetFragment.OnDialogItemSelectedListener,
+    MessageModifyBottomSheetFragment.OnDialogItemSelectedListener,
     AlertDialogFragment.OnDialogItemsSelectedListener {
 
     companion object {
@@ -68,7 +68,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                     if (System.currentTimeMillis() - message.timestamp > MESSAGE_MODIFY_LIMIT) {
                         binding.root.showSnackbar(R.string.message_too_old)
                     } else {
-                        MessageEditBottomSheetFragment.show(childFragmentManager, message)
+                        MessageModifyBottomSheetFragment.show(childFragmentManager, message)
                     }
                 } else {
                     binding.root.showSnackbar(R.string.message_modification_error)

@@ -2,12 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--suppress AndroidUnknownAttribute -->
-    <data class=".MessageEditDialogBinding" />
+    <data class=".MessageModifyDialogBinding" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/large_content_padding">
 
         <TextView
             android:layout_width="match_parent"

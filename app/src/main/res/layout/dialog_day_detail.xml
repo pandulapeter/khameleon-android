@@ -1,48 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--suppress AndroidUnknownAttribute -->
     <data class=".DayDetailDialogBinding" />
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:paddingTop="@dimen/large_content_padding"
-        android:scrollbars="none">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/large_content_padding">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_margin="@dimen/content_padding"
+            android:fontFamily="sans-serif-medium"
+            android:paddingEnd="@dimen/content_padding"
+            android:paddingStart="@dimen/content_padding"
+            android:paddingTop="@dimen/content_padding"
+            android:textColor="@color/primary" />
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/enter_your_message"
-                android:paddingEnd="12dp"
-                android:paddingStart="20dp"
-                app:hintTextAppearance="@style/TextInputLayout">
+        <TextView
+            android:id="@+id/busy"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_target"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="@dimen/large_content_padding"
+            android:drawableStart="@drawable/ic_day_busy_24dp"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/large_content_padding"
+            android:paddingStart="@dimen/large_content_padding"
+            android:text="@string/busy" />
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/input_field"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapSentences|textMultiLine" />
+        <TextView
+            android:id="@+id/rehearsal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_target"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="@dimen/large_content_padding"
+            android:drawableStart="@drawable/ic_day_rehearsal_24dp"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/large_content_padding"
+            android:paddingStart="@dimen/large_content_padding"
+            android:text="@string/rehearsal" />
 
-            </android.support.design.widget.TextInputLayout>
+        <TextView
+            android:id="@+id/gig"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_target"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="@dimen/large_content_padding"
+            android:drawableStart="@drawable/ic_day_gig_24dp"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/large_content_padding"
+            android:paddingStart="@dimen/large_content_padding"
+            android:text="@string/gig" />
 
-            <CheckBox
-                android:id="@+id/checkbox"
-                android:layout_width="match_parent"
-                android:layout_marginStart="@dimen/large_content_padding"
-                android:layout_marginEnd="@dimen/large_content_padding"
-                android:layout_height="wrap_content"
-                android:text="@string/this_is_an_announcement" />
+        <TextView
+            android:id="@+id/meetup"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_target"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="@dimen/large_content_padding"
+            android:drawableStart="@drawable/ic_day_meetup_24dp"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/large_content_padding"
+            android:paddingStart="@dimen/large_content_padding"
+            android:text="@string/meetup" />
 
-        </LinearLayout>
-
-    </ScrollView>
+    </LinearLayout>
 
 </layout>

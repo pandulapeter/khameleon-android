@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
-        android:paddingTop="@dimen/large_content_padding"
+        android:paddingTop="@dimen/content_padding"
         android:scrollbars="none">
 
         <LinearLayout

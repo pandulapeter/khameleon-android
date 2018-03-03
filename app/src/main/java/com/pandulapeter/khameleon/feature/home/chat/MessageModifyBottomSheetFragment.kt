@@ -9,32 +9,32 @@ import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatDialogFragment
 import android.view.LayoutInflater
 import android.view.View
-import com.pandulapeter.khameleon.MessageEditDialogBinding
+import com.pandulapeter.khameleon.MessageModifyDialogBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.model.Message
 import com.pandulapeter.khameleon.feature.home.shared.CustomWidthBottomSheetDialog
 import com.pandulapeter.khameleon.util.BundleArgumentDelegate
 import com.pandulapeter.khameleon.util.setArguments
 
-class MessageEditBottomSheetFragment : AppCompatDialogFragment() {
+class MessageModifyBottomSheetFragment : AppCompatDialogFragment() {
 
     companion object {
         private var Bundle.message by BundleArgumentDelegate.Parcelable<Message>("message")
 
         fun show(fragmentManager: FragmentManager, message: Message) {
-            MessageEditBottomSheetFragment().setArguments {
+            MessageModifyBottomSheetFragment().setArguments {
                 it.message = message
             }.run { (this as DialogFragment).show(fragmentManager, tag) }
         }
     }
 
-    private lateinit var binding: MessageEditDialogBinding
+    private lateinit var binding: MessageModifyDialogBinding
     private val onDialogItemSelectedListener get() = parentFragment as? OnDialogItemSelectedListener ?: activity as? OnDialogItemSelectedListener
     private val behavior: BottomSheetBehavior<*> by lazy { ((binding.root.parent as View).layoutParams as CoordinatorLayout.LayoutParams).behavior as BottomSheetBehavior<*> }
 
     override fun onCreateDialog(savedInstanceState: Bundle?) = context?.let {
         CustomWidthBottomSheetDialog(it, theme).apply {
-            binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_message_edit, null, false)
+            binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_message_modify, null, false)
             binding.editMessage.setOnClickListener {
                 arguments?.message?.let { onDialogItemSelectedListener?.onEditSelected(it) }
                 dismiss()

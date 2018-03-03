@@ -1,6 +1,8 @@
 package com.pandulapeter.khameleon.util
 
 import android.content.Context
+import android.databinding.Observable
+import android.databinding.ObservableBoolean
 import android.os.Bundle
 import android.support.annotation.ColorRes
 import android.support.annotation.StringRes
@@ -18,4 +20,14 @@ fun View.showSnackbar(message: String) = Snackbar.make(this, message, Snackbar.L
 fun Fragment.setArguments(bundleOperations: (Bundle) -> Unit): Fragment {
     arguments = Bundle().apply { bundleOperations(this) }
     return this
+}
+
+inline fun ObservableBoolean.onPropertyChanged(fragment: Fragment? = null, crossinline callback: (Boolean) -> Unit) {
+    addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+        override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+            if (fragment?.isAdded != false) {
+                callback(get())
+            }
+        }
+    })
 }

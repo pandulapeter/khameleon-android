@@ -7,6 +7,7 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.pandulapeter.khameleon.AuthenticationActivityBinding
 import com.pandulapeter.khameleon.R
+import com.pandulapeter.khameleon.data.repository.MessageRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.home.HomeActivity
 import com.pandulapeter.khameleon.feature.shared.KhameleonActivity
@@ -21,12 +22,14 @@ class AuthenticationActivity : KhameleonActivity<AuthenticationActivityBinding>(
     }
 
     private val userRepository by inject<UserRepository>()
+    private val messageRepository by inject<MessageRepository>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_Authentication)
         super.onCreate(savedInstanceState)
         if (userRepository.getSignedInUser() == null) {
             setTitle(R.string.authentication)
+            messageRepository.setPushNotificationsEnabled(false)
             binding.signInButton.setSize(SignInButton.SIZE_WIDE)
             binding.signInButton.setOnClickListener { startActivityForResult(userRepository.getSignInIntent(), AUTHENTICATION_REQUEST) }
         } else {

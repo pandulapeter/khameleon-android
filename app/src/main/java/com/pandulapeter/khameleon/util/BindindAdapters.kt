@@ -40,20 +40,16 @@ fun setAvatar(view: ImageView, url: String) {
 
 @BindingAdapter(value = ["title", "description"], requireAll = false)
 fun setTitleDescription(view: TextView, title: String?, description: String?) {
-    val text = SpannableString("${title ?: ""}\n${description ?: ""}")
-    title?.let {
-        text.setSpan(TypefaceSpan("sans-serif-medium"), 0, it.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-        text.setSpan(ForegroundColorSpan(view.context.color(R.color.dark)), 0, it.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+    view.text = SpannableString("${title ?: ""}\n${description ?: ""}").apply {
+        title?.let {
+            setSpan(TypefaceSpan("sans-serif-medium"), 0, it.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+            setSpan(ForegroundColorSpan(view.context.color(R.color.dark)), 0, it.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+        }
+        description?.let {
+            setSpan(TextAppearanceSpan(view.context, R.style.TextAppearance_AppCompat_Caption), (title?.length ?: 0) + 1, length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+            setSpan(TypefaceSpan("sans-serif-regular"), (title?.length ?: 0) + 1, length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+        }
     }
-    description?.let {
-        text.setSpan(
-            TextAppearanceSpan(view.context, R.style.TextAppearance_AppCompat_Caption),
-            (title?.length ?: 0) + 1,
-            text.length,
-            Spannable.SPAN_INCLUSIVE_INCLUSIVE
-        )
-    }
-    view.text = text
 }
 
 @BindingAdapter("date")

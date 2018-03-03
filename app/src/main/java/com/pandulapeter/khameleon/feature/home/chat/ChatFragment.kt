@@ -5,7 +5,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.pandulapeter.khameleon.ChatFragmentBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.model.Message
@@ -48,7 +51,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             }
         },
         onErrorCallback = { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } },
-        onItemClickedCallback = { binding.root.showSnackbar(it.text) }
+        onItemClickedCallback = { deleteMessage(it.id) }
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -96,6 +99,23 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         .child(NOTIFICATIONS)
         .push()
         .setValue("${user.name}: $message")
+
+    private fun deleteMessage(id: String) = FirebaseDatabase.getInstance()
+        .reference
+        .child(CHAT)
+        .orderByChild("id")
+        .equalTo(id)
+        .addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError?) = Unit
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                p0?.let {
+                    if (it.hasChildren()) {
+                        it.children.iterator().next().ref.removeValue()
+                    }
+                }
+            }
+        })
 
     private fun scrollToBottom() {
         binding.recyclerView.smoothScrollToPosition(messageAdapter.itemCount)

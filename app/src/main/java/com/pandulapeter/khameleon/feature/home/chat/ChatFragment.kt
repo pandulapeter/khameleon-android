@@ -11,6 +11,7 @@ import com.pandulapeter.khameleon.data.model.Message
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.feature.home.shared.TextInputDialogFragment
+import com.pandulapeter.khameleon.util.showSnackbar
 import org.koin.android.ext.android.inject
 
 
@@ -32,7 +33,9 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                     .child(CHAT)
                     .limitToLast(MESSAGE_LIMIT), Message::class.java
             )
-            .build()
+            .build(),
+        { viewModel.isNewMessageAlertVisible.set(true) },
+        { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } }
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

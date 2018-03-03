@@ -8,6 +8,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.pandulapeter.khameleon.ChatFragmentBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.model.Message
+import com.pandulapeter.khameleon.data.model.User
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.feature.home.shared.TextInputDialogFragment
@@ -69,21 +70,20 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
 
     override fun onTextEntered(text: String) {
         userRepository.getSignedInUser()?.let {
-            FirebaseDatabase.getInstance()
-                .reference
-                .child(CHAT)
-                .push()
-                .setValue(Message(text, it))
+            sendMessage(it, text)
+            sendNotification(it, text)
         }
-        sendNotificationToUser("all", text)
     }
 
-    private fun sendNotificationToUser(user: String, message: String) = FirebaseDatabase.getInstance()
+    private fun sendMessage(user: User, message: String) = FirebaseDatabase.getInstance()
+        .reference
+        .child(CHAT)
+        .push()
+        .setValue(Message(message, user))
+
+    private fun sendNotification(user: User, message: String) = FirebaseDatabase.getInstance()
         .reference
         .child(NOTIFICATIONS)
         .push()
-        .setValue(HashMap<String, String>().apply {
-            this["username"] = user
-            this["message"] = message
-        })
+        .setValue("${user.name}: $message")
 }

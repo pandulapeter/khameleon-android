@@ -18,6 +18,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
 
     companion object {
         private const val CHAT = "chat"
+        private const val MESSAGE_LIMIT = 500
     }
 
     override val viewModel = ChatViewModel()
@@ -29,7 +30,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                 FirebaseDatabase.getInstance()
                     .reference
                     .child(CHAT)
-                    .limitToLast(50), Message::class.java
+                    .limitToLast(MESSAGE_LIMIT), Message::class.java
             )
             .build()
     )

@@ -75,5 +75,10 @@ dependencies {
     compile "com.google.firebase:firebase-database:$firebaseVersion"
     compile "com.google.android.gms:play-services-auth:$firebaseVersion"
     implementation 'com.firebaseui:firebase-ui-database:3.2.2'
+
+    // Image loading
+    def glideVersion = "4.6.1"
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
 }
 apply plugin: 'com.google.gms.google-services'

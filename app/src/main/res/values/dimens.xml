@@ -4,5 +4,6 @@
     <dimen name="content_padding">8dp</dimen>
     <dimen name="large_content_padding">16dp</dimen>
     <dimen name="touch_target">48dp</dimen>
+    <dimen name="list_bottom_padding">72dp</dimen>
 
 </resources>

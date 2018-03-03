@@ -15,6 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/list_bottom_padding" />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floating_action_button"
             android:layout_width="wrap_content"

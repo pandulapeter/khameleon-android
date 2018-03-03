@@ -1,7 +1,7 @@
 package com.pandulapeter.khameleon.data.model
 
 data class Message(
-    val text: String,
-    val sender: User,
-    val timestamp: Long
+    var text: String = "",
+    var sender: User? = null,
+    var timestamp: Long = System.currentTimeMillis()
 )

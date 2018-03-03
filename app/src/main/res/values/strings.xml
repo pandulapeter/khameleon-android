@@ -25,5 +25,6 @@
     <string name="sign_out">Sign out</string>
     <string name="sign_out_confirmation_title">Are you sure?</string>
     <string name="sign_out_confirmation_message">Are you sure you want to sign out of the application?</string>
+    <string name="app_version">v%s</string>
 
 </resources>

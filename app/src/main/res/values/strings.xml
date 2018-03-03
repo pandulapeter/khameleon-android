@@ -7,7 +7,6 @@
     <string name="cancel">Cancel</string>
 
     <!-- Authentication -->
-    <string name="authentication">Authentication</string>
     <string name="authentication_message">To use the app, you need to connect\nwith your Google account.</string>
 
     <!-- Home -->

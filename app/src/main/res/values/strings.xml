@@ -25,6 +25,9 @@
     <string name="select_an_option">Select an option</string>
     <string name="edit_message">Edit message</string>
     <string name="delete_message">Delete message</string>
+    <string name="delete_message_title">Are you sure?</string>
+    <string name="delete_message_message">This will permanently delete the message.</string>
+    <string name="delete">Delete</string>
 
     <!-- Settings -->
     <string name="notifications">Notifications</string>

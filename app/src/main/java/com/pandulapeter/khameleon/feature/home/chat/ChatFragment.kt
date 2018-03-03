@@ -15,13 +15,17 @@ import com.pandulapeter.khameleon.data.model.Message
 import com.pandulapeter.khameleon.data.model.User
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
+import com.pandulapeter.khameleon.feature.home.shared.AlertDialogFragment
+import com.pandulapeter.khameleon.util.BundleArgumentDelegate
 import com.pandulapeter.khameleon.util.showSnackbar
 import org.koin.android.ext.android.inject
 import java.util.*
 
 
-class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.layout.fragment_chat), MessageInputDialogFragment.OnDialogTextEnteredListener,
-    MessageEditBottomSheetFragment.OnDialogItemSelectedListener {
+class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.layout.fragment_chat),
+    MessageInputDialogFragment.OnDialogTextEnteredListener,
+    MessageEditBottomSheetFragment.OnDialogItemSelectedListener,
+    AlertDialogFragment.OnDialogItemsSelectedListener {
 
     companion object {
         private const val CHAT = "chat"
@@ -31,6 +35,10 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
 
     override val viewModel = ChatViewModel()
     override val title = R.string.chat
+    private var Bundle.messageToDelete by BundleArgumentDelegate.Parcelable<Message>("message_to_delete")
+    private var Bundle.messageToEdit by BundleArgumentDelegate.Parcelable<Message>("message_to_edit")
+    private var messageToDelete: Message? = null
+    private var messageToEdit: Message? = null
     private var isScrolledToBottom = true
     private val userRepository by inject<UserRepository>()
     private val linearLayoutManager = LinearLayoutManager(context).apply { stackFromEnd = true }
@@ -65,6 +73,10 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        savedInstanceState?.let {
+            messageToDelete = it.messageToDelete
+            messageToEdit = it.messageToEdit
+        }
         binding.floatingActionButton.setOnClickListener { MessageInputDialogFragment.show(childFragmentManager) }
         binding.recyclerView.run {
             layoutManager = linearLayoutManager
@@ -77,6 +89,12 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                 updateNewMessagesIndicatorVisibility()
             }
         })
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        messageToDelete?.let { outState.messageToDelete = it }
+        messageToEdit?.let { outState.messageToEdit = it }
     }
 
     override fun onStart() {
@@ -98,11 +116,24 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     }
 
     override fun onEditSelected(message: Message) {
+        messageToEdit = message
         //TODO
     }
 
     override fun onDeleteSelected(message: Message) {
-        //TODO
+        messageToDelete = message
+        AlertDialogFragment.show(
+            childFragmentManager,
+            R.string.delete_message_title,
+            R.string.delete_message_message,
+            R.string.delete,
+            R.string.cancel
+        )
+    }
+
+    override fun onPositiveButtonSelected() {
+        messageToDelete?.let { deleteMessage(it) }
+        messageToDelete = null
     }
 
     private fun deleteMessage(message: Message) = FirebaseDatabase.getInstance()

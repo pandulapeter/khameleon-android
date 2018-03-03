@@ -81,7 +81,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         }
         binding.floatingActionButton.setOnClickListener {
             messageToEdit = null
-            MessageInputDialogFragment.show(childFragmentManager)
+            MessageInputDialogFragment.show(childFragmentManager, R.string.new_message)
         }
         binding.recyclerView.run {
             layoutManager = linearLayoutManager
@@ -144,7 +144,8 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     override fun onEditSelected(message: Message) {
         messageToEdit = message
         messageRepository.workInProgressMessageText = message.text
-        MessageInputDialogFragment.show(childFragmentManager)
+        messageRepository.workInProgressMessageImportant = message.isImportant
+        MessageInputDialogFragment.show(childFragmentManager, R.string.edit_message)
     }
 
     override fun onDeleteSelected(message: Message) {

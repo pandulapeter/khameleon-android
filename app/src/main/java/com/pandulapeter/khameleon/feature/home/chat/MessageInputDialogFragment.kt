@@ -2,6 +2,7 @@ package com.pandulapeter.khameleon.feature.home.chat
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.annotation.StringRes
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
@@ -13,15 +14,19 @@ import android.view.WindowManager
 import com.pandulapeter.khameleon.MessageInputDialogBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.repository.MessageRepository
+import com.pandulapeter.khameleon.util.BundleArgumentDelegate
 import com.pandulapeter.khameleon.util.hideKeyboard
+import com.pandulapeter.khameleon.util.setArguments
 import com.pandulapeter.khameleon.util.showKeyboard
 import org.koin.android.ext.android.inject
 
 class MessageInputDialogFragment : AppCompatDialogFragment() {
 
     companion object {
-        fun show(fragmentManager: FragmentManager) {
-            MessageInputDialogFragment().run { (this as DialogFragment).show(fragmentManager, tag) }
+        private var Bundle?.title by BundleArgumentDelegate.Int("title")
+
+        fun show(fragmentManager: FragmentManager, @StringRes title: Int) {
+            MessageInputDialogFragment().setArguments { it.title = title }.run { (this as DialogFragment).show(fragmentManager, tag) }
         }
     }
 
@@ -43,10 +48,15 @@ class MessageInputDialogFragment : AppCompatDialogFragment() {
 
             override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
         })
+        binding.checkbox.setOnCheckedChangeListener { _, isChecked -> messageRepository.workInProgressMessageImportant = isChecked }
         AlertDialog.Builder(context, R.style.AlertDialog)
+            .setTitle(arguments.title)
             .setView(binding.root)
             .setPositiveButton(R.string.send, { _, _ -> onOkButtonPressed() })
-            .setNegativeButton(R.string.cancel, { _, _ -> messageRepository.workInProgressMessageText = "" })
+            .setNegativeButton(R.string.cancel, { _, _ ->
+                messageRepository.workInProgressMessageText = ""
+                messageRepository.workInProgressMessageImportant = false
+            })
             .create()
     } ?: super.onCreateDialog(savedInstanceState)
 
@@ -54,6 +64,7 @@ class MessageInputDialogFragment : AppCompatDialogFragment() {
         super.onStart()
         dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         binding.inputField.setText(messageRepository.workInProgressMessageText)
+        binding.checkbox.isChecked = messageRepository.workInProgressMessageImportant
         binding.root.post {
             showKeyboard(binding.inputField)
             binding.inputField.setSelection(binding.inputField.text?.length ?: 0)
@@ -73,6 +84,7 @@ class MessageInputDialogFragment : AppCompatDialogFragment() {
             if (it.isTextValid()) {
                 onDialogTextEnteredListener?.onTextEntered(it.toString(), binding.checkbox.isChecked)
                 messageRepository.workInProgressMessageText = ""
+                messageRepository.workInProgressMessageImportant = false
                 dismiss()
             }
         }

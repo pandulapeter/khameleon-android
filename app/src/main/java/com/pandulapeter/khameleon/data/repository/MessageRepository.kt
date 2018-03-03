@@ -8,6 +8,7 @@ class MessageRepository {
     }
 
     var workInProgressMessageText = ""
+    var workInProgressMessageImportant = false
 
     fun setPushNotificationsEnabled(enabled: Boolean) {
         FirebaseMessaging.getInstance().run {

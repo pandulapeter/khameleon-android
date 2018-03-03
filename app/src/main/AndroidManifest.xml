@@ -15,8 +15,7 @@
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
 
         <activity
-            android:name=".feature.MainActivity"
-            android:launchMode="singleTop"
+            android:name=".feature.login.LoginActivity"
             android:theme="@style/Splash">
 
             <intent-filter>
@@ -25,6 +24,8 @@
             </intent-filter>
 
         </activity>
+
+        <activity android:name=".feature.home.HomeActivity" />
 
     </application>
 

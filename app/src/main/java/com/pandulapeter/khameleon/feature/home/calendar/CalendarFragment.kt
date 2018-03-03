@@ -1,4 +1,4 @@
-package com.pandulapeter.khameleon.feature.calendar
+package com.pandulapeter.khameleon.feature.home.calendar
 
 import com.pandulapeter.khameleon.CalendarFragmentBinding
 import com.pandulapeter.khameleon.R

@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.pandulapeter.khameleon.feature.settings.SettingsViewModel" />
+            type="com.pandulapeter.khameleon.feature.home.settings.SettingsViewModel" />
 
     </data>
 

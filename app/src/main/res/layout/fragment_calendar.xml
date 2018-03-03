@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.pandulapeter.khameleon.feature.calendar.CalendarViewModel" />
+            type="com.pandulapeter.khameleon.feature.home.calendar.CalendarViewModel" />
 
     </data>
 

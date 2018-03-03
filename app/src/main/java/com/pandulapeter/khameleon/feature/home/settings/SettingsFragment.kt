@@ -1,4 +1,4 @@
-package com.pandulapeter.khameleon.feature.settings
+package com.pandulapeter.khameleon.feature.home.settings
 
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.SettingsFragmentBinding

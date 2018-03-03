@@ -1,4 +1,4 @@
-package com.pandulapeter.khameleon.feature.songs
+package com.pandulapeter.khameleon.feature.home.songs
 
 import com.pandulapeter.khameleon.feature.KhameleonViewModel
 

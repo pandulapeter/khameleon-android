@@ -1,4 +1,4 @@
-package com.pandulapeter.khameleon.feature.chat
+package com.pandulapeter.khameleon.feature.home.chat
 
 import com.pandulapeter.khameleon.ChatFragmentBinding
 import com.pandulapeter.khameleon.R

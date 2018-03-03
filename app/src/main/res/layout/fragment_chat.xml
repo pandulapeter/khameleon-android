@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.pandulapeter.khameleon.feature.chat.ChatViewModel" />
+            type="com.pandulapeter.khameleon.feature.home.chat.ChatViewModel" />
 
     </data>
 

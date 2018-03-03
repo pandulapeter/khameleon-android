@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.pandulapeter.khameleon.feature.songs.SongsViewModel" />
+            type="com.pandulapeter.khameleon.feature.home.songs.SongsViewModel" />
 
     </data>
 

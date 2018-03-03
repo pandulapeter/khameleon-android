@@ -1,34 +1,21 @@
-package com.pandulapeter.khameleon.feature
+package com.pandulapeter.khameleon.feature.home
 
-import android.app.ActivityManager
-import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatActivity
-import com.pandulapeter.khameleon.BuildConfig
-import com.pandulapeter.khameleon.MainActivityBinding
+import com.pandulapeter.khameleon.HomeActivityBinding
 import com.pandulapeter.khameleon.R
-import com.pandulapeter.khameleon.feature.calendar.CalendarFragment
-import com.pandulapeter.khameleon.feature.chat.ChatFragment
-import com.pandulapeter.khameleon.feature.settings.SettingsFragment
-import com.pandulapeter.khameleon.feature.songs.SongsFragment
-import com.pandulapeter.khameleon.util.color
+import com.pandulapeter.khameleon.feature.home.calendar.CalendarFragment
+import com.pandulapeter.khameleon.feature.home.chat.ChatFragment
+import com.pandulapeter.khameleon.feature.home.settings.SettingsFragment
+import com.pandulapeter.khameleon.feature.home.songs.SongsFragment
+import com.pandulapeter.khameleon.feature.shared.KhameleonActivity
 import com.pandulapeter.khameleon.util.consume
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_home) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
-        @Suppress("ConstantConditionIf")
-        setTaskDescription(
-            ActivityManager.TaskDescription(
-                getString(R.string.khameleon) + if (BuildConfig.BUILD_TYPE == "release") "" else " (" + BuildConfig.BUILD_TYPE + ")",
-                null, color(R.color.primary)
-            )
-        )
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<MainActivityBinding>(this, R.layout.activity_main)
         if (savedInstanceState == null) {
             supportFragmentManager.handleReplace { ChatFragment() }
         }

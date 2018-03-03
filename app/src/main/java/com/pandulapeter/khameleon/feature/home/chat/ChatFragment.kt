@@ -13,6 +13,7 @@ import com.pandulapeter.khameleon.ChatFragmentBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.model.Message
 import com.pandulapeter.khameleon.data.model.User
+import com.pandulapeter.khameleon.data.repository.MessageRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.feature.home.shared.AlertDialogFragment
@@ -41,6 +42,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     private var messageToEdit: Message? = null
     private var isScrolledToBottom = true
     private val userRepository by inject<UserRepository>()
+    private val messageRepository by inject<MessageRepository>()
     private val linearLayoutManager = LinearLayoutManager(context).apply { stackFromEnd = true }
     private val messageAdapter = MessageAdapter(
         options = FirebaseRecyclerOptions.Builder<Message>()
@@ -63,7 +65,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         onItemClickedCallback = { message ->
             userRepository.getSignedInUser()?.let { user ->
                 if (message.sender?.id == user.id) {
-                    editMessage(message)
+                    MessageEditBottomSheetFragment.show(childFragmentManager, message)
                 } else {
                     binding.root.showSnackbar(R.string.message_modification_error)
                 }
@@ -77,7 +79,10 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             messageToDelete = it.messageToDelete
             messageToEdit = it.messageToEdit
         }
-        binding.floatingActionButton.setOnClickListener { MessageInputDialogFragment.show(childFragmentManager) }
+        binding.floatingActionButton.setOnClickListener {
+            messageToEdit = null
+            MessageInputDialogFragment.show(childFragmentManager)
+        }
         binding.recyclerView.run {
             layoutManager = linearLayoutManager
             adapter = messageAdapter
@@ -108,16 +113,38 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     }
 
     override fun onTextEntered(text: String, isImportant: Boolean) {
-        userRepository.getSignedInUser()?.let {
-            sendMessage(it, text, isImportant)
-            sendNotification(it, text)
-            scrollToBottom()
+        val edit = messageToEdit
+        if (edit == null) {
+            userRepository.getSignedInUser()?.let {
+                sendMessage(it, text, isImportant)
+                sendNotification(it, text)
+                scrollToBottom()
+            }
+        } else {
+            FirebaseDatabase.getInstance()
+                .reference
+                .child(CHAT)
+                .orderByChild("id")
+                .equalTo(edit.id)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(p0: DatabaseError?) = Unit
+
+                    override fun onDataChange(p0: DataSnapshot?) {
+                        p0?.let {
+                            if (it.hasChildren()) {
+                                it.children.iterator().next().ref.setValue(Message(edit.id, text, edit.sender, isImportant))
+                                messageToEdit = null
+                            }
+                        }
+                    }
+                })
         }
     }
 
     override fun onEditSelected(message: Message) {
         messageToEdit = message
-        //TODO
+        messageRepository.workInProgressMessageText = message.text
+        MessageInputDialogFragment.show(childFragmentManager)
     }
 
     override fun onDeleteSelected(message: Message) {
@@ -164,8 +191,6 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         .child(NOTIFICATIONS)
         .push()
         .setValue("${user.name}: $message")
-
-    private fun editMessage(message: Message) = MessageEditBottomSheetFragment.show(childFragmentManager, message)
 
     private fun scrollToBottom() {
         binding.recyclerView.smoothScrollToPosition(messageAdapter.itemCount)

@@ -6,6 +6,7 @@
 
     <!-- Authentication -->
     <string name="authentication">Authentication</string>
+    <string name="authentication_message">To use the app, you need to connect\nwith your Google account.</string>
     <string name="something_went_wrong_reason">Something went wrong (%s)</string>
 
     <!-- Home -->

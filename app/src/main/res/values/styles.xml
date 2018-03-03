@@ -13,6 +13,11 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="AppTheme.Authentication">
+        <item name="android:windowBackground">@color/primary</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
     <style name="AppBar" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>

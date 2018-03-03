@@ -9,5 +9,6 @@
     <dimen name="settings_label_margin">2dp</dimen>
 
     <dimen name="text_small">10sp</dimen>
+    <dimen name="text_large">16sp</dimen>
 
 </resources>

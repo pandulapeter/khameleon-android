@@ -20,6 +20,7 @@
     <string name="enter_your_message">Enter your message</string>
     <string name="this_is_an_announcement">This is an announcement</string>
     <string name="send">Send</string>
+    <string name="new_messages">New messages</string>
 
     <!-- Settings -->
     <string name="notifications">Notifications</string>

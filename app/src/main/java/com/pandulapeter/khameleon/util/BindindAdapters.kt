@@ -15,6 +15,20 @@ import com.bumptech.glide.request.RequestOptions
 import com.pandulapeter.khameleon.R
 import java.util.*
 
+@BindingAdapter("android:visibility")
+fun setVisibility(view: View, isVisible: Boolean) {
+    view.visibility = if (isVisible) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("android:background")
+fun setBackground(view: View, @ColorRes color: Int) {
+    if (color == 0) {
+        view.background = null
+    } else {
+        view.setBackgroundColor(view.context.color(color))
+    }
+}
+
 @BindingAdapter("avatar")
 fun setAvatar(view: ImageView, url: String) {
     GlideApp.with(view)
@@ -45,13 +59,4 @@ fun setTitleDescription(view: TextView, title: String?, description: String?) {
 @BindingAdapter("date")
 fun setDate(view: TextView, date: Long) {
     view.text = DateFormat.format("MMM d, HH:mm", Date(date))
-}
-
-@BindingAdapter("android:background")
-fun setBackground(view: View, @ColorRes color: Int) {
-    if (color == 0) {
-        view.background = null
-    } else {
-        view.setBackgroundColor(view.context.color(color))
-    }
 }

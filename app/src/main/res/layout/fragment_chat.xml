@@ -38,6 +38,7 @@
             android:layout_margin="@dimen/large_content_padding"
             android:foreground="?attr/selectableItemBackground"
             android:theme="@style/Theme.AppCompat"
+            android:visibility="@{viewModel.newMessagesVisibility}"
             app:cardBackgroundColor="@color/primary"
             app:cardCornerRadius="@dimen/large_content_padding"
             app:cardElevation="4dp"

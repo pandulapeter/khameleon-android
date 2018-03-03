@@ -5,5 +5,5 @@ import com.pandulapeter.khameleon.feature.KhameleonViewModel
 
 class ChatViewModel : KhameleonViewModel() {
 
-    val isNewMessageAlertVisible = ObservableBoolean()
+    val newMessagesVisibility = ObservableBoolean()
 }

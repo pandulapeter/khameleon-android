@@ -3,6 +3,7 @@ package com.pandulapeter.khameleon.feature.home.chat
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.FirebaseDatabase
@@ -26,6 +27,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
 
     override val viewModel = ChatViewModel()
     override val title = R.string.chat
+    private var isScrolledToBottom = true
     private val userRepository by inject<UserRepository>()
     private val adapter = MessageAdapter(
         FirebaseRecyclerOptions.Builder<Message>()
@@ -36,18 +38,34 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                     .limitToLast(MESSAGE_LIMIT), Message::class.java
             )
             .build(),
-        { viewModel.isNewMessageAlertVisible.set(true) },
+        {
+            if (!isScrolledToBottom) {
+                viewModel.newMessagesVisibility.set(true)
+            }
+        },
         { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } }
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.floatingActionButton.setOnClickListener { MessageInputDialogFragment.show(childFragmentManager) }
+        val linearLayoutManager = LinearLayoutManager(context).apply { stackFromEnd = true }
         binding.recyclerView.let {
-            it.layoutManager = LinearLayoutManager(context)
+            it.layoutManager = linearLayoutManager
             it.adapter = adapter
             it.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
+        binding.newMessagesIndicator.setOnClickListener { scrollToBottom() }
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                isScrolledToBottom = if (linearLayoutManager.findFirstVisibleItemPosition() + linearLayoutManager.childCount - 1 >= linearLayoutManager.itemCount) {
+                    viewModel.newMessagesVisibility.set(false)
+                    true
+                } else {
+                    false
+                }
+            }
+        })
     }
 
     override fun onStart() {
@@ -64,6 +82,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         userRepository.getSignedInUser()?.let {
             sendMessage(it, text, isImportant)
             sendNotification(it, text)
+            scrollToBottom()
         }
     }
 
@@ -78,4 +97,8 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         .child(NOTIFICATIONS)
         .push()
         .setValue("${user.name}: $message")
+
+    private fun scrollToBottom() {
+        binding.recyclerView.smoothScrollToPosition(adapter.itemCount)
+    }
 }

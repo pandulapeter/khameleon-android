@@ -20,6 +20,8 @@ class AuthenticationActivity : KhameleonActivity<AuthenticationActivityBinding>(
 
     companion object {
         private const val AUTHENTICATION_REQUEST = 435
+        private const val BACKGROUND_IMAGE_URL =
+            "https://scontent.fomr1-1.fna.fbcdn.net/v/t31.0-8/27164591_1597697366986225_33167602144533526_o.jpg?oh=46bf46b9a89d225a77fbb77b4b629eec&oe=5B3F6B7E"
     }
 
     private val userRepository by inject<UserRepository>()
@@ -33,7 +35,8 @@ class AuthenticationActivity : KhameleonActivity<AuthenticationActivityBinding>(
             binding.signInButton.setSize(SignInButton.SIZE_WIDE)
             binding.signInButton.setOnClickListener { startActivityForResult(userRepository.getSignInIntent(), AUTHENTICATION_REQUEST) }
             GlideApp.with(this)
-                .load("https://scontent.fomr1-1.fna.fbcdn.net/v/t31.0-8/27164591_1597697366986225_33167602144533526_o.jpg?oh=46bf46b9a89d225a77fbb77b4b629eec&oe=5B3F6B7E")
+                .load(BACKGROUND_IMAGE_URL)
+                .centerCrop()
                 .into(binding.logo)
         } else {
             startHomeScreen()

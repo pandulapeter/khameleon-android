@@ -6,6 +6,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
+import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.pandulapeter.khameleon.AuthenticationActivityBinding
 import com.pandulapeter.khameleon.R
@@ -27,6 +28,7 @@ class AuthenticationActivity : KhameleonActivity<AuthenticationActivityBinding>(
         if (account == null) {
             setTitle(R.string.authentication)
             val googleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build())
+            binding.signInButton.setSize(SignInButton.SIZE_WIDE)
             binding.signInButton.setOnClickListener { startActivityForResult(googleSignInClient.signInIntent, AUTHENTICATION_REQUEST) }
         } else {
             startHomeScreen(account)

@@ -17,7 +17,7 @@ class SettingsFragment : KhameleonFragment<SettingsFragmentBinding, SettingsView
     override val viewModel = SettingsViewModel()
     override val title = R.string.settings
     private val googleSignInClient by lazy {
-        activity?.let { GoogleSignIn.getClient(it, GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()) }
+        context?.let { GoogleSignIn.getClient(it, GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

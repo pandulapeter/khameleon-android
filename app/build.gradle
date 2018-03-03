@@ -26,6 +26,7 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            signingConfig signingConfigs.internal
             versionNameSuffix '-debug'
         }
         internal {

@@ -3,6 +3,7 @@
 
     <!-- General -->
     <string name="khameleon">Khameleon</string>
+    <string name="something_went_wrong">Something went wrong</string>
     <string name="something_went_wrong_reason">Something went wrong (%s)</string>
     <string name="cancel">Cancel</string>
 
@@ -22,6 +23,7 @@
     <string name="send">Send</string>
     <string name="new_messages">New messages</string>
     <string name="message_modification_error">You can only modify your own messages</string>
+    <string name="message_too_old">This message is to old to be modified</string>
     <string name="select_an_option">Select an option</string>
     <string name="edit_message">Edit message</string>
     <string name="delete_message">Delete message</string>

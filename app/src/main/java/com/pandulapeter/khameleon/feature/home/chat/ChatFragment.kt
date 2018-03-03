@@ -32,6 +32,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         private const val CHAT = "chat"
         private const val NOTIFICATIONS = "notificationRequests"
         private const val MESSAGE_LIMIT = 300
+        private const val MESSAGE_MODIFY_LIMIT = 1000L * 60 * 60 * 6
     }
 
     override val viewModel = ChatViewModel()
@@ -65,7 +66,11 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         onItemClickedCallback = { message ->
             userRepository.getSignedInUser()?.let { user ->
                 if (message.sender?.id == user.id) {
-                    MessageEditBottomSheetFragment.show(childFragmentManager, message)
+                    if (System.currentTimeMillis() - message.timestamp > MESSAGE_MODIFY_LIMIT) {
+                        binding.root.showSnackbar(R.string.message_too_old)
+                    } else {
+                        MessageEditBottomSheetFragment.show(childFragmentManager, message)
+                    }
                 } else {
                     binding.root.showSnackbar(R.string.message_modification_error)
                 }
@@ -127,15 +132,17 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                 .orderByChild("id")
                 .equalTo(edit.id)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onCancelled(p0: DatabaseError?) = Unit
+                    override fun onCancelled(p0: DatabaseError?) = binding.root.showSnackbar(R.string.something_went_wrong)
 
                     override fun onDataChange(p0: DataSnapshot?) {
                         p0?.let {
                             if (it.hasChildren()) {
                                 it.children.iterator().next().ref.setValue(Message(edit.id, text, edit.sender, isImportant))
                                 messageToEdit = null
+                                return
                             }
                         }
+                        binding.root.showSnackbar(R.string.something_went_wrong)
                     }
                 })
         }
@@ -170,14 +177,17 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         .orderByChild("id")
         .equalTo(message.id)
         .addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError?) = Unit
+            override fun onCancelled(p0: DatabaseError?) = binding.root.showSnackbar(R.string.something_went_wrong)
 
             override fun onDataChange(p0: DataSnapshot?) {
                 p0?.let {
                     if (it.hasChildren()) {
                         it.children.iterator().next().ref.removeValue()
+                        messageToDelete = null
+                        return
                     }
                 }
+                binding.root.showSnackbar(R.string.something_went_wrong)
             }
         })
 

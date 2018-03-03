@@ -51,7 +51,15 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             }
         },
         onErrorCallback = { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } },
-        onItemClickedCallback = { deleteMessage(it.id) }
+        onItemClickedCallback = { message ->
+            userRepository.getSignedInUser()?.let { user ->
+                if (message.sender?.id == user.id) {
+                    deleteMessage(message.id)
+                } else {
+                    binding.root.showSnackbar("You can only delete your own messages.")
+                }
+            }
+        }
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

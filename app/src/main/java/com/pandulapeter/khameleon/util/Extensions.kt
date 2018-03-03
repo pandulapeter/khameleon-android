@@ -5,6 +5,7 @@ import android.databinding.Observable
 import android.databinding.ObservableBoolean
 import android.os.Bundle
 import android.support.annotation.ColorRes
+import android.support.annotation.DimenRes
 import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
@@ -14,6 +15,8 @@ import android.support.v7.content.res.AppCompatResources
 import android.view.View
 
 fun Context.color(@ColorRes colorId: Int) = ContextCompat.getColor(this, colorId)
+
+fun Context.dimension(@DimenRes dimensionId: Int) = resources.getDimensionPixelSize(dimensionId)
 
 fun Context.drawable(@DrawableRes drawableId: Int) = AppCompatResources.getDrawable(this, drawableId)
 

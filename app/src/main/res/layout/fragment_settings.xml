@@ -35,7 +35,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/settings_label_margin"
+                        android:layout_marginBottom="@dimen/settings_label_margin"
                         android:fontFamily="sans-serif-medium"
                         android:text="@string/notifications"
                         android:textColor="@color/primary" />
@@ -69,8 +69,8 @@
                         android:id="@+id/label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/settings_label_margin"
                         android:fontFamily="sans-serif-medium"
+                        android:paddingBottom="@dimen/settings_label_margin"
                         android:paddingEnd="@dimen/content_padding"
                         android:paddingStart="@dimen/content_padding"
                         android:paddingTop="@dimen/content_padding"

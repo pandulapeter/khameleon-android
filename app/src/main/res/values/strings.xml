@@ -22,6 +22,7 @@
     <string name="send">Send</string>
     <string name="new_messages">New messages</string>
     <string name="message_modification_error">You can only modify your own messages</string>
+    <string name="select_an_option">Select an option</string>
     <string name="edit_message">Edit message</string>
     <string name="delete_message">Delete message</string>
 

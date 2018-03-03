@@ -10,6 +10,17 @@
         android:orientation="vertical">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/content_padding"
+            android:fontFamily="sans-serif-medium"
+            android:paddingEnd="@dimen/content_padding"
+            android:paddingStart="@dimen/content_padding"
+            android:paddingTop="@dimen/content_padding"
+            android:text="@string/select_an_option"
+            android:textColor="@color/primary" />
+
+        <TextView
             android:id="@+id/edit_message"
             android:layout_width="match_parent"
             android:layout_height="@dimen/touch_target"

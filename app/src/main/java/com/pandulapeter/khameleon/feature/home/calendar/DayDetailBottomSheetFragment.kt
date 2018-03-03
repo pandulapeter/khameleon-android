@@ -1,4 +1,4 @@
-package com.pandulapeter.khameleon.feature.home.chat
+package com.pandulapeter.khameleon.feature.home.calendar
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -16,13 +16,13 @@ import com.pandulapeter.khameleon.feature.home.shared.CustomWidthBottomSheetDial
 import com.pandulapeter.khameleon.util.BundleArgumentDelegate
 import com.pandulapeter.khameleon.util.setArguments
 
-class MessageEditBottomSheetFragment : AppCompatDialogFragment() {
+class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
 
     companion object {
         private var Bundle.message by BundleArgumentDelegate.Parcelable<Message>("message")
 
         fun show(fragmentManager: FragmentManager, message: Message) {
-            MessageEditBottomSheetFragment().setArguments {
+            DayDetailBottomSheetFragment().setArguments {
                 it.message = message
             }.run { (this as DialogFragment).show(fragmentManager, tag) }
         }

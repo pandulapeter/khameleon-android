@@ -32,13 +32,13 @@
     <string name="delete">Delete</string>
 
     <!-- Calendar -->
-    <string name="material_calendar_monday">Mo</string>
-    <string name="material_calendar_tuesday">Tu</string>
-    <string name="material_calendar_wednesday">We</string>
-    <string name="material_calendar_thursday">Th</string>
-    <string name="material_calendar_friday">Fr</string>
-    <string name="material_calendar_saturday">Sa</string>
-    <string name="material_calendar_sunday">Su</string>
+    <string name="material_calendar_monday">Mon</string>
+    <string name="material_calendar_tuesday">Tue</string>
+    <string name="material_calendar_wednesday">Wed</string>
+    <string name="material_calendar_thursday">Thu</string>
+    <string name="material_calendar_friday">Fri</string>
+    <string name="material_calendar_saturday">Sat</string>
+    <string name="material_calendar_sunday">Sun</string>
     <array name="material_calendar_months_array">
         <item>January</item>
         <item>February</item>

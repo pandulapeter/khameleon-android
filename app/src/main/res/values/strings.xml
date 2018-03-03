@@ -24,7 +24,7 @@
     <!-- Settings -->
     <string name="notifications">Notifications</string>
     <string name="push_chat_enabled">You will receive notifications about all messages.</string>
-    <string name="push_chat_disabled">You will not receive notifications about any messages.</string>
+    <string name="push_chat_disabled">You will not receive any notifications.</string>
     <string name="account">Account</string>
     <string name="sign_out">Sign out</string>
     <string name="sign_out_description">Deauthenticate with your Google account</string>

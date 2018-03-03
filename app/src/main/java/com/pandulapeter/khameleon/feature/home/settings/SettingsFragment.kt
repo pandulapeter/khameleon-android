@@ -18,10 +18,10 @@ import org.koin.android.ext.android.inject
 class SettingsFragment : KhameleonFragment<SettingsFragmentBinding, SettingsViewModel>(R.layout.fragment_settings), AlertDialogFragment.OnDialogItemsSelectedListener {
 
     private val preferenceRepository by inject<PreferenceRepository>()
-    override val viewModel = SettingsViewModel(preferenceRepository.shouldAllowPushNotifications)
-    override val title = R.string.settings
     private val userRepository by inject<UserRepository>()
     private val messageRepository by inject<MessageRepository>()
+    override val viewModel = SettingsViewModel(preferenceRepository.shouldAllowPushNotifications, userRepository.getSignedInUser()?.avatar ?: "")
+    override val title = R.string.settings
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

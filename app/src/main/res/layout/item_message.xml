@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@{model.isImportant ? R.color.accent : 0}"
+        android:foreground="?attr/selectableItemBackground"
         android:padding="@dimen/content_padding">
 
         <ImageView

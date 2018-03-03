@@ -15,6 +15,7 @@ import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.util.showSnackbar
 import org.koin.android.ext.android.inject
+import java.util.*
 
 
 class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.layout.fragment_chat), MessageInputDialogFragment.OnDialogTextEnteredListener {
@@ -31,7 +32,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     private val userRepository by inject<UserRepository>()
     private val linearLayoutManager = LinearLayoutManager(context).apply { stackFromEnd = true }
     private val adapter = MessageAdapter(
-        FirebaseRecyclerOptions.Builder<Message>()
+        options = FirebaseRecyclerOptions.Builder<Message>()
             .setQuery(
                 FirebaseDatabase.getInstance()
                     .reference
@@ -39,7 +40,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                     .limitToLast(MESSAGE_LIMIT), Message::class.java
             )
             .build(),
-        {
+        onDataChangedCallback = {
             if (!isScrolledToBottom) {
                 viewModel.newMessagesVisibility.set(true)
                 updateNewMessagesIndicatorVisibility()
@@ -47,7 +48,8 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                 scrollToBottom()
             }
         },
-        { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } }
+        onErrorCallback = { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } },
+        onItemClickedCallback = { binding.root.showSnackbar(it.text) }
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -88,7 +90,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         .reference
         .child(CHAT)
         .push()
-        .setValue(Message(message, user, isImportant))
+        .setValue(Message(UUID.randomUUID().toString(), message, user, isImportant))
 
     private fun sendNotification(user: User, message: String) = FirebaseDatabase.getInstance()
         .reference

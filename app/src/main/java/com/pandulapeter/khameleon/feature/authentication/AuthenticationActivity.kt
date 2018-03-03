@@ -28,7 +28,6 @@ class AuthenticationActivity : KhameleonActivity<AuthenticationActivityBinding>(
     private val messageRepository by inject<MessageRepository>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.Authentication)
         super.onCreate(savedInstanceState)
         if (userRepository.getSignedInUser() == null) {
             messageRepository.setPushNotificationsEnabled(false)

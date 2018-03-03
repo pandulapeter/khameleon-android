@@ -21,7 +21,6 @@ class SettingsFragment : KhameleonFragment<SettingsFragmentBinding, SettingsView
     private val userRepository by inject<UserRepository>()
     private val messageRepository by inject<MessageRepository>()
     override val viewModel = SettingsViewModel(preferenceRepository.shouldAllowPushNotifications, userRepository.getSignedInUser()?.avatar ?: "")
-    override val title = R.string.settings
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

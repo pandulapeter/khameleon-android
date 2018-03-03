@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--suppress AndroidUnknownAttribute -->
     <data class=".CalendarFragmentBinding">
@@ -10,9 +11,26 @@
 
     </data>
 
-    <com.applandeo.materialcalendarview.CalendarView
-        android:id="@+id/calendarView"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <com.applandeo.materialcalendarview.CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/Theme.AppCompat"
+                app:abbreviationsLabelsColor="@color/primary"
+                app:headerColor="@color/primary"
+                app:todayLabelColor="@color/accent" />
+
+        </ScrollView>
+
+    </android.support.design.widget.CoordinatorLayout>
 
 </layout>

@@ -15,6 +15,7 @@ abstract class KhameleonActivity<B : ViewDataBinding>(@LayoutRes private val lay
     protected lateinit var binding: B
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         @Suppress("ConstantConditionIf")
         setTaskDescription(
             ActivityManager.TaskDescription(

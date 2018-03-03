@@ -19,6 +19,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
 
     companion object {
         private const val CHAT = "chat"
+        private const val NOTIFICATIONS = "notificationRequests"
         private const val MESSAGE_LIMIT = 500
     }
 
@@ -74,5 +75,15 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                 .push()
                 .setValue(Message(text, it))
         }
+        sendNotificationToUser("all", text)
     }
+
+    private fun sendNotificationToUser(user: String, message: String) = FirebaseDatabase.getInstance()
+        .reference
+        .child(NOTIFICATIONS)
+        .push()
+        .setValue(HashMap<String, String>().apply {
+            this["username"] = user
+            this["message"] = message
+        })
 }

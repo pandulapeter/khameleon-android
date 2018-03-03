@@ -73,6 +73,7 @@ dependencies {
     compile "com.google.firebase:firebase-core:$firebaseVersion"
     compile "com.google.firebase:firebase-auth:$firebaseVersion"
     compile "com.google.firebase:firebase-database:$firebaseVersion"
+    compile "com.google.firebase:firebase-messaging:$firebaseVersion"
     compile "com.google.android.gms:play-services-auth:$firebaseVersion"
     implementation 'com.firebaseui:firebase-ui-database:3.2.2'
 

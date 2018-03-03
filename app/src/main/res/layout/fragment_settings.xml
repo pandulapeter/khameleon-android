@@ -99,6 +99,7 @@
                 android:fontFamily="sans-serif-thin"
                 android:gravity="center"
                 android:text="@{@string/app_version(viewModel.version)}"
+                android:textSize="@dimen/text_small"
                 tools:text="Version number" />
 
         </LinearLayout>

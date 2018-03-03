@@ -38,9 +38,19 @@
                 android:gravity="center_vertical"
                 android:text="@{model.sender.name}"
                 android:textColor="@color/primary"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/date"
                 app:layout_constraintStart_toEndOf="@id/avatar"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-thin"
+                android:textSize="@dimen/text_small"
+                app:date="@{model.timestamp}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/name" />
 
             <TextView
                 android:id="@+id/text"

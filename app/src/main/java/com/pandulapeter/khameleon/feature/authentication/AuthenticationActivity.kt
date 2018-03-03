@@ -5,12 +5,10 @@ import android.os.Bundle
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes
 import com.google.android.gms.common.api.ApiException
-import com.pandulapeter.khameleon.AuthenticationActivityBinding
-import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.feature.home.HomeActivity
 import com.pandulapeter.khameleon.feature.shared.KhameleonActivity
-import com.pandulapeter.khameleon.util.showSnackbar
 
 
 class AuthenticationActivity : KhameleonActivity<AuthenticationActivityBinding>(R.layout.activity_authentication) {
@@ -36,8 +34,8 @@ class AuthenticationActivity : KhameleonActivity<AuthenticationActivityBinding>(
         if (requestCode == AUTHENTICATION_REQUEST) {
             try {
                 startHomeScreen(GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException::class.java))
-            } catch (ignored: ApiException) {
-                binding.root.showSnackbar(R.string.something_went_wrong)
+            } catch (exception: ApiException) {
+                binding.root.showSnackbar(getString(R.string.something_went_wrong, GoogleSignInStatusCodes.getStatusCodeString(exception.statusCode)))
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)

@@ -3,10 +3,10 @@
 
     <!-- General -->
     <string name="khameleon">Khameleon</string>
-    <string name="something_went_wrong">Something went wrong</string>
 
     <!-- Authentication -->
     <string name="authentication">Authentication</string>
+    <string name="something_went_wrong">Something went wrong (%s)</string>
 
     <!-- Home -->
     <string name="chat">Chat</string>

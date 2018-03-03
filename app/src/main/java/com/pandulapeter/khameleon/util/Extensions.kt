@@ -9,4 +9,6 @@ import android.view.View
 
 fun Context.color(@ColorRes colorId: Int) = ContextCompat.getColor(this, colorId)
 
-fun View.showSnackbar(@StringRes message: Int) = Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()
+fun View.showSnackbar(@StringRes message: Int) = showSnackbar(context.getString(message))
+
+fun View.showSnackbar(message: String) = Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()

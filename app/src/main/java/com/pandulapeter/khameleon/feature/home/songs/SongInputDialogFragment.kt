@@ -70,7 +70,7 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
                     binding.artistInputField.text.toString(),
                     binding.titleInputField.text.toString(),
                     binding.keyInputField.text.toString()
-                )
+                ), true
             )
             dismiss()
         }
@@ -86,6 +86,6 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
 
     interface OnSongEnteredListener {
 
-        fun onSongEntered(song: Song)
+        fun onSongEntered(song: Song, autoOrder: Boolean)
     }
 }

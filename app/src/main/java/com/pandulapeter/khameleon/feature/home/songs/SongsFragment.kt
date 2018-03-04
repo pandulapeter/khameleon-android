@@ -34,7 +34,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
     private lateinit var linearLayoutManager: LinearLayoutManager
     private val songAdapter = SongAdapter(
         options = FirebaseRecyclerOptions.Builder<Song>()
-            .setQuery(songsRepository.songsDarabase, Song::class.java)
+            .setQuery(songsRepository.songsDarabase.orderByChild("order"), Song::class.java)
             .build(),
         onErrorCallback = { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } },
         onItemClickedCallback = { song -> binding.root.showSnackbar("${song.artist} - ${song.title}") }
@@ -100,7 +100,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
                         if (it.hasChildren()) {
                             it.children.iterator().next().ref.removeValue()
                             sendAutomaticChatMessage(song, false)
-                            context?.let { binding.root.showSnackbar(it.getString(R.string.song_deleted, song.title)) { onSongEntered(song) } }
+                            context?.let { binding.root.showSnackbar(it.getString(R.string.song_deleted, song.title)) { onSongEntered(song, false) } }
                             return
                         }
                     }
@@ -119,8 +119,12 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
         songAdapter.stopListening()
     }
 
-    override fun onSongEntered(song: Song) {
-        songsRepository.songsDarabase.push().setValue(song)
+    override fun onSongEntered(song: Song, autoOrder: Boolean) {
+        songsRepository.songsDarabase.push().setValue(song.apply {
+            if (autoOrder) {
+                order = if (songAdapter.itemCount == 0) 0 else songAdapter.getItem(songAdapter.itemCount - 1).order + 1
+            }
+        })
         sendAutomaticChatMessage(song, true)
     }
 

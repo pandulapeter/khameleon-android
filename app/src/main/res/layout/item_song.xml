@@ -26,10 +26,17 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 app:description="@{model.artist}"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/counter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:title="@{model.title}" />
+
+            <TextView
+                android:id="@id/counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/key(model.order)}"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 

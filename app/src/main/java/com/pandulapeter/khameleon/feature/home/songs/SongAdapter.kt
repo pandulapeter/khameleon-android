@@ -36,12 +36,11 @@ class SongAdapter(
             }
 
         init {
-            binding.root.setOnLongClickListener {
+            binding.root.setOnClickListener {
                 adapterPosition.let {
                     if (it != RecyclerView.NO_POSITION) {
                         onItemClicked(it)
-                        true
-                    } else false
+                    }
                 }
             }
         }

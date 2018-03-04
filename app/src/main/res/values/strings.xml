@@ -84,6 +84,7 @@
     <string name="enter_song_key">Enter song key</string>
     <string name="undo">Undo</string>
     <string name="song_deleted">%s deleted.</string>
+    <string name="key">Order: %d</string>
 
     <!-- Settings -->
     <string name="notifications">Notifications</string>

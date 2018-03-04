@@ -9,5 +9,6 @@ data class Song(
     val artist: String = "",
     val title: String = "",
     val key: String = "",
+    var order: Int = 0,
     val tag: Int = 0
 ) : Parcelable

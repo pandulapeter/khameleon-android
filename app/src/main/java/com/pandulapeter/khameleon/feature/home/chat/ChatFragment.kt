@@ -39,6 +39,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     private var messageToDelete: Message? = null
     private var messageToEdit: Message? = null
     private var isScrolledToBottom = true
+    private var myChange = false
     private val userRepository by inject<UserRepository>()
     private val messageRepository by inject<ChatRepository>()
     private lateinit var linearLayoutManager: LinearLayoutManager
@@ -48,8 +49,11 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             .build(),
         onDataChangedCallback = {
             if (!isScrolledToBottom) {
-                viewModel.newMessagesVisibility.set(true)
-                updateNewMessagesIndicatorVisibility()
+                if (!myChange) {
+                    viewModel.newMessagesVisibility.set(true)
+                    updateNewMessagesIndicatorVisibility()
+                }
+                myChange = false
             } else {
                 scrollToBottom()
             }
@@ -132,6 +136,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                     override fun onDataChange(p0: DataSnapshot?) {
                         p0?.let {
                             if (it.hasChildren()) {
+                                myChange = true
                                 it.children.iterator().next().ref.setValue(Message(edit.id, text, edit.sender, isImportant))
                                 messageToEdit = null
                                 return
@@ -175,6 +180,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             override fun onDataChange(p0: DataSnapshot?) {
                 p0?.let {
                     if (it.hasChildren()) {
+                        myChange = true
                         it.children.iterator().next().ref.removeValue()
                         messageToDelete = null
                         return

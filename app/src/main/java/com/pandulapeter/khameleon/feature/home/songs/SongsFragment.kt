@@ -14,7 +14,13 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.floatingActionButton.setOnClickListener { SongInputDialogFragment.show(childFragmentManager) }
+        binding.floatingActionButton.setOnClickListener {
+            SongInputDialogFragment.show(
+                childFragmentManager,
+                R.string.new_song,
+                R.string.add
+            )
+        }
     }
 
     override fun onSongEntered(song: Song) {

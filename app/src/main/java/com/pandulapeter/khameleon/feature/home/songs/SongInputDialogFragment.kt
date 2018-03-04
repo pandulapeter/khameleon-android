@@ -2,6 +2,7 @@ package com.pandulapeter.khameleon.feature.home.songs
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.annotation.StringRes
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
@@ -11,16 +12,19 @@ import android.view.WindowManager
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.SongInputDialogBinding
 import com.pandulapeter.khameleon.data.model.Song
-import com.pandulapeter.khameleon.util.hideKeyboard
-import com.pandulapeter.khameleon.util.onTextChanged
-import com.pandulapeter.khameleon.util.showKeyboard
+import com.pandulapeter.khameleon.util.*
 
 class SongInputDialogFragment : AppCompatDialogFragment() {
 
     companion object {
+        private var Bundle?.title by BundleArgumentDelegate.Int("title")
+        private var Bundle?.doneButton by BundleArgumentDelegate.Int("done_button")
 
-        fun show(fragmentManager: FragmentManager) {
-            SongInputDialogFragment().run { (this as DialogFragment).show(fragmentManager, tag) }
+        fun show(fragmentManager: FragmentManager, @StringRes title: Int, @StringRes doneButton: Int) {
+            SongInputDialogFragment().setArguments {
+                it.title = title
+                it.doneButton = doneButton
+            }.run { (this as DialogFragment).show(fragmentManager, tag) }
         }
     }
 
@@ -32,10 +36,11 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
         binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_song_input, null, false)
         binding.artistInputField.onTextChanged { validateInputs() }
         binding.titleInputField.onTextChanged { validateInputs() }
+        binding.keyInputField.onTextChanged { validateInputs() }
         AlertDialog.Builder(context, R.style.AlertDialog)
-            .setTitle(R.string.new_song)
+            .setTitle(arguments.title)
             .setView(binding.root)
-            .setPositiveButton(R.string.add, { _, _ -> onOkButtonPressed() })
+            .setPositiveButton(arguments.doneButton, { _, _ -> onOkButtonPressed() })
             .setNegativeButton(R.string.cancel, null)
             .create()
     } ?: super.onCreateDialog(savedInstanceState)
@@ -58,7 +63,13 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
 
     private fun onOkButtonPressed() {
         if (areInputsValid()) {
-            onSongEnteredListener?.onSongEntered(Song())
+            onSongEnteredListener?.onSongEntered(
+                Song(
+                    binding.artistInputField.text.toString(),
+                    binding.titleInputField.text.toString(),
+                    binding.keyInputField.text.toString()
+                )
+            )
             dismiss()
         }
     }
@@ -67,7 +78,9 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
         positiveButton.isEnabled = areInputsValid()
     }
 
-    private fun areInputsValid() = binding.artistInputField.text.isNotEmpty() && binding.titleInputField.text.isNotEmpty()
+    private fun areInputsValid() = binding.artistInputField.text.trim().isNotEmpty()
+            && binding.titleInputField.text.trim().isNotEmpty()
+            && binding.titleInputField.text.trim().isNotEmpty()
 
     interface OnSongEnteredListener {
 

@@ -69,7 +69,7 @@ class MessageInputDialogFragment : AppCompatDialogFragment() {
         hideKeyboard(activity?.currentFocus)
     }
 
-    private fun CharSequence?.isTextValid() = !isNullOrBlank()
+    private fun CharSequence?.isTextValid() = this?.trim()?.isNotEmpty() == true
 
     private fun onOkButtonPressed() {
         binding.inputField.text?.let {

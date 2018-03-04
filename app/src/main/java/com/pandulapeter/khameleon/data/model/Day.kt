@@ -15,6 +15,6 @@ data class Day(
         const val BUSY = 0
         const val REHEARSAL = 1
         const val GIG = 2
-        const val MEETUP = 2
+        const val MEETUP = 3
     }
 }

@@ -22,6 +22,18 @@
             android:textColor="@color/primary" />
 
         <TextView
+            android:id="@+id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/touch_target"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="@dimen/large_content_padding"
+            android:drawableStart="@drawable/ic_day_empty_24dp"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/large_content_padding"
+            android:paddingStart="@dimen/large_content_padding"
+            android:text="@string/empty" />
+
+        <TextView
             android:id="@+id/busy"
             android:layout_width="match_parent"
             android:layout_height="@dimen/touch_target"

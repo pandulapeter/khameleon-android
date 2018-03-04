@@ -15,6 +15,7 @@ import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.model.Day
 import com.pandulapeter.khameleon.feature.home.shared.CustomWidthBottomSheetDialog
 import com.pandulapeter.khameleon.util.BundleArgumentDelegate
+import com.pandulapeter.khameleon.util.color
 import com.pandulapeter.khameleon.util.setArguments
 import java.util.*
 
@@ -34,14 +35,36 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
     private val onDialogItemSelectedListener get() = parentFragment as? OnDialogItemSelectedListener ?: activity as? OnDialogItemSelectedListener
     private val behavior: BottomSheetBehavior<*> by lazy { ((binding.root.parent as View).layoutParams as CoordinatorLayout.LayoutParams).behavior as BottomSheetBehavior<*> }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?) = context?.let {
-        CustomWidthBottomSheetDialog(it, theme).apply {
+    override fun onCreateDialog(savedInstanceState: Bundle?) = context?.let { context ->
+        CustomWidthBottomSheetDialog(context, theme).apply {
             binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_day_detail, null, false)
-            arguments?.day?.timestamp?.let { binding.label.text = DateFormat.format("EEEE, MMMM d", Date(it)) }
+            binding.empty.setOnClickListener { handleClick(Day.EMPTY) }
+            binding.busy.setOnClickListener { handleClick(Day.BUSY) }
+            binding.rehearsal.setOnClickListener { handleClick(Day.REHEARSAL) }
+            binding.gig.setOnClickListener { handleClick(Day.GIG) }
+            binding.meetup.setOnClickListener { handleClick(Day.MEETUP) }
+            arguments?.day?.also {
+                it.timestamp.let { binding.label.text = DateFormat.format("EEEE, MMMM d", Date(it)) }
+                when (it.type) {
+                    Day.EMPTY -> binding.empty
+                    Day.BUSY -> binding.busy
+                    Day.REHEARSAL -> binding.rehearsal
+                    Day.GIG -> binding.gig
+                    Day.MEETUP -> binding.meetup
+                    else -> null
+                }?.run {
+                    setBackgroundColor(context.color(R.color.accent))
+                    setOnClickListener(null)
+                }
+            }
             setContentView(binding.root)
             binding.root.run { post { behavior.peekHeight = height } }
         }
     } ?: super.onCreateDialog(savedInstanceState)
+
+    private fun handleClick(type: Int) {
+        dismiss()
+    }
 
     interface OnDialogItemSelectedListener
 }

@@ -12,7 +12,10 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.content.res.AppCompatResources
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.widget.EditText
 
 fun Context.color(@ColorRes colorId: Int) = ContextCompat.getColor(this, colorId)
 
@@ -28,6 +31,15 @@ fun Fragment.setArguments(bundleOperations: (Bundle) -> Unit): Fragment {
     arguments = Bundle().apply { bundleOperations(this) }
     return this
 }
+
+inline fun EditText.onTextChanged(crossinline listener: (String) -> Unit) = addTextChangedListener(object : TextWatcher {
+
+    override fun afterTextChanged(text: Editable?) = listener(text.toString())
+
+    override fun beforeTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
+
+    override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
+})
 
 inline fun ObservableBoolean.onPropertyChanged(fragment: Fragment? = null, crossinline callback: (Boolean) -> Unit) {
     addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {

@@ -7,17 +7,12 @@ import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatDialogFragment
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.WindowManager
 import com.pandulapeter.khameleon.MessageInputDialogBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.repository.ChatRepository
-import com.pandulapeter.khameleon.util.BundleArgumentDelegate
-import com.pandulapeter.khameleon.util.hideKeyboard
-import com.pandulapeter.khameleon.util.setArguments
-import com.pandulapeter.khameleon.util.showKeyboard
+import com.pandulapeter.khameleon.util.*
 import org.koin.android.ext.android.inject
 
 class MessageInputDialogFragment : AppCompatDialogFragment() {
@@ -41,17 +36,10 @@ class MessageInputDialogFragment : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?) = context?.let { context ->
         binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_message_input, null, false)
-        binding.inputField.addTextChangedListener(object : TextWatcher {
-
-            override fun afterTextChanged(text: Editable?) {
-                positiveButton.isEnabled = text.isTextValid()
-                messageRepository.workInProgressMessageText = text.toString()
-            }
-
-            override fun beforeTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
-
-            override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
-        })
+        binding.inputField.onTextChanged {
+            positiveButton.isEnabled = it.isTextValid()
+            messageRepository.workInProgressMessageText = it
+        }
         binding.checkbox.setOnCheckedChangeListener { _, isChecked -> messageRepository.workInProgressMessageImportant = isChecked }
         AlertDialog.Builder(context, R.style.AlertDialog)
             .setTitle(arguments.title)

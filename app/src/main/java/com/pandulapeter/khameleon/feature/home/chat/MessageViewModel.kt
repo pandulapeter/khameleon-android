@@ -11,6 +11,11 @@ import com.pandulapeter.khameleon.util.drawable
 import java.util.*
 
 class MessageViewModel(model: Message, context: Context) {
+    companion object {
+        const val SONG_ADDED = "added"
+        const val SONG_REMOVED = "removed"
+    }
+
     val systemMessage = model.event != null || model.song != null
     val background = if (model.isImportant) R.color.accent else 0
     val nameColor = context.color(if (systemMessage) R.color.light else R.color.primary)
@@ -23,7 +28,7 @@ class MessageViewModel(model: Message, context: Context) {
             Day.GIG -> context.getString(R.string.day_marked_gig, it, model.event.timestamp.format())
             Day.MEETUP -> context.getString(R.string.day_marked_meetup, it, model.event.timestamp.format())
             else -> when (model.song) {
-                is Song -> context.getString(R.string.song_added, it, model.song.artist, model.song.title, model.song.key)
+                is Song -> context.getString(if (model.text == SONG_ADDED) R.string.song_added_pattern else R.string.song_deleted_pattern, it, model.song.artist, model.song.title)
                 else -> it
             }
         }

@@ -37,7 +37,8 @@
     <string name="day_marked_rehearsal">%1$s scheduled a rehearsal for %2$s.</string>
     <string name="day_marked_gig">%1$s scheduled a gig for %2$s.</string>
     <string name="day_marked_meetup">%1$s scheduled a meetup for %2$s.</string>
-    <string name="song_added">%1$s added the song %2$s - %3$s in the key of %4$s.</string>
+    <string name="song_added_pattern">%1$s added the song %2$s - %3$s.</string>
+    <string name="song_deleted_pattern">%1$s deleted the song %2$s - %3$s.</string>
     <string name="rehearsal_starts_from">The rehearsal starts from %s.</string>
     <string name="meetup_at">The meetup will be at %s.</string>
     <string name="gig_at">The concert will be at %s.</string>

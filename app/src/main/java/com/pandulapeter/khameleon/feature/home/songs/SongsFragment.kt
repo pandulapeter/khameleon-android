@@ -17,6 +17,7 @@ import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.SongRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
+import com.pandulapeter.khameleon.feature.home.chat.MessageViewModel
 import com.pandulapeter.khameleon.util.consume
 import com.pandulapeter.khameleon.util.dimension
 import com.pandulapeter.khameleon.util.showSnackbar
@@ -98,6 +99,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
                     p0?.let {
                         if (it.hasChildren()) {
                             it.children.iterator().next().ref.removeValue()
+                            sendAutomaticChatMessage(song, false)
                             context?.let { binding.root.showSnackbar(it.getString(R.string.song_deleted, song.title)) { onSongEntered(song) } }
                             return
                         }
@@ -119,13 +121,21 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
 
     override fun onSongEntered(song: Song) {
         songsRepository.songsDarabase.push().setValue(song)
-        sendAutomaticChatMessage(song)
+        sendAutomaticChatMessage(song, true)
     }
 
-
-    private fun sendAutomaticChatMessage(song: Song) {
+    private fun sendAutomaticChatMessage(song: Song, added: Boolean) {
         userRepository.getSignedInUser()?.let { user ->
-            chatRepository.chatDatabase.push().setValue(Message(UUID.randomUUID().toString(), "", user, false, null, song))
+            chatRepository.chatDatabase.push().setValue(
+                Message(
+                    UUID.randomUUID().toString(),
+                    if (added) MessageViewModel.SONG_ADDED else MessageViewModel.SONG_REMOVED,
+                    user,
+                    false,
+                    null,
+                    song
+                )
+            )
         }
     }
 }

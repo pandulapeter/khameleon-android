@@ -5,6 +5,6 @@
 
 # Firebase
 -keepattributes Signature
--keepclassmembers class com.pandulapeter.firebase.data.models.** {
+-keepclassmembers class com.pandulapeter.khameleon.data.model.** {
   *;
 }

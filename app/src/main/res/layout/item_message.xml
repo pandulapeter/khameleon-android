@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!--suppress AndroidUnknownAttribute -->
     <data class=".MessageItemBinding">
@@ -37,7 +38,7 @@
             android:fontFamily="sans-serif-medium"
             android:gravity="center_vertical"
             android:text="@{viewModel.name}"
-            android:textColor="@color/primary"
+            android:textColor="@{viewModel.nameColor}"
             app:layout_constraintEnd_toStartOf="@+id/date"
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintTop_toTopOf="parent" />
@@ -52,6 +53,18 @@
             app:date="@{viewModel.timestamp}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/name" />
+
+        <ImageView
+            android:id="@id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/content_padding"
+            android:layout_marginTop="@dimen/small_content_padding"
+            android:src="@{viewModel.icon}"
+            android:visibility="@{viewModel.systemMessage}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/date"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/text"

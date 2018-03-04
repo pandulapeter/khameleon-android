@@ -36,7 +36,10 @@ class SongAdapter(
 
     override fun onError(error: DatabaseError) = onErrorCallback(error.message)
 
-    class SongViewHolder(private val binding: SongItemBinding, private val onItemClicked: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
+    class SongViewHolder(
+        private val binding: SongItemBinding,
+        private val onItemClicked: (Int) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         var model
             get() = binding.model

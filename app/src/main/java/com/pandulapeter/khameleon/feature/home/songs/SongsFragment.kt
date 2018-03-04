@@ -37,7 +37,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
             .setQuery(songsRepository.songsDarabase.orderByChild("order"), Song::class.java)
             .build(),
         onErrorCallback = { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } },
-        onItemClickedCallback = { song -> binding.root.showSnackbar("${song.artist} - ${song.title}") }
+        onItemClickedCallback = { updateSong(it.apply { isHighlighted = !isHighlighted }) }
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

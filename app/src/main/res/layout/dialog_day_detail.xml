@@ -16,9 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/content_padding"
             android:fontFamily="sans-serif-medium"
-            android:paddingEnd="@dimen/content_padding"
-            android:paddingStart="@dimen/content_padding"
-            android:paddingTop="@dimen/content_padding"
+            android:padding="@dimen/content_padding"
             android:textColor="@color/primary" />
 
         <TextView

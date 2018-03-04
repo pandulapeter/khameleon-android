@@ -29,9 +29,9 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.calendarView.setMinimumDate(Calendar.getInstance().apply { timeInMillis -= 24 * 60 * 60 * 1000 })
         binding.calendarView.showCurrentMonthPage()
-        binding.calendarView.setOnDayClickListener {
-            if (it.calendar.after(Calendar.getInstance())) {
-                DayDetailBottomSheetFragment.show(childFragmentManager, Day(it.calendar.timeInMillis))
+        binding.calendarView.setOnDayClickListener { eventDay ->
+            if (eventDay.calendar.after(Calendar.getInstance())) {
+                DayDetailBottomSheetFragment.show(childFragmentManager, events.findLast { it.timestamp == eventDay.calendar.timeInMillis } ?: Day(eventDay.calendar.timeInMillis))
             }
         }
     }
@@ -95,10 +95,14 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
                 override fun onDataChange(p0: DataSnapshot?) {
                     p0?.let {
                         if (it.hasChildren()) {
-                            it.children.iterator().next().ref.setValue(day)
-                            events.findLast { it.timestamp == day.timestamp }?.apply {
-                                type = day.type
-                                description = day.description
+                            if (day.type == Day.EMPTY) {
+                                it.children.iterator().next().ref.removeValue()
+                            } else {
+                                it.children.iterator().next().ref.setValue(day)
+                                events.findLast { it.timestamp == day.timestamp }?.apply {
+                                    type = day.type
+                                    description = day.description
+                                }
                             }
                             updateEvents()
                             return

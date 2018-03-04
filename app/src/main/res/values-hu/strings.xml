@@ -2,6 +2,7 @@
 <resources>
 
     <!-- General -->
+    <string name="khameleon">Khameleon</string>
     <string name="something_went_wrong">Valami elromlott</string>
     <string name="something_went_wrong_reason">Valami elromlott (%s)</string>
     <string name="cancel">Mégse</string>

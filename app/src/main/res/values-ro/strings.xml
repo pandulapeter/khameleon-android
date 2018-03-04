@@ -2,6 +2,7 @@
 <resources>
 
     <!-- General -->
+    <string name="khameleon">Khameleon</string>
     <string name="something_went_wrong">Ceva s-a stricat</string>
     <string name="something_went_wrong_reason">Ceva s-a stricat (%s)</string>
     <string name="cancel">Anulare</string>

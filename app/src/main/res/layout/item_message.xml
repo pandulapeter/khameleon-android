@@ -10,6 +10,8 @@
             name="viewModel"
             type="com.pandulapeter.khameleon.feature.home.chat.MessageViewModel" />
 
+        <import type="android.text.TextUtils" />
+
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -72,7 +74,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:text="@{viewModel.text}"
-            android:visibility="@{!viewModel.systemMessage}"
+            android:visibility="@{!TextUtils.isEmpty(viewModel.text)}"
             app:layout_constraintEnd_toEndOf="@id/name"
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintStart_toStartOf="@id/name"

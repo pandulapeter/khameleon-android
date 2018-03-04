@@ -42,7 +42,7 @@ class MessageViewModel(model: Message, context: Context) {
     )
     val avatar = model.sender?.avatar ?: ""
     val timestamp = model.timestamp
-    val text = model.text
+    val text = model.event?.description ?: model.text
 
     private fun Long.format() = DateFormat.format("EEEE, MMMM d", Date(this))
 }

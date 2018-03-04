@@ -44,7 +44,7 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
             binding.gig.setOnClickListener { handleClick(Day.GIG) }
             binding.meetup.setOnClickListener { handleClick(Day.MEETUP) }
             arguments?.day?.also {
-                it.timestamp.let { binding.label.text = DateFormat.format("EEEE, MMMM d", Date(it)) }
+                it.timestamp.let { binding.label.text = DateFormat.format("EEEE, MMMM d", Date(it)).toString().capitalize() }
                 when (it.type) {
                     Day.EMPTY -> binding.empty
                     Day.BUSY -> binding.busy

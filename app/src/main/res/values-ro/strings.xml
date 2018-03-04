@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General -->
+    <string name="something_went_wrong">Ceva s-a stricat</string>
+    <string name="something_went_wrong_reason">Ceva s-a stricat (%s)</string>
+    <string name="cancel">Anulare</string>
+
+    <!-- Authentication -->
+    <string name="authentication_message">Pentru a folosi aplicația, trebuie să\nte autentifici cu contul tău Google.</string>
+
+    <!-- Home -->
+    <string name="chat">Chat</string>
+    <string name="calendar">Calendar</string>
+    <string name="songs">Piese</string>
+    <string name="settings">Setări</string>
+
+    <!-- Chat -->
+    <string name="new_message">Mesaj nou</string>
+    <string name="enter_your_message">Introdu mesajul</string>
+    <string name="this_is_an_announcement">Anunț important</string>
+    <string name="send">Trimite</string>
+    <string name="edit">Editare</string>
+    <string name="new_messages">Mesaje noi</string>
+    <string name="message_modification_error_automatic">Nu poți modifica mesajele automate</string>
+    <string name="message_modification_error">Poți modifica doar mesajele tale</string>
+    <string name="message_too_old">Mesajul e prea vechi pentru a modifica</string>
+    <string name="select_an_option">Selectează o opțiune</string>
+    <string name="edit_message">Editare mesaj</string>
+    <string name="delete_message">Ștergere mesaj</string>
+    <string name="delete_message_title">Ești sigur?</string>
+    <string name="delete_message_message">Asta va șterge permanent mesajul.</string>
+    <string name="delete">Șterge</string>
+    <string name="day_cleared">%1$s a anulat evenimentele din ziua %2$s.</string>
+    <string name="day_marked_busy">%1$s este ocupat în data de %2$s.</string>
+    <string name="day_marked_rehearsal">%1$s a planificat o repetiție pe data de %2$s.</string>
+    <string name="day_marked_gig">%1$s a planificat un concert pe data de %2$s.</string>
+    <string name="day_marked_meetup">%1$s a planificat o întâlnire pe data de %2$s.</string>
+    <string name="song_added_pattern">%1$s a adăugat piesa %2$s - %3$s.</string>
+    <string name="song_deleted_pattern">%1$s a șters piesa %2$s - %3$s.</string>
+    <string name="rehearsal_starts_from">Repetiția începe la ora %s.</string>
+    <string name="meetup_at">Întâlnirea va fi la %s.</string>
+    <string name="gig_at">Concertul va fi în %s.</string>
+
+    <!-- Calendar -->
+    <string name="material_calendar_monday">Lun</string>
+    <string name="material_calendar_tuesday">Mar</string>
+    <string name="material_calendar_wednesday">Mie</string>
+    <string name="material_calendar_thursday">Joi</string>
+    <string name="material_calendar_friday">Vin</string>
+    <string name="material_calendar_saturday">Sâm</string>
+    <string name="material_calendar_sunday">Dum</string>
+    <array name="material_calendar_months_array">
+        <item>Ianuarie</item>
+        <item>Februarie</item>
+        <item>Martie</item>
+        <item>Aprilie</item>
+        <item>Mai</item>
+        <item>Iunie</item>
+        <item>Iulie</item>
+        <item>August</item>
+        <item>Septembrie</item>
+        <item>Octombrie</item>
+        <item>Noiembrie</item>
+        <item>Devembrie</item>
+    </array>
+    <string name="empty">Nimic interesant</string>
+    <string name="busy">Ocupat</string>
+    <string name="gig">Concert</string>
+    <string name="meetup">Întâlnire</string>
+    <string name="rehearsal">Repetiție</string>
+    <string name="description_pattern">%1$s (%2$s)</string>
+    <string name="save">Salvare</string>
+    <string name="new_gig">Repetiție nouă</string>
+    <string name="new_meetup">Întâlnire nouă</string>
+    <string name="enter_location">Introdu locația</string>
+
+    <!-- Songs -->
+    <string name="new_song">Piesă nouă</string>
+    <string name="edit_song">Editare piesă</string>
+    <string name="add">Adaugă</string>
+    <string name="enter_song_artist">Introdu artistul</string>
+    <string name="enter_song_title">Introdu titlul</string>
+    <string name="enter_song_key">Gamă</string>
+    <string name="undo">Anulare</string>
+    <string name="song_deleted">%s șters</string>
+    <string name="highlight_song">Piesă importantă</string>
+
+    <!-- Settings -->
+    <string name="notifications">Niotificări</string>
+    <string name="chat_messages">Mesaje chat</string>
+    <string name="push_chat_enabled">Vei primi notificări despre fiecare mesaj.</string>
+    <string name="push_chat_disabled">Nu vei primi nici-o notificare despre mesaje.</string>
+    <string name="event_reminders">Reaminitiri</string>
+    <string name="push_events_enabled">Vei primi notificări înainte de concerte, repetiții și întâlniri (în curând).</string>
+    <string name="push_events_disabled">Nu vei primi nici-o notificare despre evenimente.</string>
+    <string name="account">Cont</string>
+    <string name="sign_out">Ieșire</string>
+    <string name="sign_out_description">Deautentificare cu contul Google</string>
+    <string name="sign_out_confirmation_title">Ești sigur?</string>
+    <string name="sign_out_confirmation_message">Sigur vrei să ieși din aplicație?</string>
+    <string name="app_version">v%s</string>
+
+</resources>

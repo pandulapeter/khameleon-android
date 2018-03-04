@@ -12,6 +12,7 @@ import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.SongRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
+import com.pandulapeter.khameleon.util.dimension
 import com.pandulapeter.khameleon.util.showSnackbar
 import org.koin.android.ext.android.inject
 import java.util.*
@@ -45,6 +46,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
         binding.recyclerView.run {
             layoutManager = linearLayoutManager
             adapter = songAdapter
+            context?.let { addItemDecoration(SpacesItemDecoration(it.dimension(R.dimen.content_padding))) }
         }
     }
 

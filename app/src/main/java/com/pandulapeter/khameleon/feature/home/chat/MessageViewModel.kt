@@ -1,16 +1,32 @@
 package com.pandulapeter.khameleon.feature.home.chat
 
 import android.content.Context
+import android.text.format.DateFormat
 import com.pandulapeter.khameleon.R
+import com.pandulapeter.khameleon.data.model.Day
 import com.pandulapeter.khameleon.data.model.Message
-import com.pandulapeter.khameleon.util.color
+import com.pandulapeter.khameleon.data.model.Song
+import java.util.*
 
 class MessageViewModel(model: Message, context: Context) {
-    val background = if (model.event !== null || model.song != null) R.color.primary else if (model.isImportant) R.color.accent else 0
-    val textColor = context.color(if (model.event == null && model.song == null) R.color.dark else R.color.white)
-    val nameColor = context.color(if (model.event == null && model.song == null) R.color.primary else R.color.accent)
-    val name = model.sender?.name ?: ""
+    val systemMessage = model.event != null || model.song != null
+    val background = if (model.isImportant) R.color.accent else 0
+    val name: String = (model.sender?.name ?: "").let {
+        when (model.event?.type) {
+            Day.EMPTY -> context.getString(R.string.day_cleared, it, model.event.timestamp.format())
+            Day.BUSY -> context.getString(R.string.day_marked_busy, it, model.event.timestamp.format())
+            Day.REHEARSAL -> context.getString(R.string.day_marked_rehearsal, it, model.event.timestamp.format())
+            Day.GIG -> context.getString(R.string.day_marked_gig, it, model.event.timestamp.format())
+            Day.MEETUP -> context.getString(R.string.day_marked_meetup, it, model.event.timestamp.format())
+            else -> when (model.song) {
+                is Song -> context.getString(R.string.song_added, it, model.song.artist, model.song.title, model.song.key)
+                else -> it
+            }
+        }
+    }
     val avatar = model.sender?.avatar ?: ""
     val timestamp = model.timestamp
-    val text = if (model.event == null && model.song == null) model.text else "System message"
+    val text = model.text
+
+    private fun Long.format() = DateFormat.format("EEEE, MMMM d", Date(this))
 }

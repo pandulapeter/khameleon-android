@@ -32,6 +32,12 @@
     <string name="delete_message_title">Are you sure?</string>
     <string name="delete_message_message">This will permanently delete the message.</string>
     <string name="delete">Delete</string>
+    <string name="day_cleared">%1$s cleared the day %2$s.</string>
+    <string name="day_marked_busy">%1$s marked %2$s as Busy.</string>
+    <string name="day_marked_rehearsal">%1$s scheduled a rehearsal for %2$s.</string>
+    <string name="day_marked_gig">%1$s scheduled a gig for %2$s.</string>
+    <string name="day_marked_meetup">%1$s scheduled a meetup for %2$s.</string>
+    <string name="song_added">%1$s added the song %2$s - %3$s in the key %4$s.</string>
 
     <!-- Calendar -->
     <string name="material_calendar_monday">Mon</string>

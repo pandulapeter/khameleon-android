@@ -37,8 +37,8 @@
             android:fontFamily="sans-serif-medium"
             android:gravity="center_vertical"
             android:text="@{viewModel.name}"
-            android:textColor="@{viewModel.nameColor}"
-            app:layout_constraintEnd_toEndOf="@+id/date"
+            android:textColor="@color/primary"
+            app:layout_constraintEnd_toStartOf="@+id/date"
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,7 +48,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/content_padding"
             android:fontFamily="sans-serif-thin"
-            android:textColor="@{viewModel.textColor}"
             android:textSize="@dimen/text_small"
             app:date="@{viewModel.timestamp}"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +59,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:text="@{viewModel.text}"
-            android:textColor="@{viewModel.textColor}"
+            android:visibility="@{!viewModel.systemMessage}"
             app:layout_constraintEnd_toEndOf="@id/name"
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintStart_toStartOf="@id/name"

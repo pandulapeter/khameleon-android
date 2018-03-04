@@ -8,10 +8,10 @@ Download the app, sign in with your Google-account and simplify the administrati
 - Shared setlist where songs can be added, removed, rearranged and highlighted.
 
 ### Screenshots
-<img src="screenshots/01.jpg" width="25%" />
-<img src="screenshots/02.jpg" width="25%" />
-<img src="screenshots/03.jpg" width="25%" />
-<img src="screenshots/04.jpg" width="25%" />
-<img src="screenshots/05.jpg" width="25%" />
-<img src="screenshots/06.jpg" width="25%" />
-<img src="screenshots/07.jpg" width="25%" />
+<img src="screenshots/01.png" width="25%" />
+<img src="screenshots/02.png" width="25%" />
+<img src="screenshots/03.png" width="25%" />
+<img src="screenshots/04.png" width="25%" />
+<img src="screenshots/05.png" width="25%" />
+<img src="screenshots/06.png" width="25%" />
+<img src="screenshots/07.png" width="25%" />

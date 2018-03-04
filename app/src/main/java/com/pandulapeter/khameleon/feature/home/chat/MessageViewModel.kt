@@ -35,7 +35,7 @@ class MessageViewModel(model: Message, context: Context) {
             Day.GIG -> R.drawable.ic_day_gig_24dp
             Day.MEETUP -> R.drawable.ic_day_meetup_24dp
             else -> when (model.song) {
-                is Song -> R.drawable.ic_songs_24dp
+                is Song -> R.drawable.ic_icon_song_24dp
                 else -> R.drawable.ic_chat_24dp
             }
         }

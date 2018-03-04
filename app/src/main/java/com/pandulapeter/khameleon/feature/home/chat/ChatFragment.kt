@@ -44,9 +44,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     private val messageRepository by inject<ChatRepository>()
     private lateinit var linearLayoutManager: LinearLayoutManager
     private val messageAdapter = MessageAdapter(
-        options = FirebaseRecyclerOptions.Builder<Message>()
-            .setQuery(messageRepository.chatDatabase.limitToLast(MESSAGE_LIMIT), Message::class.java)
-            .build(),
+        options = FirebaseRecyclerOptions.Builder<Message>().setQuery(messageRepository.chatDatabase.limitToLast(MESSAGE_LIMIT), Message::class.java).build(),
         onDataChangedCallback = {
             if (!isScrolledToBottom) {
                 if (!myChange) {

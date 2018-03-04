@@ -33,23 +33,15 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
     private val userRepository by inject<UserRepository>()
     private lateinit var linearLayoutManager: LinearLayoutManager
     private val songAdapter = SongAdapter(
-        options = FirebaseRecyclerOptions.Builder<Song>()
-            .setQuery(songsRepository.songsDarabase.orderByChild("order"), Song::class.java)
-            .build(),
+        options = FirebaseRecyclerOptions.Builder<Song>().setQuery(songsRepository.songsDarabase.orderByChild("order"), Song::class.java).build(),
         onErrorCallback = { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } },
-        onItemClickedCallback = { updateSong(it.apply { isHighlighted = !isHighlighted }) }
+        onItemClickedCallback = { SongInputDialogFragment.show(childFragmentManager, R.string.edit_song, R.string.edit, it) }
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         linearLayoutManager = LinearLayoutManager(context)
-        binding.floatingActionButton.setOnClickListener {
-            SongInputDialogFragment.show(
-                childFragmentManager,
-                R.string.new_song,
-                R.string.add
-            )
-        }
+        binding.floatingActionButton.setOnClickListener { SongInputDialogFragment.show(childFragmentManager, R.string.new_song, R.string.add) }
         binding.recyclerView.run {
             layoutManager = linearLayoutManager
             adapter = songAdapter
@@ -72,6 +64,30 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
                 }
             }).attachToRecyclerView(this)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        songAdapter.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        songAdapter.stopListening()
+    }
+
+    override fun onSongEntered(song: Song, autoOrder: Boolean, isUpdate: Boolean) {
+        if (isUpdate) {
+            updateSong(song)
+        } else {
+            songsRepository.songsDarabase.push().setValue(song.apply {
+                if (autoOrder) {
+                    order = if (songAdapter.itemCount == 0) 0 else songAdapter.getItem(songAdapter.itemCount - 1).order + 1
+                }
+            })
+            sendAutomaticChatMessage(song, true)
+        }
+        binding.recyclerView.smoothScrollToPosition(song.order)
     }
 
     private fun swapSongsInPlaylist(originalPosition: Int, targetPosition: Int) {
@@ -100,7 +116,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
                         if (it.hasChildren()) {
                             it.children.iterator().next().ref.removeValue()
                             sendAutomaticChatMessage(song, false)
-                            context?.let { binding.root.showSnackbar(it.getString(R.string.song_deleted, song.title)) { onSongEntered(song, false) } }
+                            context?.let { binding.root.showSnackbar(it.getString(R.string.song_deleted, song.title)) { onSongEntered(song, false, false) } }
                             return
                         }
                     }
@@ -126,25 +142,6 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
                     binding.root.showSnackbar(R.string.something_went_wrong)
                 }
             })
-    }
-
-    override fun onStart() {
-        super.onStart()
-        songAdapter.startListening()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        songAdapter.stopListening()
-    }
-
-    override fun onSongEntered(song: Song, autoOrder: Boolean) {
-        songsRepository.songsDarabase.push().setValue(song.apply {
-            if (autoOrder) {
-                order = if (songAdapter.itemCount == 0) 0 else songAdapter.getItem(songAdapter.itemCount - 1).order + 1
-            }
-        })
-        sendAutomaticChatMessage(song, true)
     }
 
     private fun sendAutomaticChatMessage(song: Song, added: Boolean) {

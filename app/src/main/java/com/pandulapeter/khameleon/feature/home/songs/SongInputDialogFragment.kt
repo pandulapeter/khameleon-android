@@ -20,11 +20,13 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
     companion object {
         private var Bundle?.title by BundleArgumentDelegate.Int("title")
         private var Bundle?.doneButton by BundleArgumentDelegate.Int("done_button")
+        private var Bundle?.song by BundleArgumentDelegate.Parcelable<Song>("song")
 
-        fun show(fragmentManager: FragmentManager, @StringRes title: Int, @StringRes doneButton: Int) {
+        fun show(fragmentManager: FragmentManager, @StringRes title: Int, @StringRes doneButton: Int, song: Song? = null) {
             SongInputDialogFragment().setArguments {
                 it.title = title
                 it.doneButton = doneButton
+                it.song = song
             }.run { (this as DialogFragment).show(fragmentManager, tag) }
         }
     }
@@ -35,6 +37,12 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?) = context?.let { context ->
         binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_song_input, null, false)
+        arguments.song?.let {
+            binding.artistInputField.setText(it.artist)
+            binding.titleInputField.setText(it.title)
+            binding.keyInputField.setText(it.key)
+            binding.checkbox.isChecked = it.isHighlighted
+        }
         binding.artistInputField.onTextChanged { validateInputs() }
         binding.titleInputField.onTextChanged { validateInputs() }
         binding.keyInputField.onTextChanged { validateInputs() }
@@ -53,6 +61,7 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
             showKeyboard(binding.titleInputField)
             binding.artistInputField.setSelection(binding.artistInputField.text?.length ?: 0)
             binding.titleInputField.setSelection(binding.titleInputField.text?.length ?: 0)
+            binding.keyInputField.setSelection(binding.keyInputField.text?.length ?: 0)
         }
         validateInputs()
     }
@@ -64,13 +73,16 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
 
     private fun onOkButtonPressed() {
         if (areInputsValid()) {
+            val isUpdate = arguments?.song != null
             onSongEnteredListener?.onSongEntered(
                 Song(
-                    UUID.randomUUID().toString(),
+                    arguments?.song?.id ?: UUID.randomUUID().toString(),
                     binding.artistInputField.text.toString(),
                     binding.titleInputField.text.toString(),
-                    binding.keyInputField.text.toString()
-                ), true
+                    binding.keyInputField.text.toString(),
+                    arguments?.song?.order ?: 0,
+                    binding.checkbox.isChecked
+                ), !isUpdate, isUpdate
             )
             dismiss()
         }
@@ -86,6 +98,6 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
 
     interface OnSongEnteredListener {
 
-        fun onSongEntered(song: Song, autoOrder: Boolean)
+        fun onSongEntered(song: Song, autoOrder: Boolean, isUpdate: Boolean)
     }
 }

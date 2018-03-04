@@ -50,7 +50,7 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
         super.onStart()
         dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         binding.root.post {
-            showKeyboard(binding.artistInputField)
+            showKeyboard(binding.titleInputField)
             binding.artistInputField.setSelection(binding.artistInputField.text?.length ?: 0)
             binding.titleInputField.setSelection(binding.titleInputField.text?.length ?: 0)
         }

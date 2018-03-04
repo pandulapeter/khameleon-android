@@ -14,6 +14,7 @@ class MessageViewModel(model: Message, context: Context) {
     val systemMessage = model.event != null || model.song != null
     val background = if (model.isImportant) R.color.accent else 0
     val nameColor = context.color(if (systemMessage) R.color.light else R.color.primary)
+    val linkColor = context.color(if (model.isImportant) R.color.primary else R.color.accent)
     val name: String = (model.sender?.name ?: "").let {
         when (model.event?.type) {
             Day.EMPTY -> context.getString(R.string.day_cleared, it, model.event.timestamp.format())

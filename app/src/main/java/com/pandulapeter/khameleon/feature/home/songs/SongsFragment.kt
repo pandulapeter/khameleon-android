@@ -75,17 +75,17 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
     }
 
     private fun swapSongsInPlaylist(originalPosition: Int, targetPosition: Int) {
+        val items = MutableList(songAdapter.itemCount) { songAdapter.getItem(it) }
         if (originalPosition < targetPosition) {
             for (i in originalPosition until targetPosition) {
-//                Collections.swap(adapter.items, i, i + 1)
+                Collections.swap(items, i, i + 1)
             }
         } else {
             for (i in originalPosition downTo targetPosition + 1) {
-//                Collections.swap(adapter.items, i, i - 1)
+                Collections.swap(items, i, i - 1)
             }
         }
-        songAdapter.notifyItemMoved(originalPosition, targetPosition)
-        //TODO: Network request
+        items.forEachIndexed { index, song -> updateSong(song.apply { order = index }) }
     }
 
     private fun deleteSong(song: Song) {
@@ -101,6 +101,25 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
                             it.children.iterator().next().ref.removeValue()
                             sendAutomaticChatMessage(song, false)
                             context?.let { binding.root.showSnackbar(it.getString(R.string.song_deleted, song.title)) { onSongEntered(song, false) } }
+                            return
+                        }
+                    }
+                    binding.root.showSnackbar(R.string.something_went_wrong)
+                }
+            })
+    }
+
+    private fun updateSong(song: Song) {
+        songsRepository.songsDarabase
+            .orderByChild("id")
+            .equalTo(song.id)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError?) = binding.root.showSnackbar(R.string.something_went_wrong)
+
+                override fun onDataChange(p0: DataSnapshot?) {
+                    p0?.let {
+                        if (it.hasChildren()) {
+                            it.children.iterator().next().ref.setValue(song)
                             return
                         }
                     }

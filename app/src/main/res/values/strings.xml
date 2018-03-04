@@ -69,10 +69,11 @@
 
     <!-- Settings -->
     <string name="notifications">Notifications</string>
+    <string name="chat_messages">Chat messages</string>
     <string name="push_chat_enabled">You will receive notifications about all messages.</string>
     <string name="push_chat_disabled">You will not receive any message notifications.</string>
-    <string name="events">Events (work in progress)</string>
-    <string name="push_events_enabled">You will receive notifications before gigs, rehearsals and meetups.</string>
+    <string name="event_reminders">Event reminders</string>
+    <string name="push_events_enabled">You will receive notifications before gigs, rehearsals and meetups (work in progress).</string>
     <string name="push_events_disabled">You will not receive any event notifications.</string>
     <string name="account">Account</string>
     <string name="sign_out">Sign out</string>

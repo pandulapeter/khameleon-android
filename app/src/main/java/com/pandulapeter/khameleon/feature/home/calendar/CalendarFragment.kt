@@ -9,6 +9,7 @@ import com.firebase.ui.database.ClassSnapshotParser
 import com.firebase.ui.database.FirebaseArray
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.pandulapeter.khameleon.CalendarFragmentBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.model.Day
@@ -37,7 +38,9 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
 
     override fun onStart() {
         super.onStart()
-        events.addChangeEventListener(this)
+        if (!events.isListening(this)) {
+            events.addChangeEventListener(this)
+        }
     }
 
     override fun onStop() {
@@ -46,6 +49,7 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     }
 
     override fun onItemClicked(itemType: Int, day: Day) {
+        updateDay(day.apply { type = itemType })
         when (itemType) {
             Day.EMPTY -> {
             }
@@ -60,13 +64,9 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
         }
     }
 
-    override fun onDataChanged() {
-        updateEvents()
-    }
+    override fun onDataChanged() = Unit
 
-    override fun onChildChanged(type: ChangeEventType, snapshot: DataSnapshot, newIndex: Int, oldIndex: Int) {
-        updateEvents()
-    }
+    override fun onChildChanged(type: ChangeEventType, snapshot: DataSnapshot, newIndex: Int, oldIndex: Int) = updateEvents()
 
     override fun onError(e: DatabaseError) = binding.root.showSnackbar(R.string.something_went_wrong)
 
@@ -83,5 +83,31 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
                 }
             )
         })
+    }
+
+    private fun updateDay(day: Day) {
+        calendarRepository.calendarDatabase
+            .orderByChild("timestamp")
+            .equalTo(day.timestamp.toDouble())
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError?) = binding.root.showSnackbar(R.string.something_went_wrong)
+
+                override fun onDataChange(p0: DataSnapshot?) {
+                    p0?.let {
+                        if (it.hasChildren()) {
+                            it.children.iterator().next().ref.setValue(day)
+                            events.findLast { it.timestamp == day.timestamp }?.apply {
+                                type = day.type
+                                description = day.description
+                            }
+                            updateEvents()
+                            return
+                        }
+                    }
+                    calendarRepository.calendarDatabase
+                        .push()
+                        .setValue(day)
+                }
+            })
     }
 }

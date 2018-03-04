@@ -6,7 +6,8 @@ import kotlin.reflect.KProperty
 
 class PreferenceRepository(context: Context) {
     private val preferences = context.applicationContext.getSharedPreferences("preference_storage", Context.MODE_PRIVATE)
-    var shouldAllowPushNotifications by PreferenceFieldDelegate.Boolean("should_allow_push_notifications", true)
+    var chatNotifications by PreferenceFieldDelegate.Boolean("chat_notifications", true)
+    var eventNotifications by PreferenceFieldDelegate.Boolean("event_notifications", true)
 
     private sealed class PreferenceFieldDelegate<T>(protected val key: String, protected val defaultValue: T) : ReadWriteProperty<PreferenceRepository, T> {
 

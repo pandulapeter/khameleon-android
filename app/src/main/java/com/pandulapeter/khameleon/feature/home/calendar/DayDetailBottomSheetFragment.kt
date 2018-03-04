@@ -37,7 +37,7 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?) = context?.let {
         CustomWidthBottomSheetDialog(it, theme).apply {
             binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_day_detail, null, false)
-            arguments?.day?.timestamp?.let { binding.label.text = DateFormat.format("MMMM d", Date(it)) }
+            arguments?.day?.timestamp?.let { binding.label.text = DateFormat.format("EEEE, MMMM d", Date(it)) }
             setContentView(binding.root)
             binding.root.run { post { behavior.peekHeight = height } }
         }

@@ -20,7 +20,11 @@ class SettingsFragment : KhameleonFragment<SettingsFragmentBinding, SettingsView
     private val preferenceRepository by inject<PreferenceRepository>()
     private val userRepository by inject<UserRepository>()
     private val messageRepository by inject<MessageRepository>()
-    override val viewModel = SettingsViewModel(preferenceRepository.shouldAllowPushNotifications, userRepository.getSignedInUser()?.avatar ?: "")
+    override val viewModel = SettingsViewModel(
+        preferenceRepository.chatNotifications,
+        preferenceRepository.eventNotifications,
+        userRepository.getSignedInUser()?.avatar ?: ""
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,7 +38,7 @@ class SettingsFragment : KhameleonFragment<SettingsFragmentBinding, SettingsView
             )
         }
         viewModel.shouldEnableChatPushNotifications.onPropertyChanged {
-            preferenceRepository.shouldAllowPushNotifications = it
+            preferenceRepository.chatNotifications = it
             messageRepository.setPushNotificationsEnabled(it)
         }
     }

@@ -13,7 +13,7 @@ import android.view.LayoutInflater
 import android.view.WindowManager
 import com.pandulapeter.khameleon.MessageInputDialogBinding
 import com.pandulapeter.khameleon.R
-import com.pandulapeter.khameleon.data.repository.MessageRepository
+import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.util.BundleArgumentDelegate
 import com.pandulapeter.khameleon.util.hideKeyboard
 import com.pandulapeter.khameleon.util.setArguments
@@ -33,7 +33,7 @@ class MessageInputDialogFragment : AppCompatDialogFragment() {
     private lateinit var binding: MessageInputDialogBinding
     private val positiveButton by lazy { (dialog as AlertDialog).getButton(AlertDialog.BUTTON_POSITIVE) }
     private val onDialogTextEnteredListener get() = parentFragment as? OnDialogTextEnteredListener ?: activity as? OnDialogTextEnteredListener
-    private val messageRepository by inject<MessageRepository>()
+    private val messageRepository by inject<ChatRepository>()
 
     override fun onCreateDialog(savedInstanceState: Bundle?) = context?.let { context ->
         binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_message_input, null, false)

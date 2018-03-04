@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.SettingsFragmentBinding
-import com.pandulapeter.khameleon.data.repository.MessageRepository
+import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.PreferenceRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
@@ -19,7 +19,7 @@ class SettingsFragment : KhameleonFragment<SettingsFragmentBinding, SettingsView
 
     private val preferenceRepository by inject<PreferenceRepository>()
     private val userRepository by inject<UserRepository>()
-    private val messageRepository by inject<MessageRepository>()
+    private val messageRepository by inject<ChatRepository>()
     override val viewModel = SettingsViewModel(
         preferenceRepository.chatNotifications,
         preferenceRepository.eventNotifications,

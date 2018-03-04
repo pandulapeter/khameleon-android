@@ -3,7 +3,7 @@ package com.pandulapeter.khameleon.data.repository
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.messaging.FirebaseMessaging
 
-class MessageRepository {
+class ChatRepository {
     companion object {
         private const val CHAT_TOPIC = "chat"
         private const val CHAT = "chat"

@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import com.pandulapeter.khameleon.HomeActivityBinding
 import com.pandulapeter.khameleon.R
-import com.pandulapeter.khameleon.data.repository.MessageRepository
+import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.PreferenceRepository
 import com.pandulapeter.khameleon.feature.home.calendar.CalendarFragment
 import com.pandulapeter.khameleon.feature.home.chat.ChatFragment
@@ -17,7 +17,7 @@ import com.pandulapeter.khameleon.util.consume
 import org.koin.android.ext.android.inject
 
 class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_home) {
-    private val messageRepository by inject<MessageRepository>()
+    private val messageRepository by inject<ChatRepository>()
     private val preferenceRepository by inject<PreferenceRepository>()
 
     override fun onCreate(savedInstanceState: Bundle?) {

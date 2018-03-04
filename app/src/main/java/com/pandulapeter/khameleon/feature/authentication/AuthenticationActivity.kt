@@ -7,7 +7,7 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.pandulapeter.khameleon.AuthenticationActivityBinding
 import com.pandulapeter.khameleon.R
-import com.pandulapeter.khameleon.data.repository.MessageRepository
+import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.home.HomeActivity
 import com.pandulapeter.khameleon.feature.shared.KhameleonActivity
@@ -25,7 +25,7 @@ class AuthenticationActivity : KhameleonActivity<AuthenticationActivityBinding>(
     }
 
     private val userRepository by inject<UserRepository>()
-    private val messageRepository by inject<MessageRepository>()
+    private val messageRepository by inject<ChatRepository>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_Authentication)

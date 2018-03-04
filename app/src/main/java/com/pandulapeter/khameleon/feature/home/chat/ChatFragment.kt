@@ -12,7 +12,7 @@ import com.pandulapeter.khameleon.ChatFragmentBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.model.Message
 import com.pandulapeter.khameleon.data.model.User
-import com.pandulapeter.khameleon.data.repository.MessageRepository
+import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.feature.home.shared.AlertDialogFragment
@@ -39,7 +39,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     private var messageToEdit: Message? = null
     private var isScrolledToBottom = true
     private val userRepository by inject<UserRepository>()
-    private val messageRepository by inject<MessageRepository>()
+    private val messageRepository by inject<ChatRepository>()
     private val linearLayoutManager = LinearLayoutManager(context).apply { stackFromEnd = true }
     private val messageAdapter = MessageAdapter(
         options = FirebaseRecyclerOptions.Builder<Message>()

@@ -24,7 +24,9 @@ import org.koin.android.ext.android.inject
 import java.util.*
 
 class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarViewModel>(R.layout.fragment_calendar),
-    ChangeEventListener, DayDetailBottomSheetFragment.OnDialogItemSelectedListener {
+    ChangeEventListener,
+    DayDetailBottomSheetFragment.OnDialogItemSelectedListener,
+    DescriptionInputDialogFragment.OnDialogTextEnteredListener {
 
     companion object {
         private const val TIME_FORMAT = "%02d:%02d"
@@ -65,23 +67,17 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     override fun onItemClicked(itemType: Int, day: Day) {
         when (itemType) {
             Day.BUSY,
-            Day.EMPTY -> {
-                updateDay(day.apply { type = itemType })
+            Day.EMPTY -> updateDay(day.apply { type = itemType })
+            Day.REHEARSAL -> context?.let {
+                TimePickerDialog(it, R.style.AlertDialog, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+                    updateDay(day.apply {
+                        type = itemType
+                        description = String.format(Locale.getDefault(), TIME_FORMAT, hourOfDay, minute)
+                    })
+                }, 20, 0, false).show()
             }
-            Day.REHEARSAL -> {
-                context?.let {
-                    TimePickerDialog(it, R.style.AlertDialog, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                        updateDay(day.apply {
-                            type = itemType
-                            description = String.format(Locale.getDefault(), TIME_FORMAT, hourOfDay, minute)
-                        })
-                    }, 20, 0, false).show()
-                }
-            }
-            Day.GIG -> {
-            }
-            Day.MEETUP -> {
-            }
+            Day.GIG -> DescriptionInputDialogFragment.show(childFragmentManager, day.apply { type = itemType }, R.string.new_gig)
+            Day.MEETUP -> DescriptionInputDialogFragment.show(childFragmentManager, day.apply { type = itemType }, R.string.new_meetup)
         }
     }
 
@@ -90,6 +86,8 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     override fun onChildChanged(type: ChangeEventType, snapshot: DataSnapshot, newIndex: Int, oldIndex: Int) = updateEvents()
 
     override fun onError(e: DatabaseError) = binding.root.showSnackbar(R.string.something_went_wrong)
+
+    override fun onTextEntered(text: String, day: Day) = updateDay(day.apply { description = text })
 
     private fun updateEvents() {
         binding.calendarView.setEvents(events.map {

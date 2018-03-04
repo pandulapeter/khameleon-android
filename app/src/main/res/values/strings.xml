@@ -39,6 +39,8 @@
     <string name="day_marked_meetup">%1$s scheduled a meetup for %2$s.</string>
     <string name="song_added">%1$s added the song %2$s - %3$s in the key %4$s.</string>
     <string name="rehearsal_starts_from">The rehearsal starts from %s.</string>
+    <string name="meetup_at">The meetup will be at %s.</string>
+    <string name="gig_at">The concert will be at %s.</string>
 
     <!-- Calendar -->
     <string name="material_calendar_monday">Mon</string>
@@ -68,6 +70,10 @@
     <string name="meetup">Meetup</string>
     <string name="rehearsal">Rehearsal</string>
     <string name="description_pattern">%1$s (%2$s)</string>
+    <string name="save">Save</string>
+    <string name="new_gig">New gig</string>
+    <string name="new_meetup">New meetup</string>
+    <string name="enter_location">Enter the location</string>
 
     <!-- Settings -->
     <string name="notifications">Notifications</string>

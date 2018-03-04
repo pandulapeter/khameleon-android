@@ -46,8 +46,10 @@ class MessageViewModel(model: Message, context: Context) {
 
     private fun Long.format() = DateFormat.format("EEEE, MMMM d", Date(this))
 
-    private fun Day.getDescription(context: Context) = when (type) {
+    private fun Day.getDescription(context: Context) = if (description.isEmpty()) "" else when (type) {
         Day.REHEARSAL -> context.getString(R.string.rehearsal_starts_from, description)
+        Day.MEETUP -> context.getString(R.string.meetup_at, description)
+        Day.GIG -> context.getString(R.string.gig_at, description)
         else -> ""
     }
 }

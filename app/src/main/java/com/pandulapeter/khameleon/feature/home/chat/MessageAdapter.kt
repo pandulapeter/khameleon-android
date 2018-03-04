@@ -21,7 +21,7 @@ class MessageAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MessageViewHolder.create(parent) { onItemClickedCallback(getItem(it)) }
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int, model: Message) {
-        holder.message = model
+        holder.messageViewModel = MessageViewModel(model)
     }
 
     override fun onDataChanged() = onDataChangedCallback()
@@ -30,10 +30,10 @@ class MessageAdapter(
 
     class MessageViewHolder(private val binding: MessageItemBinding, private val onItemClicked: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
 
-        var message
-            get() = binding.model
+        var messageViewModel
+            get() = binding.viewModel
             set(value) {
-                binding.model = value
+                binding.viewModel = value
             }
 
         init {

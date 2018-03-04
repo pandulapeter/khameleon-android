@@ -6,17 +6,15 @@
     <data class=".MessageItemBinding">
 
         <variable
-            name="model"
-            type="com.pandulapeter.khameleon.data.model.Message" />
-
-        <import type="com.pandulapeter.khameleon.R" />
+            name="viewModel"
+            type="com.pandulapeter.khameleon.feature.home.chat.MessageViewModel" />
 
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@{model.isImportant ? R.color.accent : 0}"
+        android:background="@{viewModel.background}"
         android:foreground="?attr/selectableItemBackground"
         android:padding="@dimen/content_padding">
 
@@ -25,8 +23,8 @@
             android:layout_width="@dimen/avatar_size"
             android:layout_height="@dimen/avatar_size"
             android:layout_marginStart="@dimen/content_padding"
-            android:contentDescription="@{model.sender.name}"
-            app:avatar="@{model.sender.avatar}"
+            android:contentDescription="@{viewModel.name}"
+            app:avatar="@{viewModel.avatar}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,7 +36,7 @@
             android:layout_marginStart="@dimen/large_content_padding"
             android:fontFamily="sans-serif-medium"
             android:gravity="center_vertical"
-            android:text="@{model.sender.name}"
+            android:text="@{viewModel.name}"
             android:textColor="@color/primary"
             app:layout_constraintEnd_toEndOf="@+id/date"
             app:layout_constraintStart_toEndOf="@id/avatar"
@@ -51,7 +49,7 @@
             android:layout_marginEnd="@dimen/content_padding"
             android:fontFamily="sans-serif-thin"
             android:textSize="@dimen/text_small"
-            app:date="@{model.timestamp}"
+            app:date="@{viewModel.timestamp}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/name" />
 
@@ -60,7 +58,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="@{model.text}"
+            android:text="@{viewModel.text}"
             app:layout_constraintEnd_toEndOf="@id/name"
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintStart_toStartOf="@id/name"

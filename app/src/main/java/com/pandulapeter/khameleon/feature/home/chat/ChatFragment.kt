@@ -57,10 +57,14 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         onItemClickedCallback = { message ->
             userRepository.getSignedInUser()?.let { user ->
                 if (message.sender?.id == user.id) {
-                    if (System.currentTimeMillis() - message.timestamp > MESSAGE_MODIFY_LIMIT) {
-                        binding.root.showSnackbar(R.string.message_too_old)
+                    if (message.event != null || message.song != null) {
+                        binding.root.showSnackbar(R.string.message_modification_error_automatic)
                     } else {
-                        MessageModifyBottomSheetFragment.show(childFragmentManager, message)
+                        if (System.currentTimeMillis() - message.timestamp > MESSAGE_MODIFY_LIMIT) {
+                            binding.root.showSnackbar(R.string.message_too_old)
+                        } else {
+                            MessageModifyBottomSheetFragment.show(childFragmentManager, message)
+                        }
                     }
                 } else {
                     binding.root.showSnackbar(R.string.message_modification_error)

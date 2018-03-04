@@ -21,7 +21,7 @@ class MessageAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MessageViewHolder.create(parent) { onItemClickedCallback(getItem(it)) }
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int, model: Message) {
-        holder.messageViewModel = MessageViewModel(model)
+        holder.messageViewModel = MessageViewModel(model, holder.itemView.context)
     }
 
     override fun onDataChanged() = onDataChangedCallback()

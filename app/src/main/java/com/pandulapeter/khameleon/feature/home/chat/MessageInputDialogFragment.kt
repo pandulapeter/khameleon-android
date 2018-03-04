@@ -24,9 +24,13 @@ class MessageInputDialogFragment : AppCompatDialogFragment() {
 
     companion object {
         private var Bundle?.title by BundleArgumentDelegate.Int("title")
+        private var Bundle?.doneButton by BundleArgumentDelegate.Int("done_button")
 
-        fun show(fragmentManager: FragmentManager, @StringRes title: Int) {
-            MessageInputDialogFragment().setArguments { it.title = title }.run { (this as DialogFragment).show(fragmentManager, tag) }
+        fun show(fragmentManager: FragmentManager, @StringRes title: Int, @StringRes doneButton: Int) {
+            MessageInputDialogFragment().setArguments {
+                it.title = title
+                it.doneButton = doneButton
+            }.run { (this as DialogFragment).show(fragmentManager, tag) }
         }
     }
 
@@ -52,7 +56,7 @@ class MessageInputDialogFragment : AppCompatDialogFragment() {
         AlertDialog.Builder(context, R.style.AlertDialog)
             .setTitle(arguments.title)
             .setView(binding.root)
-            .setPositiveButton(R.string.send, { _, _ -> onOkButtonPressed() })
+            .setPositiveButton(arguments.doneButton, { _, _ -> onOkButtonPressed() })
             .setNegativeButton(R.string.cancel, { _, _ ->
                 messageRepository.workInProgressMessageText = ""
                 messageRepository.workInProgressMessageImportant = false

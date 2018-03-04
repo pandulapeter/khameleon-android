@@ -21,6 +21,7 @@
     <string name="enter_your_message">Enter your message</string>
     <string name="this_is_an_announcement">This is an announcement</string>
     <string name="send">Send</string>
+    <string name="edit">Edit</string>
     <string name="new_messages">New messages</string>
     <string name="message_modification_error_automatic">You cannot modify automatic messages</string>
     <string name="message_modification_error">You can only modify your own messages</string>

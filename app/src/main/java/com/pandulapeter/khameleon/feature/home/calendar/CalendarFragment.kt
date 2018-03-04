@@ -36,7 +36,9 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
         binding.calendarView.showCurrentMonthPage()
         binding.calendarView.setOnDayClickListener { eventDay ->
             if (eventDay.calendar.after(Calendar.getInstance())) {
-                DayDetailBottomSheetFragment.show(childFragmentManager, events.findLast { it.timestamp == eventDay.calendar.timeInMillis } ?: Day(eventDay.calendar.timeInMillis))
+                DayDetailBottomSheetFragment.show(
+                    childFragmentManager,
+                    events.findLast { it.timestamp.normalize() == eventDay.calendar.timeInMillis.normalize() } ?: Day(eventDay.calendar.timeInMillis.normalize()))
             }
         }
     }
@@ -78,7 +80,7 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     private fun updateEvents() {
         binding.calendarView.setEvents(events.map {
             EventDay(
-                Calendar.getInstance().apply { timeInMillis = it.timestamp },
+                Calendar.getInstance().apply { timeInMillis = it.timestamp.normalize() },
                 when (it.type) {
                     Day.BUSY -> R.drawable.ic_day_busy_24dp
                     Day.GIG -> R.drawable.ic_day_gig_24dp
@@ -91,6 +93,7 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     }
 
     private fun updateDay(day: Day) {
+        day.timestamp = day.timestamp.normalize()
         calendarRepository.calendarDatabase
             .orderByChild("timestamp")
             .equalTo(day.timestamp.toDouble())
@@ -104,7 +107,7 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
                                 it.children.iterator().next().ref.removeValue()
                             } else {
                                 it.children.iterator().next().ref.setValue(day)
-                                events.findLast { it.timestamp == day.timestamp }?.apply {
+                                events.findLast { it.timestamp.normalize() == day.timestamp }?.apply {
                                     type = day.type
                                     description = day.description
                                 }
@@ -128,4 +131,13 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
                 .setValue(Message(UUID.randomUUID().toString(), "", user, false, day))
         }
     }
+
+    private fun Long.normalize() = Calendar.getInstance().apply {
+        timeInMillis = this@normalize
+        timeZone = TimeZone.getTimeZone("GMT")
+        set(Calendar.HOUR_OF_DAY, 12)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }.timeInMillis
 }

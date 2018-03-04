@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Day(
-    val timestamp: Long = 0L,
+    var timestamp: Long = 0L,
     var type: Int = EMPTY,
     var description: String = ""
 ) : Parcelable {

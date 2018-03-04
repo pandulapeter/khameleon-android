@@ -48,7 +48,7 @@ class MessageViewModel(model: Message, context: Context) {
     )
     val avatar = model.sender?.avatar ?: ""
     val timestamp = DateFormat.format("MMM d, HH:mm", Date(model.timestamp)).toString()
-    val text = model.event?.getDescription(context) ?: model.text
+    val text = if (model.song == null) model.event?.getDescription(context) ?: model.text else ""
 
     private fun Long.format() = DateFormat.format("EEEE, MMMM d", Date(this))
 

@@ -21,4 +21,19 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
             }
         }
     }
+
+    override fun onItemClicked(itemType: Int, day: Day) {
+        when (itemType) {
+            Day.EMPTY -> {
+            }
+            Day.BUSY -> {
+            }
+            Day.REHEARSAL -> {
+            }
+            Day.GIG -> {
+            }
+            Day.MEETUP -> {
+            }
+        }
+    }
 }

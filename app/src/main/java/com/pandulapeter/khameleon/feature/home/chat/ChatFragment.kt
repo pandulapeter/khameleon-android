@@ -7,7 +7,6 @@ import android.view.View
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.pandulapeter.khameleon.ChatFragmentBinding
 import com.pandulapeter.khameleon.R
@@ -29,8 +28,6 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     AlertDialogFragment.OnDialogItemsSelectedListener {
 
     companion object {
-        private const val CHAT = "chat"
-        private const val NOTIFICATIONS = "notificationRequests"
         private const val MESSAGE_LIMIT = 300
         private const val MESSAGE_MODIFY_LIMIT = 1000L * 60 * 60 * 6
     }
@@ -46,12 +43,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     private val linearLayoutManager = LinearLayoutManager(context).apply { stackFromEnd = true }
     private val messageAdapter = MessageAdapter(
         options = FirebaseRecyclerOptions.Builder<Message>()
-            .setQuery(
-                FirebaseDatabase.getInstance()
-                    .reference
-                    .child(CHAT)
-                    .limitToLast(MESSAGE_LIMIT), Message::class.java
-            )
+            .setQuery(messageRepository.chatDatabase.limitToLast(MESSAGE_LIMIT), Message::class.java)
             .build(),
         onDataChangedCallback = {
             if (!isScrolledToBottom) {
@@ -125,9 +117,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                 scrollToBottom()
             }
         } else {
-            FirebaseDatabase.getInstance()
-                .reference
-                .child(CHAT)
+            messageRepository.chatDatabase
                 .orderByChild("id")
                 .equalTo(edit.id)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -170,9 +160,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         messageToDelete = null
     }
 
-    private fun deleteMessage(message: Message) = FirebaseDatabase.getInstance()
-        .reference
-        .child(CHAT)
+    private fun deleteMessage(message: Message) = messageRepository.chatDatabase
         .orderByChild("id")
         .equalTo(message.id)
         .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -190,15 +178,11 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             }
         })
 
-    private fun sendMessage(user: User, message: String, isImportant: Boolean) = FirebaseDatabase.getInstance()
-        .reference
-        .child(CHAT)
+    private fun sendMessage(user: User, message: String, isImportant: Boolean) = messageRepository.chatDatabase
         .push()
         .setValue(Message(UUID.randomUUID().toString(), message, user, isImportant))
 
-    private fun sendNotification(user: User, message: String) = FirebaseDatabase.getInstance()
-        .reference
-        .child(NOTIFICATIONS)
+    private fun sendNotification(user: User, message: String) = messageRepository.notificationsDatabase
         .push()
         .setValue("${user.name}: $message")
 

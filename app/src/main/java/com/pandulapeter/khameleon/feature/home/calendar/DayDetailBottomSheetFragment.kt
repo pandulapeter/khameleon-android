@@ -63,8 +63,12 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
     } ?: super.onCreateDialog(savedInstanceState)
 
     private fun handleClick(type: Int) {
+        arguments?.day?.let { onDialogItemSelectedListener?.onItemClicked(type, it) }
         dismiss()
     }
 
-    interface OnDialogItemSelectedListener
+    interface OnDialogItemSelectedListener {
+
+        fun onItemClicked(itemType: Int, day: Day)
+    }
 }

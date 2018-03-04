@@ -38,6 +38,7 @@
     <string name="day_marked_gig">%1$s scheduled a gig for %2$s.</string>
     <string name="day_marked_meetup">%1$s scheduled a meetup for %2$s.</string>
     <string name="song_added">%1$s added the song %2$s - %3$s in the key %4$s.</string>
+    <string name="rehearsal_starts_from">The rehearsal starts from %s.</string>
 
     <!-- Calendar -->
     <string name="material_calendar_monday">Mon</string>

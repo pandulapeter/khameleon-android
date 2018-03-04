@@ -41,8 +41,13 @@ class MessageViewModel(model: Message, context: Context) {
         }
     )
     val avatar = model.sender?.avatar ?: ""
-    val timestamp = DateFormat.format("MMM d, HH : mm", Date(model.timestamp))
-    val text = model.event?.description ?: model.text
+    val timestamp = DateFormat.format("MMM d, HH:mm", Date(model.timestamp)).toString()
+    val text = model.event?.getDescription(context) ?: model.text
 
     private fun Long.format() = DateFormat.format("EEEE, MMMM d", Date(this))
+
+    private fun Day.getDescription(context: Context) = when (type) {
+        Day.REHEARSAL -> context.getString(R.string.rehearsal_starts_from, description)
+        else -> ""
+    }
 }

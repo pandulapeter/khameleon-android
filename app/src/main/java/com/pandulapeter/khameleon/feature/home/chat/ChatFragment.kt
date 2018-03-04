@@ -41,7 +41,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     private var isScrolledToBottom = true
     private val userRepository by inject<UserRepository>()
     private val messageRepository by inject<ChatRepository>()
-    private val linearLayoutManager = LinearLayoutManager(context).apply { stackFromEnd = true }
+    private lateinit var linearLayoutManager: LinearLayoutManager
     private val messageAdapter = MessageAdapter(
         options = FirebaseRecyclerOptions.Builder<Message>()
             .setQuery(messageRepository.chatDatabase.limitToLast(MESSAGE_LIMIT), Message::class.java)
@@ -80,6 +80,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             messageToDelete = it.messageToDelete
             messageToEdit = it.messageToEdit
         }
+        linearLayoutManager = LinearLayoutManager(context).apply { stackFromEnd = true }
         binding.floatingActionButton.setOnClickListener {
             messageToEdit = null
             MessageInputDialogFragment.show(childFragmentManager, R.string.new_message, R.string.send)

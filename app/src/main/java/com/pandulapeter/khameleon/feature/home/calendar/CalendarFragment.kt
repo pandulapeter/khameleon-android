@@ -1,5 +1,6 @@
 package com.pandulapeter.khameleon.feature.home.calendar
 
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.View
 import com.applandeo.materialcalendarview.EventDay
@@ -24,6 +25,10 @@ import java.util.*
 
 class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarViewModel>(R.layout.fragment_calendar),
     ChangeEventListener, DayDetailBottomSheetFragment.OnDialogItemSelectedListener {
+
+    companion object {
+        private const val TIME_FORMAT = "%02d:%02d"
+    }
 
     override val viewModel = CalendarViewModel()
     override val title = R.string.calendar
@@ -58,13 +63,20 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     }
 
     override fun onItemClicked(itemType: Int, day: Day) {
-        updateDay(day.apply { type = itemType })
         when (itemType) {
+            Day.BUSY,
             Day.EMPTY -> {
-            }
-            Day.BUSY -> {
+                updateDay(day.apply { type = itemType })
             }
             Day.REHEARSAL -> {
+                context?.let {
+                    TimePickerDialog(it, R.style.AlertDialog, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+                        updateDay(day.apply {
+                            type = itemType
+                            description = String.format(Locale.getDefault(), TIME_FORMAT, hourOfDay, minute)
+                        })
+                    }, 20, 0, false).show()
+                }
             }
             Day.GIG -> {
             }

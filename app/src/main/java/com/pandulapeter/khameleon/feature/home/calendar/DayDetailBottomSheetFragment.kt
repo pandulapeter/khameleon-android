@@ -55,6 +55,11 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
                 }?.run {
                     setBackgroundColor(context.color(R.color.accent))
                     setOnClickListener(null)
+                    it.description.let {
+                        if (it.isNotEmpty()) {
+                            text = context.getString(R.string.description_pattern, text, it)
+                        }
+                    }
                 }
             }
             setContentView(binding.root)

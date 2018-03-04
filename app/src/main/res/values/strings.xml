@@ -81,6 +81,8 @@
     <string name="enter_song_artist">Enter song artist</string>
     <string name="enter_song_title">Enter song title</string>
     <string name="enter_song_key">Enter song key</string>
+    <string name="undo">Undo</string>
+    <string name="song_deleted">%s deleted.</string>
 
     <!-- Settings -->
     <string name="notifications">Notifications</string>

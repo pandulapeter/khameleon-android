@@ -2,8 +2,13 @@ package com.pandulapeter.khameleon.feature.home.songs
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.SongsFragmentBinding
 import com.pandulapeter.khameleon.data.model.Message
@@ -12,6 +17,7 @@ import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.SongRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
+import com.pandulapeter.khameleon.util.consume
 import com.pandulapeter.khameleon.util.dimension
 import com.pandulapeter.khameleon.util.showSnackbar
 import org.koin.android.ext.android.inject
@@ -47,7 +53,58 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
             layoutManager = linearLayoutManager
             adapter = songAdapter
             context?.let { addItemDecoration(SpacesItemDecoration(it.dimension(R.dimen.content_padding))) }
+            ItemTouchHelper(object : ElevationItemTouchHelperCallback((context?.dimension(R.dimen.content_padding) ?: 0).toFloat()) {
+
+                override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?) =
+                    makeMovementFlags(if (adapter.itemCount > 1) ItemTouchHelper.UP or ItemTouchHelper.DOWN else 0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
+
+                override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?) = consume {
+                    viewHolder?.adapterPosition?.let { originalPosition ->
+                        target?.adapterPosition?.let { targetPosition ->
+                            swapSongsInPlaylist(originalPosition, targetPosition)
+                        }
+                    }
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+                    viewHolder?.adapterPosition?.let { position -> deleteSong(songAdapter.getItem(position)) }
+                }
+            }).attachToRecyclerView(this)
         }
+    }
+
+    private fun swapSongsInPlaylist(originalPosition: Int, targetPosition: Int) {
+        if (originalPosition < targetPosition) {
+            for (i in originalPosition until targetPosition) {
+//                Collections.swap(adapter.items, i, i + 1)
+            }
+        } else {
+            for (i in originalPosition downTo targetPosition + 1) {
+//                Collections.swap(adapter.items, i, i - 1)
+            }
+        }
+        songAdapter.notifyItemMoved(originalPosition, targetPosition)
+        //TODO: Network request
+    }
+
+    private fun deleteSong(song: Song) {
+        songsRepository.songsDarabase
+            .orderByChild("id")
+            .equalTo(song.id)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError?) = binding.root.showSnackbar(R.string.something_went_wrong)
+
+                override fun onDataChange(p0: DataSnapshot?) {
+                    p0?.let {
+                        if (it.hasChildren()) {
+                            it.children.iterator().next().ref.removeValue()
+                            context?.let { binding.root.showSnackbar(it.getString(R.string.song_deleted, song.title)) { onSongEntered(song) } }
+                            return
+                        }
+                    }
+                    binding.root.showSnackbar(R.string.something_went_wrong)
+                }
+            })
     }
 
     override fun onStart() {

@@ -16,6 +16,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import com.pandulapeter.khameleon.R
 
 fun Context.color(@ColorRes colorId: Int) = ContextCompat.getColor(this, colorId)
 
@@ -25,7 +26,9 @@ fun Context.drawable(@DrawableRes drawableId: Int) = AppCompatResources.getDrawa
 
 fun View.showSnackbar(@StringRes message: Int) = showSnackbar(context.getString(message))
 
-fun View.showSnackbar(message: String) = Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()
+fun View.showSnackbar(message: String) = Snackbar.make(this, message, Snackbar.LENGTH_SHORT).show()
+
+fun View.showSnackbar(message: String, undoAction: () -> Unit) = Snackbar.make(this, message, Snackbar.LENGTH_LONG).setAction(R.string.undo, { undoAction() }).show()
 
 fun Fragment.setArguments(bundleOperations: (Bundle) -> Unit): Fragment {
     arguments = Bundle().apply { bundleOperations(this) }

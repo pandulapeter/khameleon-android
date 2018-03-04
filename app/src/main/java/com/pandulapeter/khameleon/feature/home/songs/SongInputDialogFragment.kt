@@ -13,6 +13,7 @@ import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.SongInputDialogBinding
 import com.pandulapeter.khameleon.data.model.Song
 import com.pandulapeter.khameleon.util.*
+import java.util.*
 
 class SongInputDialogFragment : AppCompatDialogFragment() {
 
@@ -65,6 +66,7 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
         if (areInputsValid()) {
             onSongEnteredListener?.onSongEntered(
                 Song(
+                    UUID.randomUUID().toString(),
                     binding.artistInputField.text.toString(),
                     binding.titleInputField.text.toString(),
                     binding.keyInputField.text.toString()
@@ -80,7 +82,7 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
 
     private fun areInputsValid() = binding.artistInputField.text.trim().isNotEmpty()
             && binding.titleInputField.text.trim().isNotEmpty()
-            && binding.titleInputField.text.trim().isNotEmpty()
+            && binding.keyInputField.text.trim().isNotEmpty()
 
     interface OnSongEnteredListener {
 

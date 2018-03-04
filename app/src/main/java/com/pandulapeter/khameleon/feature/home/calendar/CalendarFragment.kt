@@ -13,7 +13,10 @@ import com.google.firebase.database.ValueEventListener
 import com.pandulapeter.khameleon.CalendarFragmentBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.model.Day
+import com.pandulapeter.khameleon.data.model.Message
 import com.pandulapeter.khameleon.data.repository.CalendarRepository
+import com.pandulapeter.khameleon.data.repository.ChatRepository
+import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.util.showSnackbar
 import org.koin.android.ext.android.inject
@@ -24,6 +27,8 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
 
     override val viewModel = CalendarViewModel()
     private val calendarRepository by inject<CalendarRepository>()
+    private val chatRepository by inject<ChatRepository>()
+    private val userRepository by inject<UserRepository>()
     private val events = FirebaseArray(calendarRepository.calendarDatabase, ClassSnapshotParser(Day::class.java))
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -104,14 +109,23 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
                                     description = day.description
                                 }
                             }
+                            sendAutomaticChatMessage(day)
                             updateEvents()
                             return
                         }
                     }
+                    sendAutomaticChatMessage(day)
                     calendarRepository.calendarDatabase
                         .push()
                         .setValue(day)
                 }
             })
+    }
+
+    private fun sendAutomaticChatMessage(day: Day) {
+        userRepository.getSignedInUser()?.let { user ->
+            chatRepository.chatDatabase.push()
+                .setValue(Message(UUID.randomUUID().toString(), "", user, false, day))
+        }
     }
 }

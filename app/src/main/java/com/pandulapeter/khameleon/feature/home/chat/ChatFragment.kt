@@ -89,13 +89,13 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             layoutManager = linearLayoutManager
             adapter = messageAdapter
             context?.let { addItemDecoration(DividerItemDecoration(it)) }
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                    updateNewMessagesIndicatorVisibility()
+                }
+            })
         }
         binding.newMessagesIndicator.setOnClickListener { scrollToBottom() }
-        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                updateNewMessagesIndicatorVisibility()
-            }
-        })
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

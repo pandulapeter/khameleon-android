@@ -1,9 +1,6 @@
 package com.pandulapeter.khameleon.injection
 
-import com.pandulapeter.khameleon.data.repository.CalendarRepository
-import com.pandulapeter.khameleon.data.repository.ChatRepository
-import com.pandulapeter.khameleon.data.repository.PreferenceRepository
-import com.pandulapeter.khameleon.data.repository.UserRepository
+import com.pandulapeter.khameleon.data.repository.*
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.applicationContext
 
@@ -18,4 +15,8 @@ val chatModule: Module = applicationContext {
 
 val calendarModule: Module = applicationContext {
     provide { CalendarRepository() }
+}
+
+val songsModule: Module = applicationContext {
+    provide { SongRepository() }
 }

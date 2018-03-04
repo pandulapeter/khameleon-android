@@ -71,9 +71,8 @@
         <TextView
             android:id="@+id/text"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:autoLink="all"
-            android:gravity="center_vertical"
             android:text="@{viewModel.text}"
             android:textColorLink="@{viewModel.linkColor}"
             android:visibility="@{!TextUtils.isEmpty(viewModel.text)}"

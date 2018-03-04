@@ -51,8 +51,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/content_padding"
             android:fontFamily="sans-serif-thin"
+            android:text="@{viewModel.timestamp}"
             android:textSize="@dimen/text_small"
-            app:date="@{viewModel.timestamp}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/name" />
 

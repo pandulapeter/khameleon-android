@@ -6,6 +6,7 @@
     <color name="accent">#FFC107</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="light">#808080</color>
     <color name="dark">#404040</color>
 
 </resources>

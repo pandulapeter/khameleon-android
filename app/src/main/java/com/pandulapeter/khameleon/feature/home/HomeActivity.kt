@@ -21,7 +21,7 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
     private val preferenceRepository by inject<PreferenceRepository>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
+        setTheme(R.style.HomeTheme)
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
             messageRepository.setPushNotificationsEnabled(preferenceRepository.chatNotifications)

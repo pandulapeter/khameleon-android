@@ -25,6 +25,7 @@ class SettingsFragment : KhameleonFragment<SettingsFragmentBinding, SettingsView
         preferenceRepository.eventNotifications,
         userRepository.getSignedInUser()?.avatar ?: ""
     )
+    override val title = R.string.settings
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

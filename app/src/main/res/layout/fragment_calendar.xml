@@ -25,9 +25,11 @@
                 android:id="@+id/calendar_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/Theme.AppCompat"
                 app:abbreviationsLabelsColor="@color/primary"
-                app:headerColor="@color/primary"
+                app:forwardButtonSrc="@drawable/ic_navigate_next_24dp"
+                app:headerColor="@color/white"
+                app:headerLabelColor="@color/primary"
+                app:previousButtonSrc="@drawable/ic_navigate_previous_24dp"
                 app:todayLabelColor="@color/accent" />
 
         </ScrollView>

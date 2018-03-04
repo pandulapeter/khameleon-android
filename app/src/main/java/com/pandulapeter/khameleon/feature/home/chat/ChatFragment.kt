@@ -33,6 +33,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     }
 
     override val viewModel = ChatViewModel()
+    override val title = R.string.chat
     private var Bundle.messageToDelete by BundleArgumentDelegate.Parcelable<Message>("message_to_delete")
     private var Bundle.messageToEdit by BundleArgumentDelegate.Parcelable<Message>("message_to_edit")
     private var messageToDelete: Message? = null

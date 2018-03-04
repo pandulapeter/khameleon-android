@@ -26,12 +26,14 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     ChangeEventListener, DayDetailBottomSheetFragment.OnDialogItemSelectedListener {
 
     override val viewModel = CalendarViewModel()
+    override val title = R.string.calendar
     private val calendarRepository by inject<CalendarRepository>()
     private val chatRepository by inject<ChatRepository>()
     private val userRepository by inject<UserRepository>()
     private val events = FirebaseArray(calendarRepository.calendarDatabase, ClassSnapshotParser(Day::class.java))
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.calendarView.setMinimumDate(Calendar.getInstance().apply { timeInMillis -= 24 * 60 * 60 * 1000 })
         binding.calendarView.showCurrentMonthPage()
         binding.calendarView.setOnDayClickListener { eventDay ->

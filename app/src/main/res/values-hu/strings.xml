@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- General -->
+    <string name="something_went_wrong">Valami elromlott</string>
+    <string name="something_went_wrong_reason">Valami elromlott (%s)</string>
+    <string name="cancel">Mégse</string>
+
+    <!-- Authentication -->
+    <string name="authentication_message">Az applikáció használatához jelentkezz\nbe a Google felhasználóddal.</string>
+
+    <!-- Home -->
+    <string name="chat">Chat</string>
+    <string name="calendar">Naptár</string>
+    <string name="songs">Dalok</string>
+    <string name="settings">Beállítások</string>
+
+    <!-- Chat -->
+    <string name="new_message">Új üzenet</string>
+    <string name="enter_your_message">Írd be az üzeneted</string>
+    <string name="this_is_an_announcement">Kiemenlten fontos</string>
+    <string name="send">Küldés</string>
+    <string name="edit">Szerkesztés</string>
+    <string name="new_messages">Új üzenetek</string>
+    <string name="message_modification_error_automatic">Nem módosíthatsz rendszerüzeneteket</string>
+    <string name="message_modification_error">Csak a saját üzeneteidet módosíthatod</string>
+    <string name="message_too_old">Ez az üzenet túl régi ahhoz hogy módosítsd</string>
+    <string name="select_an_option">Válassz egy opciót</string>
+    <string name="edit_message">Üzenet szerkesztése</string>
+    <string name="delete_message">Üzenet törlése</string>
+    <string name="delete_message_title">Biztos vagy benne?</string>
+    <string name="delete_message_message">Biztosan szeretnéd véglegesen törölni az üzenetet?</string>
+    <string name="delete">Törlés</string>
+    <string name="day_cleared">%1$s törölt mindent eseményt erről a napról: %2$s.</string>
+    <string name="day_marked_busy">%1$s foglalt ezen a napon: %2$s.</string>
+    <string name="day_marked_rehearsal">%1$s próbát rakott erre a napra: %2$s.</string>
+    <string name="day_marked_gig">%1$s koncertet rakott erre a napra: %2$s.</string>
+    <string name="day_marked_meetup">%1$s találkozót rakott erre a napra: %2$s.</string>
+    <string name="song_added_pattern">%1$s hozzáadta ezt a dalt: %2$s - %3$s.</string>
+    <string name="song_deleted_pattern">%1$s kitörölte ezt a dalt: %2$s - %3$s.</string>
+    <string name="rehearsal_starts_from">A próba ekkor kezdődik: %s.</string>
+    <string name="meetup_at">Helyszín: %s.</string>
+    <string name="gig_at">Helyszín: %s.</string>
+
+    <!-- Calendar -->
+    <string name="material_calendar_monday">Hét</string>
+    <string name="material_calendar_tuesday">Ked</string>
+    <string name="material_calendar_wednesday">Sze</string>
+    <string name="material_calendar_thursday">Csü</string>
+    <string name="material_calendar_friday">Pén</string>
+    <string name="material_calendar_saturday">Szo</string>
+    <string name="material_calendar_sunday">Vas</string>
+    <array name="material_calendar_months_array">
+        <item>Január</item>
+        <item>Február</item>
+        <item>Március</item>
+        <item>Április</item>
+        <item>Május</item>
+        <item>Június</item>
+        <item>Július</item>
+        <item>Augusztus</item>
+        <item>Szeptember</item>
+        <item>Október</item>
+        <item>November</item>
+        <item>December</item>
+    </array>
+    <string name="empty">Semmi különös</string>
+    <string name="busy">Elfoglalt</string>
+    <string name="gig">Koncert</string>
+    <string name="meetup">Találkozó</string>
+    <string name="rehearsal">Próba</string>
+    <string name="description_pattern">%1$s (%2$s)</string>
+    <string name="save">Mentés</string>
+    <string name="new_gig">Új koncert</string>
+    <string name="new_meetup">Új találkozó</string>
+    <string name="enter_location">Add meg a helyszínt</string>
+
+    <!-- Songs -->
+    <string name="new_song">Új dal</string>
+    <string name="edit_song">Dal szerkesztése</string>
+    <string name="add">Hozzáadás</string>
+    <string name="enter_song_artist">Add meg az előadót</string>
+    <string name="enter_song_title">Add meg a címet</string>
+    <string name="enter_song_key">Hangnem</string>
+    <string name="undo">Mégse</string>
+    <string name="song_deleted">%s törölve</string>
+    <string name="highlight_song">Dal kiemelése</string>
+
+    <!-- Settings -->
+    <string name="notifications">Értesítések</string>
+    <string name="chat_messages">Üzenetek</string>
+    <string name="push_chat_enabled">Minden üzenetről értesítést fogsz kapni.</string>
+    <string name="push_chat_disabled">Semmilyen üzenetről nem kapsz értesítést.</string>
+    <string name="event_reminders">Esemény emlékeztetők</string>
+    <string name="push_events_enabled">Értesítést kapsz próbák, koncertek és találkozók előtt (nincs kész).</string>
+    <string name="push_events_disabled">Semmilyen eseményről nem kapsz értesítést.</string>
+    <string name="account">Felhasználó</string>
+    <string name="sign_out">Kijelentkezés</string>
+    <string name="sign_out_description">Kijelentkezés a Google fiókkal</string>
+    <string name="sign_out_confirmation_title">Biztos vagy benne?</string>
+    <string name="sign_out_confirmation_message">Biztosan ki szeretnél jelentkezni az applikációból?</string>
+    <string name="app_version">v%s</string>
+
+</resources>

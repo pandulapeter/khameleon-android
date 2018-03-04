@@ -38,7 +38,7 @@
     <string name="day_marked_meetup">%1$s találkozót rakott erre a napra: %2$s.</string>
     <string name="song_added_pattern">%1$s hozzáadta ezt a dalt: %2$s - %3$s.</string>
     <string name="song_deleted_pattern">%1$s kitörölte ezt a dalt: %2$s - %3$s.</string>
-    <string name="rehearsal_starts_from">A próba ekkor kezdődik: %s.</string>
+    <string name="rehearsal_starts_from">A próba %s-kor kezdődik.</string>
     <string name="meetup_at">Helyszín: %s.</string>
     <string name="gig_at">Helyszín: %s.</string>
 

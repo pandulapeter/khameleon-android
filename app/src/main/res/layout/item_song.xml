@@ -27,7 +27,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/small_content_padding"
-                android:layout_marginTop="@dimen/small_content_padding"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/play"
                 android:onClick="@{() -> viewModel.onPlayButtonClicked(context)}"
@@ -35,6 +34,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_play_24dp" />
+
+            <ImageView
+                android:id="@+id/lyrics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/content_padding"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/lyrics"
+                android:onClick="@{() -> viewModel.onLyricsButtonClicked(context)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/play"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_lyrics_24dp" />
 
             <TextView
                 android:id="@+id/key"
@@ -46,7 +58,7 @@
                 android:textColor="@color/primary"
                 android:textSize="@dimen/text_large"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/play"
+                app:layout_constraintEnd_toStartOf="@id/lyrics"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView

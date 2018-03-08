@@ -79,6 +79,7 @@
     <!-- Songs -->
     <string name="export_list">Lista exportálása</string>
     <string name="play">Lejátszás</string>
+    <string name="lyrics">Dalszöveg</string>
     <string name="new_song">Új dal</string>
     <string name="edit_song">Dal szerkesztése</string>
     <string name="add">Hozzáadás</string>

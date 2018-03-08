@@ -15,19 +15,24 @@ class SongViewModel(val song: Song) {
     } else {
         Intent.FLAG_ACTIVITY_NEW_TASK
     }
+    private val fullTitle = "${song.artist} - ${song.title}"
 
     fun onPlayButtonClicked(context: Context) {
-        "${song.artist} - ${song.title}".let {
+        try {
+            context.startActivity(getYouTubeIntent("com.lara.android.youtube", fullTitle))
+        } catch (_: ActivityNotFoundException) {
             try {
-                context.startActivity(getYouTubeIntent("com.lara.android.youtube", it))
+                context.startActivity(getYouTubeIntent("com.google.android.youtube", fullTitle))
             } catch (_: ActivityNotFoundException) {
-                try {
-                    context.startActivity(getYouTubeIntent("com.google.android.youtube", it))
-                } catch (_: ActivityNotFoundException) {
-                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com/#q=" + URLEncoder.encode(it, "UTF-8"))).apply { flags = multiWindowFlags })
-                }
+                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com/#q=" + URLEncoder.encode(fullTitle, "UTF-8"))).apply { flags = multiWindowFlags })
             }
         }
+    }
+
+    fun onLyricsButtonClicked(context: Context) {
+        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com/#q=" + URLEncoder.encode("$fullTitle lyrics", "UTF-8"))).apply {
+            flags = multiWindowFlags
+        })
     }
 
     private fun getYouTubeIntent(packageName: String, query: String) = Intent(Intent.ACTION_SEARCH).apply {

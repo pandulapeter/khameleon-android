@@ -17,8 +17,6 @@
     <string name="settings">Setări</string>
 
     <!-- Chat -->
-    <string name="export_list">Exportare ca listă</string>
-    <string name="play">Ascultă</string>
     <string name="new_message">Mesaj nou</string>
     <string name="enter_your_message">Introdu mesajul</string>
     <string name="this_is_an_announcement">Anunț important</string>
@@ -79,6 +77,9 @@
     <string name="enter_location">Introdu locația</string>
 
     <!-- Songs -->
+    <string name="export_list">Exportare ca listă</string>
+    <string name="play">Ascultă</string>
+    <string name="lyrics">Versuri</string>
     <string name="new_song">Piesă nouă</string>
     <string name="edit_song">Editare piesă</string>
     <string name="add">Adaugă</string>

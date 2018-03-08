@@ -39,6 +39,10 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
         }
     }
 
+    override fun onBackPressed() {
+        supportFinishAfterTransition()
+    }
+
     private inline fun <reified T : Fragment> FragmentManager.handleReplace(crossinline newInstance: () -> T) {
         beginTransaction()
             .replace(
@@ -46,6 +50,7 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
                 findFragmentByTag(T::class.java.name) ?: newInstance.invoke(),
                 T::class.java.name
             )
+            .addToBackStack(null)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
     }

@@ -10,8 +10,8 @@ android {
         applicationId "com.pandulapeter.khameleon"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 2
-        versionName "0.0.2"
+        versionCode 3
+        versionName "0.0.3"
         vectorDrawables.useSupportLibrary = true
     }
     dataBinding {
@@ -40,7 +40,6 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            //TODO: Create a separate signing configuration for Release builds.
             signingConfig signingConfigs.internal
         }
     }

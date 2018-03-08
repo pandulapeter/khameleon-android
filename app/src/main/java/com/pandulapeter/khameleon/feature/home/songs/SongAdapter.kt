@@ -18,12 +18,12 @@ class SongAdapter(
     private val onErrorCallback: (String) -> Unit,
     private val onItemClickedCallback: (Song) -> Unit
 ) : FirebaseRecyclerAdapter<Song, SongAdapter.SongViewHolder>(options) {
-    var allowNotifyEvents = true
+    private var allowNotifyEvents = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SongViewHolder.create(parent) { onItemClickedCallback(getItem(it)) }
 
     override fun onBindViewHolder(holder: SongViewHolder, position: Int, model: Song) {
-        holder.model = model
+        holder.model = SongViewModel(model)
     }
 
     override fun onChildChanged(type: ChangeEventType, snapshot: DataSnapshot, newIndex: Int, oldIndex: Int) {
@@ -42,9 +42,9 @@ class SongAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         var model
-            get() = binding.model
+            get() = binding.viewModel
             set(value) {
-                binding.model = value
+                binding.viewModel = value
             }
 
         init {

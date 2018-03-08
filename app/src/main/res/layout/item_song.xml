@@ -6,8 +6,8 @@
     <data class=".SongItemBinding">
 
         <variable
-            name="model"
-            type="com.pandulapeter.khameleon.data.model.Song" />
+            name="viewModel"
+            type="com.pandulapeter.khameleon.feature.home.songs.SongViewModel" />
 
     </data>
 
@@ -15,35 +15,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?attr/selectableItemBackground"
-        app:cardBackgroundColor="@{model.isHighlighted ? @color/accent : @color/white}">
+        app:cardBackgroundColor="@{viewModel.song.isHighlighted ? @color/accent : @color/white}">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/content_padding">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/content_padding"
-                app:description="@{model.artist}"
-                app:layout_constraintEnd_toStartOf="@+id/counter"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:title="@{model.title}" />
-
-            <TextView
-                android:id="@id/counter"
+            <ImageView
+                android:id="@+id/play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/small_content_padding"
                 android:layout_marginTop="@dimen/small_content_padding"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/play"
+                android:onClick="@{() -> viewModel.onPlayButtonClicked(context)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_play_24dp" />
+
+            <TextView
+                android:id="@+id/key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/content_padding"
                 android:fontFamily="sans-serif-medium"
-                android:text="@{model.key}"
+                android:text="@{viewModel.song.key}"
                 android:textColor="@color/primary"
                 android:textSize="@dimen/text_large"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/play"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/content_padding"
+                app:description="@{viewModel.song.artist}"
+                app:layout_constraintEnd_toStartOf="@id/key"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:title="@{viewModel.song.title}" />
 
         </android.support.constraint.ConstraintLayout>
 

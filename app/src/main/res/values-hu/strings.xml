@@ -17,7 +17,6 @@
     <string name="settings">Beállítások</string>
 
     <!-- Chat -->
-    <string name="export_list">Lista exportálása</string>
     <string name="new_message">Új üzenet</string>
     <string name="enter_your_message">Írd be az üzeneted</string>
     <string name="this_is_an_announcement">Kiemenlten fontos</string>
@@ -78,6 +77,8 @@
     <string name="enter_location">Add meg a helyszínt</string>
 
     <!-- Songs -->
+    <string name="export_list">Lista exportálása</string>
+    <string name="play">Lejátszás</string>
     <string name="new_song">Új dal</string>
     <string name="edit_song">Dal szerkesztése</string>
     <string name="add">Hozzáadás</string>

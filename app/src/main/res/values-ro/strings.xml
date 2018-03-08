@@ -18,6 +18,7 @@
 
     <!-- Chat -->
     <string name="export_list">Exportare ca listă</string>
+    <string name="play">Ascultă</string>
     <string name="new_message">Mesaj nou</string>
     <string name="enter_your_message">Introdu mesajul</string>
     <string name="this_is_an_announcement">Anunț important</string>

@@ -17,6 +17,7 @@
     <string name="settings">Beállítások</string>
 
     <!-- Chat -->
+    <string name="export_list">Lista exportálása</string>
     <string name="new_message">Új üzenet</string>
     <string name="enter_your_message">Írd be az üzeneted</string>
     <string name="this_is_an_announcement">Kiemenlten fontos</string>

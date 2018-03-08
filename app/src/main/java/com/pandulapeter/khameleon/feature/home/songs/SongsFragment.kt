@@ -1,9 +1,13 @@
 package com.pandulapeter.khameleon.feature.home.songs
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DataSnapshot
@@ -24,6 +28,7 @@ import com.pandulapeter.khameleon.util.showSnackbar
 import org.koin.android.ext.android.inject
 import java.util.*
 
+
 class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.layout.fragment_songs), SongInputDialogFragment.OnSongEnteredListener {
 
     override val viewModel = SongsViewModel()
@@ -37,6 +42,11 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
         onErrorCallback = { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } },
         onItemClickedCallback = { SongInputDialogFragment.show(childFragmentManager, R.string.edit_song, R.string.edit, it) }
     )
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,6 +74,26 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
                 }
             }).attachToRecyclerView(this)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.songs, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {
+        R.id.export -> consume {
+            var text = ""
+            (0 until songAdapter.itemCount).forEach {
+                songAdapter.getItem(it).run {
+                    text = "$text\n$artist - $title ($key)"
+                }
+            }
+            startActivity(Intent.createChooser(Intent().apply {
+                action = Intent.ACTION_SEND
+                type = "text/plain"
+            }.putExtra(Intent.EXTRA_TEXT, text), getString(R.string.export_list)))
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     override fun onStart() {

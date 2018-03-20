@@ -112,12 +112,12 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
         } else {
             songsRepository.songsDarabase.push().setValue(song.apply {
                 if (autoOrder) {
-                    order = if (songAdapter.itemCount == 0) 0 else songAdapter.getItem(songAdapter.itemCount - 1).order + 1
+                    order = -1//if (songAdapter.itemCount == 0) 0 else songAdapter.getItem(songAdapter.itemCount - 1).order + 1
                 }
             })
             sendAutomaticChatMessage(song, true)
         }
-        binding.recyclerView.smoothScrollToPosition(song.order)
+        binding.recyclerView.smoothScrollToPosition(Math.max(0, song.order))
     }
 
     private fun swapSongsInPlaylist(originalPosition: Int, targetPosition: Int) {

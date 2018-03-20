@@ -41,6 +41,7 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
             binding.artistInputField.setText(it.artist)
             binding.titleInputField.setText(it.title)
             binding.keyInputField.setText(it.key)
+            binding.bpmInputField.setText(it.bpm.toString())
             binding.checkbox.isChecked = it.isHighlighted
         }
         binding.artistInputField.onTextChanged { validateInputs() }
@@ -81,7 +82,7 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
                     binding.titleInputField.text.toString(),
                     binding.keyInputField.text.toString(),
                     arguments?.song?.order ?: 0,
-                    arguments?.song?.bpm ?: 0,
+                    Integer.parseInt(binding.bpmInputField.text.toString()),
                     binding.checkbox.isChecked
                 ), !isUpdate, isUpdate
             )
@@ -98,7 +99,6 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
             && binding.keyInputField.text.trim().isNotEmpty()
 
     interface OnSongEnteredListener {
-
         fun onSongEntered(song: Song, autoOrder: Boolean, isUpdate: Boolean)
     }
 }

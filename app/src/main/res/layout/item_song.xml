@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/content_padding"
                 android:fontFamily="sans-serif-medium"
-                android:text="@{viewModel.song.key}"
+                android:text="@{viewModel.key}"
                 android:textColor="@color/primary"
                 android:textSize="@dimen/text_large"
                 app:layout_constraintBottom_toBottomOf="parent"

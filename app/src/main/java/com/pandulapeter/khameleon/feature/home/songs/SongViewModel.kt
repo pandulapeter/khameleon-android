@@ -16,6 +16,7 @@ class SongViewModel(val song: Song) {
         Intent.FLAG_ACTIVITY_NEW_TASK
     }
     private val fullTitle = "${song.artist} - ${song.title}"
+    val key = song.key + if (song.bpm == 0) "" else " (${song.bpm})"
 
     fun onPlayButtonClicked(context: Context) {
         try {

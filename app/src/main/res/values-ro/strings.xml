@@ -104,6 +104,8 @@
     <string name="sign_out_description">Deautentificare cu contul Google</string>
     <string name="sign_out_confirmation_title">Ești sigur?</string>
     <string name="sign_out_confirmation_message">Sigur vrei să ieși din aplicație?</string>
-    <string name="app_version">v%s</string>
+    <string name="about">Despre aplicație</string>
+    <string name="check_for_updates">Caută actualizări</string>
+    <string name="app_version">Versiunea curentă: v%s</string>
 
 </resources>

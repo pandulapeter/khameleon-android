@@ -104,6 +104,8 @@
     <string name="sign_out_description">Kijelentkezés a Google fiókkal</string>
     <string name="sign_out_confirmation_title">Biztos vagy benne?</string>
     <string name="sign_out_confirmation_message">Biztosan ki szeretnél jelentkezni az applikációból?</string>
-    <string name="app_version">v%s</string>
+    <string name="about">Az applikációról</string>
+    <string name="check_for_updates">Frissítések keresése</string>
+    <string name="app_version">Jelenlegi verzió: v%s</string>
 
 </resources>

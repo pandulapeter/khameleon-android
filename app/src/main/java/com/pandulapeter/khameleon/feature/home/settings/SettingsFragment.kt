@@ -1,6 +1,7 @@
 package com.pandulapeter.khameleon.feature.home.settings
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import com.pandulapeter.khameleon.R
@@ -37,6 +38,11 @@ class SettingsFragment : KhameleonFragment<SettingsFragmentBinding, SettingsView
                 R.string.sign_out,
                 R.string.cancel
             )
+        }
+        binding.checkForUpdates.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse("market://details?id=com.pandulapeter.khameleon")
+            })
         }
         viewModel.shouldEnableChatPushNotifications.onPropertyChanged {
             preferenceRepository.chatNotifications = it

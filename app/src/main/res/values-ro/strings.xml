@@ -9,6 +9,7 @@
 
     <!-- Authentication -->
     <string name="authentication_message">Pentru a folosi aplicația, trebuie să\nte autentifici cu contul tău Google.</string>
+    <string name="authentication_not_a_member">Nu ești membrul trupei Khameleon Band.</string>
 
     <!-- Home -->
     <string name="chat">Chat</string>

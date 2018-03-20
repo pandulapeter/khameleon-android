@@ -9,6 +9,7 @@
 
     <!-- Authentication -->
     <string name="authentication_message">Az applikáció használatához jelentkezz\nbe a Google felhasználóddal.</string>
+    <string name="authentication_not_a_member">Nem vagy a Khameleon Band tagja.</string>
 
     <!-- Home -->
     <string name="chat">Chat</string>

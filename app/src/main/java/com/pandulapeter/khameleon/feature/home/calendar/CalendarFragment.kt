@@ -30,6 +30,7 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
 
     companion object {
         private const val TIME_FORMAT = "%02d:%02d"
+        private const val ONE_DAY = 24 * 60 * 60 * 1000
     }
 
     override val viewModel = CalendarViewModel()
@@ -41,10 +42,11 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.calendarView.setMinimumDate(Calendar.getInstance().apply { timeInMillis -= 24 * 60 * 60 * 1000 })
+        val yesterday = Calendar.getInstance().apply { timeInMillis -= ONE_DAY }
+        binding.calendarView.setMinimumDate(yesterday)
         binding.calendarView.showCurrentMonthPage()
         binding.calendarView.setOnDayClickListener { eventDay ->
-            if (eventDay.calendar.after(Calendar.getInstance())) {
+            if (eventDay.calendar.after(yesterday)) {
                 DayDetailBottomSheetFragment.show(
                     childFragmentManager,
                     events.findLast { it.timestamp.normalize() == eventDay.calendar.timeInMillis.normalize() } ?: Day(eventDay.calendar.timeInMillis.normalize()))

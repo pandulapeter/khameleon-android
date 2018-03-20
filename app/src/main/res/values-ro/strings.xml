@@ -86,6 +86,7 @@
     <string name="enter_song_artist">Introdu artistul</string>
     <string name="enter_song_title">Introdu titlul</string>
     <string name="enter_song_key">Gamă</string>
+    <string name="enter_song_bpm">BPM</string>
     <string name="undo">Anulare</string>
     <string name="song_deleted">%s șters</string>
     <string name="highlight_song">Piesă importantă</string>

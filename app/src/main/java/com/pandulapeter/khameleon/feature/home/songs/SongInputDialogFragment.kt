@@ -81,6 +81,7 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
                     binding.titleInputField.text.toString(),
                     binding.keyInputField.text.toString(),
                     arguments?.song?.order ?: 0,
+                    arguments?.song?.bpm ?: 0,
                     binding.checkbox.isChecked
                 ), !isUpdate, isUpdate
             )

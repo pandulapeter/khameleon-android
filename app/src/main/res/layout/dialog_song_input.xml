@@ -67,6 +67,32 @@
                     app:layout_constraintBottom_toBottomOf="@+id/key_input_field_container"
                     app:layout_constraintEnd_toEndOf="parent" />
 
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.3" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/bpm_input_field_container"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_song_bpm"
+                    app:hintTextAppearance="@style/TextInputLayout"
+                    app:layout_constraintEnd_toStartOf="@id/checkbox"
+                    app:layout_constraintStart_toEndOf="@id/guideline">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/bpm_input_field"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLength="3"
+                        android:maxLines="1" />
+
+                </android.support.design.widget.TextInputLayout>
+
                 <android.support.design.widget.TextInputLayout
                     android:id="@id/key_input_field_container"
                     android:layout_width="0dp"
@@ -75,7 +101,7 @@
                     android:paddingEnd="12dp"
                     android:paddingStart="20dp"
                     app:hintTextAppearance="@style/TextInputLayout"
-                    app:layout_constraintEnd_toStartOf="@id/checkbox"
+                    app:layout_constraintEnd_toStartOf="@id/guideline"
                     app:layout_constraintStart_toStartOf="parent">
 
                     <android.support.design.widget.TextInputEditText

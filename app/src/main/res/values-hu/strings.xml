@@ -100,13 +100,13 @@
     <string name="event_reminders">Esemény emlékeztetők</string>
     <string name="push_events_enabled">Értesítést kapsz próbák, koncertek és találkozók előtt (nincs kész).</string>
     <string name="push_events_disabled">Semmilyen eseményről nem kapsz értesítést.</string>
+    <string name="about">Az applikációról</string>
+    <string name="check_for_updates">Frissítések keresése</string>
+    <string name="app_version">Jelenlegi verzió: v%s</string>
     <string name="account">Felhasználó</string>
     <string name="sign_out">Kijelentkezés</string>
     <string name="sign_out_description">Kijelentkezés a Google fiókkal</string>
     <string name="sign_out_confirmation_title">Biztos vagy benne?</string>
     <string name="sign_out_confirmation_message">Biztosan ki szeretnél jelentkezni az applikációból?</string>
-    <string name="about">Az applikációról</string>
-    <string name="check_for_updates">Frissítések keresése</string>
-    <string name="app_version">Jelenlegi verzió: v%s</string>
 
 </resources>

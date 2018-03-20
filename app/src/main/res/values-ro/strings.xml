@@ -100,13 +100,13 @@
     <string name="event_reminders">Reaminitiri</string>
     <string name="push_events_enabled">Vei primi notificări înainte de concerte, repetiții și întâlniri (în curând).</string>
     <string name="push_events_disabled">Nu vei primi nici-o notificare despre evenimente.</string>
+    <string name="about">Despre aplicația</string>
+    <string name="check_for_updates">Caută actualizări</string>
+    <string name="app_version">Versiunea curentă: v%s</string>
     <string name="account">Cont</string>
     <string name="sign_out">Ieșire</string>
     <string name="sign_out_description">Deautentificare cu contul Google</string>
     <string name="sign_out_confirmation_title">Ești sigur?</string>
     <string name="sign_out_confirmation_message">Sigur vrei să ieși din aplicație?</string>
-    <string name="about">Despre aplicație</string>
-    <string name="check_for_updates">Caută actualizări</string>
-    <string name="app_version">Versiunea curentă: v%s</string>
 
 </resources>

@@ -20,7 +20,7 @@ class MessageViewModel(model: Message, context: Context) {
     val background = if (model.isImportant) R.color.accent else 0
     val nameColor = context.color(if (systemMessage) R.color.light else R.color.primary)
     val linkColor = context.color(if (model.isImportant) R.color.primary else R.color.accent)
-    val name: String = (model.sender?.name ?: "").let {
+    val name: String = (model.sender?.getFormattedName() ?: "").let {
         when (model.event?.type) {
             Day.EMPTY -> context.getString(R.string.day_cleared, it, model.event.timestamp.format())
             Day.BUSY -> context.getString(R.string.day_marked_busy, it, model.event.timestamp.format())
@@ -47,10 +47,10 @@ class MessageViewModel(model: Message, context: Context) {
         }
     )
     val avatar = model.sender?.avatar ?: ""
-    val timestamp = DateFormat.format("MMM d, HH:mm", Date(model.timestamp)).toString()
+    val timestamp = DateFormat.format("MMM d, HH:mm", Date(model.timestamp)).toString().capitalize()
     val text = if (model.song == null) model.event?.getDescription(context) ?: model.text else ""
 
-    private fun Long.format() = DateFormat.format("EEEE, MMMM d", Date(this))
+    private fun Long.format() = DateFormat.format("EEEE, MMMM d", Date(this)).toString().capitalize()
 
     private fun Day.getDescription(context: Context) = if (description.isEmpty()) "" else when (type) {
         Day.REHEARSAL -> context.getString(R.string.rehearsal_starts_from, description)

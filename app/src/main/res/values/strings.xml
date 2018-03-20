@@ -100,13 +100,13 @@
     <string name="event_reminders">Event reminders</string>
     <string name="push_events_enabled">You will receive notifications before gigs, rehearsals and meetups (work in progress).</string>
     <string name="push_events_disabled">You will not receive any event notifications.</string>
+    <string name="about">About the app</string>
+    <string name="check_for_updates">Check for updates</string>
+    <string name="app_version">The current version is v%s</string>
     <string name="account">Account</string>
     <string name="sign_out">Sign out</string>
     <string name="sign_out_description">Deauthenticate with your Google account</string>
     <string name="sign_out_confirmation_title">Are you sure?</string>
     <string name="sign_out_confirmation_message">Are you sure you want to sign out of the application?</string>
-    <string name="about">About</string>
-    <string name="check_for_updates">Check for updates</string>
-    <string name="app_version">The current version is v%s</string>
 
 </resources>

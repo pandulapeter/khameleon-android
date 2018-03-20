@@ -194,7 +194,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
 
     private fun sendNotification(user: User, message: String) = messageRepository.notificationsDatabase
         .push()
-        .setValue("${user.name}: $message")
+        .setValue("${user.getFormattedName()}: $message")
 
     private fun scrollToBottom() {
         binding.recyclerView.smoothScrollToPosition(messageAdapter.itemCount)

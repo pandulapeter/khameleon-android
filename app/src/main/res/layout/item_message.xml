@@ -29,7 +29,8 @@
             android:contentDescription="@{viewModel.name}"
             app:avatar="@{viewModel.avatar}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/name"
@@ -43,7 +44,8 @@
             android:textColor="@{viewModel.nameColor}"
             app:layout_constraintEnd_toStartOf="@+id/date"
             app:layout_constraintStart_toEndOf="@id/avatar"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/full_names" />
 
         <TextView
             android:id="@id/date"
@@ -54,7 +56,8 @@
             android:text="@{viewModel.timestamp}"
             android:textSize="@dimen/text_small"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/name" />
+            app:layout_constraintTop_toTopOf="@id/name"
+            tools:text="@tools:sample/date/hhmm" />
 
         <ImageView
             android:id="@id/icon"
@@ -76,10 +79,10 @@
             android:text="@{viewModel.text}"
             android:textColorLink="@{viewModel.linkColor}"
             android:visibility="@{!TextUtils.isEmpty(viewModel.text)}"
-            app:layout_constraintEnd_toEndOf="@id/name"
-            app:layout_constraintStart_toEndOf="@id/avatar"
+            app:layout_constraintEnd_toStartOf="@id/icon"
             app:layout_constraintStart_toStartOf="@id/name"
-            app:layout_constraintTop_toBottomOf="@id/name" />
+            app:layout_constraintTop_toBottomOf="@id/name"
+            tools:text="@tools:sample/lorem" />
 
     </android.support.constraint.ConstraintLayout>
 

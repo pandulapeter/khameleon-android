@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!--suppress AndroidUnknownAttribute -->
     <data class=".SongItemBinding">
@@ -15,7 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?attr/selectableItemBackground"
-        app:cardBackgroundColor="@{viewModel.song.isHighlighted ? @color/accent : @color/white}">
+        app:cardBackgroundColor="@{viewModel.song.isHighlighted ? @color/accent : @color/white}"
+        tools:cardBackgroundColor="@color/white">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -54,12 +56,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/content_padding"
                 android:fontFamily="sans-serif-medium"
-                android:text="@{viewModel.key}"
+                android:gravity="center"
+                android:text="@{viewModel.keyAndBpm}"
                 android:textColor="@color/primary"
-                android:textSize="@dimen/text_large"
+                android:textSize="@dimen/text_small"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/lyrics"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Key\n(BPM)" />
 
             <TextView
                 android:id="@id/title"
@@ -70,7 +74,8 @@
                 app:layout_constraintEnd_toStartOf="@id/key"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:title="@{viewModel.song.title}" />
+                app:title="@{viewModel.song.title}"
+                tools:text="@tools:sample/lorem" />
 
         </android.support.constraint.ConstraintLayout>
 

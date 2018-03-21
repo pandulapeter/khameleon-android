@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!--suppress AndroidUnknownAttribute -->
     <data class=".SongsFragmentBinding">
@@ -20,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="@dimen/list_bottom_padding" />
+            android:paddingBottom="@dimen/list_bottom_padding"
+            tools:listitem="@layout/item_song" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floating_action_button"

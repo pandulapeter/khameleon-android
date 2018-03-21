@@ -37,4 +37,5 @@
             app:layout_behavior="com.pandulapeter.khameleon.feature.home.chat.SnackbarBehavior" />
 
     </android.support.design.widget.CoordinatorLayout>
+
 </layout>

@@ -31,7 +31,7 @@
                 app:mcv_leftArrowMask="@drawable/ic_navigate_previous_24dp"
                 app:mcv_monthLabels="@array/calendar_months"
                 app:mcv_rightArrowMask="@drawable/ic_navigate_next_24dp"
-                app:mcv_showOtherDates="all"
+                app:mcv_showOtherDates="other_months"
                 app:mcv_titleAnimationOrientation="horizontal"
                 app:mcv_weekDayLabels="@array/calendar_days"
                 app:mcv_weekDayTextAppearance="@style/CalendarDay" />

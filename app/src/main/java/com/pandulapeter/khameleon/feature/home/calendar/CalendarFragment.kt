@@ -22,6 +22,8 @@ import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.integration.AppShortcutManager
+import com.pandulapeter.khameleon.util.color
+import com.pandulapeter.khameleon.util.drawable
 import com.pandulapeter.khameleon.util.showSnackbar
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
@@ -66,31 +68,48 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
                 widget.clearSelection()
             }
         }
-        fun getDecorator(type: Int, @DrawableRes resourceId: Int) = object : DayViewDecorator {
-            private val span = IconSpan(view.context, resourceId)
+        val sizeSpan = AbsoluteSizeSpan(0)
 
-            override fun shouldDecorate(day: CalendarDay?) = getDayType(day) == type
+        fun getDayType(day: CalendarDay?) = events.find { it.timestamp.normalize() == day?.calendar?.timeInMillis?.normalize() }?.type ?: Day.EMPTY
 
-            override fun decorate(view: DayViewFacade?) {
-                context?.let {
-                    view?.addSpan(AbsoluteSizeSpan(0))
-                    view?.addSpan(span)
-                }
+        fun getDisabledDecorator(type: Int, @DrawableRes resourceId: Int) = object : DayViewDecorator {
+            private val span = IconSpan(view.context.drawable(resourceId)?.mutate()?.apply {
+                setTint(view.context.color(R.color.disabled))
+            } ?: throw IllegalStateException("Drawable cannot be null"))
+
+            override fun shouldDecorate(day: CalendarDay) = day.isBefore(today) && getDayType(day) == type
+
+            override fun decorate(view: DayViewFacade) = view.run {
+                addSpan(sizeSpan)
+                addSpan(span)
+            }
+        }
+
+        fun getEnabledDecorator(type: Int, @DrawableRes resourceId: Int) = object : DayViewDecorator {
+            private val span = IconSpan(view.context.drawable(resourceId) ?: throw IllegalStateException("Drawable cannot be null"))
+
+            override fun shouldDecorate(day: CalendarDay) = !day.isBefore(today) && getDayType(day) == type
+
+            override fun decorate(view: DayViewFacade) = view.run {
+                addSpan(sizeSpan)
+                addSpan(span)
             }
         }
 
         binding.calendarView.addDecorators(
             object : DayViewDecorator {
-                override fun shouldDecorate(day: CalendarDay?) = day == today
+                override fun shouldDecorate(day: CalendarDay) = day == today
 
-                override fun decorate(view: DayViewFacade?) {
-                    view?.addSpan(TextAppearanceSpan(context, R.style.CalendarToday))
-                }
+                override fun decorate(view: DayViewFacade) = view.addSpan(TextAppearanceSpan(context, R.style.CalendarToday))
             },
-            getDecorator(Day.BUSY, R.drawable.ic_day_busy_24dp),
-            getDecorator(Day.REHEARSAL, R.drawable.ic_day_rehearsal_24dp),
-            getDecorator(Day.GIG, R.drawable.ic_day_gig_24dp),
-            getDecorator(Day.MEETUP, R.drawable.ic_day_meetup_24dp)
+            getDisabledDecorator(Day.BUSY, R.drawable.ic_day_busy_24dp),
+            getEnabledDecorator(Day.BUSY, R.drawable.ic_day_busy_24dp),
+            getDisabledDecorator(Day.REHEARSAL, R.drawable.ic_day_rehearsal_24dp),
+            getEnabledDecorator(Day.REHEARSAL, R.drawable.ic_day_rehearsal_24dp),
+            getDisabledDecorator(Day.GIG, R.drawable.ic_day_gig_24dp),
+            getEnabledDecorator(Day.GIG, R.drawable.ic_day_gig_24dp),
+            getDisabledDecorator(Day.MEETUP, R.drawable.ic_day_meetup_24dp),
+            getEnabledDecorator(Day.MEETUP, R.drawable.ic_day_meetup_24dp)
         )
     }
 
@@ -130,8 +149,6 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     override fun onError(e: DatabaseError) = binding.root.showSnackbar(R.string.something_went_wrong)
 
     override fun onTextEntered(text: String, day: Day) = updateDay(day.apply { description = text })
-
-    private fun getDayType(day: CalendarDay?) = events.find { it.timestamp.normalize() == day?.calendar?.timeInMillis?.normalize() }?.type ?: Day.EMPTY
 
     private fun updateEvents() {
         if (!isInvalidationScheduled) {

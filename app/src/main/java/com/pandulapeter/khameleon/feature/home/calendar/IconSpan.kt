@@ -1,16 +1,13 @@
 package com.pandulapeter.khameleon.feature.home.calendar
 
-import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.support.annotation.DrawableRes
+import android.graphics.drawable.Drawable
 import android.text.style.LineBackgroundSpan
-import com.pandulapeter.khameleon.util.drawable
 
 
-class IconSpan(context: Context, @DrawableRes resourceId: Int) : LineBackgroundSpan {
+class IconSpan(private val drawable: Drawable) : LineBackgroundSpan {
 
-    private val drawable = context.drawable(resourceId)
 
     override fun drawBackground(
         canvas: Canvas, paint: Paint,
@@ -18,14 +15,14 @@ class IconSpan(context: Context, @DrawableRes resourceId: Int) : LineBackgroundS
         charSequence: CharSequence,
         start: Int, end: Int, lineNum: Int
     ) {
-        drawable?.let {
-            it.setBounds(
-                (right / 2) - (it.intrinsicWidth / 2),
-                (bottom / 2) - (it.intrinsicHeight / 2),
-                (right / 2) + (it.intrinsicWidth / 2),
-                (bottom / 2) + (it.intrinsicHeight / 2)
+        drawable.run {
+            setBounds(
+                (right / 2) - (intrinsicWidth / 2),
+                (bottom / 2) - (intrinsicHeight / 2),
+                (right / 2) + (intrinsicWidth / 2),
+                (bottom / 2) + (intrinsicHeight / 2)
             )
-            it.draw(canvas)
+            draw(canvas)
         }
     }
 }

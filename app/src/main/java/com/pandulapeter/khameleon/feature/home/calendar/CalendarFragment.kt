@@ -2,6 +2,8 @@ package com.pandulapeter.khameleon.feature.home.calendar
 
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.support.annotation.DrawableRes
+import android.text.style.AbsoluteSizeSpan
 import android.text.style.TextAppearanceSpan
 import android.view.View
 import com.firebase.ui.common.ChangeEventType
@@ -57,13 +59,32 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
                 widget.clearSelection()
             }
         }
-        binding.calendarView.addDecorator(object : DayViewDecorator {
-            override fun shouldDecorate(day: CalendarDay?) = day?.calendar?.timeInMillis == today.calendar.timeInMillis
+        fun getDecorator(type: Int, @DrawableRes resourceId: Int) = object : DayViewDecorator {
+            private val span = IconSpan(view.context, resourceId)
+
+            override fun shouldDecorate(day: CalendarDay?) = getDayType(day) == type
 
             override fun decorate(view: DayViewFacade?) {
-                view?.addSpan(TextAppearanceSpan(context, R.style.CalendarToday))
+                context?.let {
+                    view?.addSpan(AbsoluteSizeSpan(0))
+                    view?.addSpan(span)
+                }
             }
-        })
+        }
+
+        binding.calendarView.addDecorators(
+            object : DayViewDecorator {
+                override fun shouldDecorate(day: CalendarDay?) = day == today
+
+                override fun decorate(view: DayViewFacade?) {
+                    view?.addSpan(TextAppearanceSpan(context, R.style.CalendarToday))
+                }
+            },
+            getDecorator(Day.BUSY, R.drawable.ic_day_busy_24dp),
+            getDecorator(Day.REHEARSAL, R.drawable.ic_day_rehearsal_24dp),
+            getDecorator(Day.GIG, R.drawable.ic_day_gig_24dp),
+            getDecorator(Day.MEETUP, R.drawable.ic_day_meetup_24dp)
+        )
     }
 
     override fun onStart() {
@@ -103,20 +124,9 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
 
     override fun onTextEntered(text: String, day: Day) = updateDay(day.apply { description = text })
 
-    private fun updateEvents() {
-//        binding.calendarView.setEvents(events.map {
-//            EventDay(
-//                Calendar.getInstance().apply { timeInMillis = it.timestamp.normalize() },
-//                when (it.type) {
-//                    Day.BUSY -> R.drawable.ic_day_busy_24dp
-//                    Day.GIG -> R.drawable.ic_day_gig_24dp
-//                    Day.MEETUP -> R.drawable.ic_day_meetup_24dp
-//                    Day.REHEARSAL -> R.drawable.ic_day_rehearsal_24dp
-//                    else -> 0
-//                }
-//            )
-//        })
-    }
+    private fun getDayType(day: CalendarDay?) = events.find { it.timestamp.normalize() == day?.calendar?.timeInMillis?.normalize() }?.type ?: Day.EMPTY
+
+    private fun updateEvents() = binding.calendarView.invalidateDecorators()
 
     private fun updateDay(day: Day) {
         day.timestamp = day.timestamp.normalize()

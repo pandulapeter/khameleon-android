@@ -94,9 +94,7 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
         positiveButton.isEnabled = areInputsValid()
     }
 
-    private fun areInputsValid() = binding.artistInputField.text.trim().isNotEmpty()
-            && binding.titleInputField.text.trim().isNotEmpty()
-            && binding.keyInputField.text.trim().isNotEmpty()
+    private fun areInputsValid() = binding.artistInputField.text.trim().isNotEmpty() && binding.titleInputField.text.trim().isNotEmpty()
 
     interface OnSongEnteredListener {
         fun onSongEntered(song: Song, autoOrder: Boolean, isUpdate: Boolean)

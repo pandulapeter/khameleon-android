@@ -2,6 +2,7 @@ package com.pandulapeter.khameleon.feature.home.calendar
 
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.TextAppearanceSpan
@@ -72,12 +73,12 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
 
         fun getDayType(day: CalendarDay?) = events.find { it.timestamp.normalize() == day?.calendar?.timeInMillis?.normalize() }?.type ?: Day.EMPTY
 
-        fun getDisabledDecorator(type: Int, @DrawableRes resourceId: Int) = object : DayViewDecorator {
+        class Decorator(@DrawableRes resourceId: Int, @ColorRes color: Int, private val shouldDecorateCallback: (CalendarDay) -> Boolean) : DayViewDecorator {
             private val span = IconSpan(view.context.drawable(resourceId)?.mutate()?.apply {
-                setTint(view.context.color(R.color.disabled))
+                setTint(view.context.color(color))
             } ?: throw IllegalStateException("Drawable cannot be null"))
 
-            override fun shouldDecorate(day: CalendarDay) = day.isBefore(today) && getDayType(day) == type
+            override fun shouldDecorate(day: CalendarDay) = shouldDecorateCallback(day)
 
             override fun decorate(view: DayViewFacade) = view.run {
                 addSpan(sizeSpan)
@@ -85,16 +86,11 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
             }
         }
 
-        fun getEnabledDecorator(type: Int, @DrawableRes resourceId: Int) = object : DayViewDecorator {
-            private val span = IconSpan(view.context.drawable(resourceId) ?: throw IllegalStateException("Drawable cannot be null"))
+        fun getDisabledDecorator(type: Int, @DrawableRes resourceId: Int) = Decorator(resourceId, R.color.disabled) { it.isBefore(today) && getDayType(it) == type }
 
-            override fun shouldDecorate(day: CalendarDay) = !day.isBefore(today) && getDayType(day) == type
+        fun getEnabledDecorator(type: Int, @DrawableRes resourceId: Int) = Decorator(resourceId, R.color.primary) { it.isAfter(today) && getDayType(it) == type }
 
-            override fun decorate(view: DayViewFacade) = view.run {
-                addSpan(sizeSpan)
-                addSpan(span)
-            }
-        }
+        fun getTodayDecorator(type: Int, @DrawableRes resourceId: Int) = Decorator(resourceId, R.color.accent) { it == today && getDayType(it) == type }
 
         binding.calendarView.addDecorators(
             object : DayViewDecorator {
@@ -104,12 +100,16 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
             },
             getDisabledDecorator(Day.BUSY, R.drawable.ic_day_busy_24dp),
             getEnabledDecorator(Day.BUSY, R.drawable.ic_day_busy_24dp),
+            getTodayDecorator(Day.BUSY, R.drawable.ic_day_busy_24dp),
             getDisabledDecorator(Day.REHEARSAL, R.drawable.ic_day_rehearsal_24dp),
             getEnabledDecorator(Day.REHEARSAL, R.drawable.ic_day_rehearsal_24dp),
+            getTodayDecorator(Day.REHEARSAL, R.drawable.ic_day_rehearsal_24dp),
             getDisabledDecorator(Day.GIG, R.drawable.ic_day_gig_24dp),
             getEnabledDecorator(Day.GIG, R.drawable.ic_day_gig_24dp),
+            getTodayDecorator(Day.GIG, R.drawable.ic_day_gig_24dp),
             getDisabledDecorator(Day.MEETUP, R.drawable.ic_day_meetup_24dp),
-            getEnabledDecorator(Day.MEETUP, R.drawable.ic_day_meetup_24dp)
+            getEnabledDecorator(Day.MEETUP, R.drawable.ic_day_meetup_24dp),
+            getTodayDecorator(Day.MEETUP, R.drawable.ic_day_meetup_24dp)
         )
     }
 

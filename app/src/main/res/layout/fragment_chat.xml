@@ -25,21 +25,23 @@
             android:paddingBottom="@dimen/list_bottom_padding"
             tools:listitem="@layout/item_message" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floating_action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/large_content_padding"
-            app:srcCompat="@drawable/ic_chat_24dp" />
+        <com.github.ag.floatingactionmenu.OptionsFabLayout
+            android:id="@+id/floating_action_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:color="@color/accent"
+            app:layout_behavior="com.pandulapeter.khameleon.feature.home.chat.SnackbarBehavior"
+            app:options_color="@color/primary"
+            app:options_menu="@menu/chat"
+            app:src="@drawable/ic_add_24dp" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:transitionGroup="true"
             android:visibility="@{viewModel.newMessagesVisibility}"
-            app:layout_anchor="@id/floating_action_button"
-            app:layout_anchorGravity="center_vertical">
+            app:layout_behavior="com.pandulapeter.khameleon.feature.home.chat.SnackbarBehavior">
 
             <android.support.v7.widget.CardView
                 android:id="@+id/new_messages_indicator"

@@ -20,6 +20,7 @@
 
     <!-- Chat -->
     <string name="new_message">New message</string>
+    <string name="thumbs_up">Send a like</string>
     <string name="enter_your_message">Enter your message</string>
     <string name="this_is_an_announcement">This is an announcement</string>
     <string name="send">Send</string>

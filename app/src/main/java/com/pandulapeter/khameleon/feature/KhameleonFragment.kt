@@ -27,4 +27,6 @@ abstract class KhameleonFragment<B : ViewDataBinding, out VM : KhameleonViewMode
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         activity?.let { it.title = it.getString(title) }
     }
+
+    open fun onBackPressed() = false
 }

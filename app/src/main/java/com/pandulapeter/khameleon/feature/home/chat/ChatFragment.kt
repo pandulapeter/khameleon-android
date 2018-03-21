@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.Toast
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -95,9 +96,16 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             messageToEdit = it.messageToEdit
         }
         linearLayoutManager = LinearLayoutManager(context).apply { stackFromEnd = true }
-        binding.floatingActionButton.setOnClickListener {
-            messageToEdit = null
-            MessageInputDialogFragment.show(childFragmentManager, R.string.new_message, R.string.send)
+        binding.floatingActionMenu.setMainFabOnClickListener { binding.floatingActionMenu.closeOptionsMenu() }
+        binding.floatingActionMenu.setMiniFabSelectedListener {
+            when (it.itemId) {
+                R.id.thumbs_up -> Toast.makeText(context, "Thumbs up", Toast.LENGTH_SHORT).show()
+                R.id.new_message -> {
+                    messageToEdit = null
+                    MessageInputDialogFragment.show(childFragmentManager, R.string.new_message, R.string.send)
+                }
+            }
+            binding.floatingActionMenu.closeOptionsMenu()
         }
         binding.recyclerView.run {
             layoutManager = linearLayoutManager
@@ -127,6 +135,13 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     override fun onStop() {
         super.onStop()
         messageAdapter.stopListening()
+    }
+
+    override fun onBackPressed() = if (binding.floatingActionMenu.isOptionsMenuOpened) {
+        binding.floatingActionMenu.closeOptionsMenu()
+        true
+    } else {
+        false
     }
 
     override fun onTextEntered(text: String, isImportant: Boolean) {

@@ -7,11 +7,11 @@ import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
-import android.util.Log
 import com.pandulapeter.khameleon.HomeActivityBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.PreferenceRepository
+import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.feature.home.calendar.CalendarFragment
 import com.pandulapeter.khameleon.feature.home.chat.ChatFragment
 import com.pandulapeter.khameleon.feature.home.settings.SettingsFragment
@@ -55,7 +55,6 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        Log.d("HELLO", "onNewIntent: ${intent?.item}")
         when (intent?.item) {
             AppShortcutManager.CHAT_ID -> openChatScreen()
             AppShortcutManager.CALENDAR_ID -> openCalendarScreen()
@@ -64,7 +63,11 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
         }
     }
 
-    override fun onBackPressed() = supportFinishAfterTransition()
+    override fun onBackPressed() {
+        if ((supportFragmentManager.findFragmentById(R.id.fragment_container) as? KhameleonFragment<*, *>)?.onBackPressed() != true) {
+            supportFinishAfterTransition()
+        }
+    }
 
     private fun updateDisplayedFragment(@IdRes id: Int) {
         when (id) {

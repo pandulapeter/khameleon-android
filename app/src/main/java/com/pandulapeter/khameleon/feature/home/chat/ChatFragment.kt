@@ -102,6 +102,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         binding.recyclerView.run {
             layoutManager = linearLayoutManager
             adapter = messageAdapter
+            setHasFixedSize(true)
             context?.let { addItemDecoration(DividerItemDecoration(it)) }
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {

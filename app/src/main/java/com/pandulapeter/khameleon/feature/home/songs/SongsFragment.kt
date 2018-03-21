@@ -58,6 +58,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
         binding.recyclerView.run {
             layoutManager = linearLayoutManager
             adapter = songAdapter
+            setHasFixedSize(true)
             context?.let { addItemDecoration(SpacesItemDecoration(it.dimension(R.dimen.content_padding))) }
             ItemTouchHelper(object : ElevationItemTouchHelperCallback((context?.dimension(R.dimen.content_padding) ?: 0).toFloat()) {
 

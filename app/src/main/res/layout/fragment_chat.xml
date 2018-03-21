@@ -25,15 +25,42 @@
             android:paddingBottom="@dimen/list_bottom_padding"
             tools:listitem="@layout/item_message" />
 
-        <com.github.ag.floatingactionmenu.OptionsFabLayout
+        <com.github.clans.fab.FloatingActionMenu
             android:id="@+id/floating_action_menu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:color="@color/accent"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/content_padding"
             app:layout_behavior="com.pandulapeter.khameleon.feature.home.chat.SnackbarBehavior"
-            app:options_color="@color/primary"
-            app:options_menu="@menu/chat"
-            app:src="@drawable/ic_add_24dp" />
+            app:menu_backgroundColor="@color/overlay"
+            app:menu_colorNormal="@color/accent"
+            app:menu_colorPressed="@color/accent"
+            app:menu_fab_size="normal"
+            app:menu_icon="@drawable/ic_add_24dp"
+            app:menu_openDirection="up"
+            app:menu_showShadow="true">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/thumbs_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_thumbs_up_24dp"
+                app:fab_label="@string/thumbs_up"
+                app:fab_size="mini"
+                app:fab_colorNormal="@color/primary"
+                app:fab_colorPressed="@color/primary" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/new_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_chat_24dp"
+                app:fab_label="@string/new_message"
+                app:fab_size="mini"
+                app:fab_colorNormal="@color/primary"
+                app:fab_colorPressed="@color/primary" />
+
+        </com.github.clans.fab.FloatingActionMenu>
 
         <FrameLayout
             android:layout_width="match_parent"

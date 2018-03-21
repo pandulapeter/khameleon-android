@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/large_content_padding"
+            android:layout_margin="@dimen/content_padding"
             app:srcCompat="@drawable/ic_add_24dp" />
 
     </android.support.design.widget.CoordinatorLayout>

@@ -96,16 +96,15 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             messageToEdit = it.messageToEdit
         }
         linearLayoutManager = LinearLayoutManager(context).apply { stackFromEnd = true }
-        binding.floatingActionMenu.setMainFabOnClickListener { binding.floatingActionMenu.closeOptionsMenu() }
-        binding.floatingActionMenu.setMiniFabSelectedListener {
-            when (it.itemId) {
-                R.id.thumbs_up -> Toast.makeText(context, "Thumbs up", Toast.LENGTH_SHORT).show()
-                R.id.new_message -> {
-                    messageToEdit = null
-                    MessageInputDialogFragment.show(childFragmentManager, R.string.new_message, R.string.send)
-                }
-            }
-            binding.floatingActionMenu.closeOptionsMenu()
+        binding.floatingActionMenu.setClosedOnTouchOutside(true)
+        binding.thumbsUp.setOnClickListener {
+            Toast.makeText(context, "Thumbs up", Toast.LENGTH_SHORT).show()
+            closeFloatingActionMenu()
+        }
+        binding.newMessage.setOnClickListener {
+            messageToEdit = null
+            MessageInputDialogFragment.show(childFragmentManager, R.string.new_message, R.string.send)
+            closeFloatingActionMenu()
         }
         binding.recyclerView.run {
             layoutManager = linearLayoutManager
@@ -137,8 +136,8 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         messageAdapter.stopListening()
     }
 
-    override fun onBackPressed() = if (binding.floatingActionMenu.isOptionsMenuOpened) {
-        binding.floatingActionMenu.closeOptionsMenu()
+    override fun onBackPressed() = if (binding.floatingActionMenu.isOpened) {
+        closeFloatingActionMenu()
         true
     } else {
         false
@@ -235,5 +234,9 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         } else {
             false
         }
+    }
+
+    private fun closeFloatingActionMenu() {
+        binding.floatingActionMenu.close(true)
     }
 }

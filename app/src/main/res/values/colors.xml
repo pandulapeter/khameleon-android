@@ -9,5 +9,6 @@
     <color name="disabled">#c0c0c0</color>
     <color name="light">#808080</color>
     <color name="dark">#404040</color>
+    <color name="overlay">#80ffffff</color>
 
 </resources>

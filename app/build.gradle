@@ -88,7 +88,7 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
 
     // Floating action menu
-    implementation "com.github.arthurghazaryan:floatingactionmenu:1.0.0"
+    implementation "com.github.clans:fab:1.6.4"
 
     // Calendar
     implementation "com.prolificinteractive:material-calendarview:1.4.3"

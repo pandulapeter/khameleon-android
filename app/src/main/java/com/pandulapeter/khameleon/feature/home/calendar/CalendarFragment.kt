@@ -2,6 +2,7 @@ package com.pandulapeter.khameleon.feature.home.calendar
 
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.text.style.TextAppearanceSpan
 import android.view.View
 import com.firebase.ui.common.ChangeEventType
 import com.firebase.ui.database.ChangeEventListener
@@ -21,6 +22,8 @@ import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.integration.AppShortcutManager
 import com.pandulapeter.khameleon.util.showSnackbar
 import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.DayViewDecorator
+import com.prolificinteractive.materialcalendarview.DayViewFacade
 import org.koin.android.ext.android.inject
 import java.util.*
 
@@ -44,7 +47,8 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         appShortcutManager.onCalendarOpened()
-        binding.calendarView.state().edit().setMinimumDate(CalendarDay.today()).commit()
+        val today = CalendarDay.today()
+        binding.calendarView.state().edit().setMinimumDate(today).commit()
         binding.calendarView.setOnDateChangedListener { widget, date, selected ->
             if (selected) {
                 DayDetailBottomSheetFragment.show(
@@ -53,6 +57,13 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
                 widget.clearSelection()
             }
         }
+        binding.calendarView.addDecorator(object : DayViewDecorator {
+            override fun shouldDecorate(day: CalendarDay?) = day?.calendar?.timeInMillis == today.calendar.timeInMillis
+
+            override fun decorate(view: DayViewFacade?) {
+                view?.addSpan(TextAppearanceSpan(context, R.style.CalendarToday))
+            }
+        })
     }
 
     override fun onStart() {

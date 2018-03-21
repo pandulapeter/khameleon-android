@@ -75,6 +75,7 @@
             android:id="@+id/text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/content_padding"
             android:autoLink="all"
             android:text="@{viewModel.text}"
             android:textColorLink="@{viewModel.linkColor}"

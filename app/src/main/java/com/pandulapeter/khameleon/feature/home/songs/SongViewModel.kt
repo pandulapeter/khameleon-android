@@ -5,8 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.support.customtabs.CustomTabsIntent
+import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.model.Song
+import com.pandulapeter.khameleon.util.color
 import java.net.URLEncoder
+
 
 class SongViewModel(val song: Song) {
 
@@ -25,19 +29,19 @@ class SongViewModel(val song: Song) {
             try {
                 context.startActivity(getYouTubeIntent("com.google.android.youtube", fullTitle))
             } catch (_: ActivityNotFoundException) {
-                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com/#q=" + URLEncoder.encode(fullTitle, "UTF-8"))).apply { flags = multiWindowFlags })
+                openInCustomTab(context, Uri.parse("http://www.google.com/#q=" + URLEncoder.encode(fullTitle, "UTF-8")))
             }
         }
     }
 
-    fun onLyricsButtonClicked(context: Context) {
-        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com/#q=" + URLEncoder.encode("$fullTitle lyrics", "UTF-8"))).apply {
-            flags = multiWindowFlags
-        })
-    }
+    fun onLyricsButtonClicked(context: Context) = openInCustomTab(context, Uri.parse("http://www.google.com/#q=" + URLEncoder.encode("$fullTitle lyrics", "UTF-8")))
 
     private fun getYouTubeIntent(packageName: String, query: String) = Intent(Intent.ACTION_SEARCH).apply {
         `package` = packageName
         flags = multiWindowFlags
     }.putExtra("query", query)
+
+    private fun openInCustomTab(context: Context, uri: Uri) = CustomTabsIntent.Builder()
+        .setToolbarColor(context.color(R.color.primary))
+        .build().launchUrl(context, uri)
 }

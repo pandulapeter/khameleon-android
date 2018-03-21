@@ -45,6 +45,13 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     private val userRepository by inject<UserRepository>()
     private val appShortcutManager by inject<AppShortcutManager>()
     private val events = FirebaseArray(calendarRepository.calendarDatabase, ClassSnapshotParser(Day::class.java))
+    private var isInvalidationScheduled = false
+    private val invalidateRunnable = Runnable {
+        if (isAdded) {
+            binding.calendarView.invalidateDecorators()
+        }
+        isInvalidationScheduled = false
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -126,7 +133,13 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
 
     private fun getDayType(day: CalendarDay?) = events.find { it.timestamp.normalize() == day?.calendar?.timeInMillis?.normalize() }?.type ?: Day.EMPTY
 
-    private fun updateEvents() = binding.calendarView.invalidateDecorators()
+    private fun updateEvents() {
+        if (!isInvalidationScheduled) {
+            isInvalidationScheduled = true
+            binding.calendarView.postDelayed(invalidateRunnable, 100)
+        }
+
+    }
 
     private fun updateDay(day: Day) {
         day.timestamp = day.timestamp.normalize()

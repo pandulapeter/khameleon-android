@@ -83,14 +83,12 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:3.2.2'
 
     // Image loading
-    def glideVersion = "4.3.0"
-    //noinspection GradleDependency
+    def glideVersion = "4.6.1"
     implementation "com.github.bumptech.glide:glide:$glideVersion"
-    //noinspection GradleDependency
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
 
     // Calendar
-    implementation "com.applandeo:material-calendar-view:1.4.0"
+    implementation "com.prolificinteractive:material-calendarview:1.4.3"
 
     // Crash reporting
     compile('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') { transitive = true }

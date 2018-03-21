@@ -45,14 +45,16 @@
     <string name="gig_at">The concert will be at %s.</string>
 
     <!-- Calendar -->
-    <string name="material_calendar_monday">Mon</string>
-    <string name="material_calendar_tuesday">Tue</string>
-    <string name="material_calendar_wednesday">Wed</string>
-    <string name="material_calendar_thursday">Thu</string>
-    <string name="material_calendar_friday">Fri</string>
-    <string name="material_calendar_saturday">Sat</string>
-    <string name="material_calendar_sunday">Sun</string>
-    <array name="material_calendar_months_array">
+    <array name="calendar_days">
+        <item>Sun</item>
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+    </array>
+    <array name="calendar_months">
         <item>January</item>
         <item>February</item>
         <item>March</item>

@@ -45,14 +45,16 @@
     <string name="gig_at">Concertul va fi în %s.</string>
 
     <!-- Calendar -->
-    <string name="material_calendar_monday">Lun</string>
-    <string name="material_calendar_tuesday">Mar</string>
-    <string name="material_calendar_wednesday">Mie</string>
-    <string name="material_calendar_thursday">Joi</string>
-    <string name="material_calendar_friday">Vin</string>
-    <string name="material_calendar_saturday">Sâm</string>
-    <string name="material_calendar_sunday">Dum</string>
-    <array name="material_calendar_months_array">
+    <array name="calendar_days">
+        <item>Dum</item>
+        <item>Lun</item>
+        <item>Mar</item>
+        <item>Mie</item>
+        <item>Joi</item>
+        <item>Vin</item>
+        <item>Sâm</item>
+    </array>
+    <array name="calendar_months">
         <item>Ianuarie</item>
         <item>Februarie</item>
         <item>Martie</item>

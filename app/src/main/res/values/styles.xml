@@ -33,4 +33,8 @@
         <item name="android:textColor">@color/primary</item>
     </style>
 
+    <style name="CalendarDay" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
 </resources>

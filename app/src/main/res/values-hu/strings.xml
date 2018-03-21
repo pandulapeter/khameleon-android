@@ -45,14 +45,16 @@
     <string name="gig_at">Helyszín: %s.</string>
 
     <!-- Calendar -->
-    <string name="material_calendar_monday">Hét</string>
-    <string name="material_calendar_tuesday">Ked</string>
-    <string name="material_calendar_wednesday">Sze</string>
-    <string name="material_calendar_thursday">Csü</string>
-    <string name="material_calendar_friday">Pén</string>
-    <string name="material_calendar_saturday">Szo</string>
-    <string name="material_calendar_sunday">Vas</string>
-    <array name="material_calendar_months_array">
+    <array name="calendar_days">
+        <item>Vas</item>
+        <item>Hét</item>
+        <item>Ked</item>
+        <item>Sze</item>
+        <item>Csü</item>
+        <item>Pén</item>
+        <item>Szo</item>
+    </array>
+    <array name="calendar_months">
         <item>Január</item>
         <item>Február</item>
         <item>Március</item>

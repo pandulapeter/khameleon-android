@@ -3,7 +3,6 @@ package com.pandulapeter.khameleon.feature.home.calendar
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.View
-import com.applandeo.materialcalendarview.EventDay
 import com.firebase.ui.common.ChangeEventType
 import com.firebase.ui.database.ChangeEventListener
 import com.firebase.ui.database.ClassSnapshotParser
@@ -21,6 +20,7 @@ import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.integration.AppShortcutManager
 import com.pandulapeter.khameleon.util.showSnackbar
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import org.koin.android.ext.android.inject
 import java.util.*
 
@@ -45,16 +45,17 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         appShortcutManager.onCalendarOpened()
-        val yesterday = Calendar.getInstance().apply { timeInMillis -= ONE_DAY }
-        binding.calendarView.setMinimumDate(yesterday)
-        binding.calendarView.showCurrentMonthPage()
-        binding.calendarView.setOnDayClickListener { eventDay ->
-            if (eventDay.calendar.after(yesterday)) {
-                DayDetailBottomSheetFragment.show(
-                    childFragmentManager,
-                    events.findLast { it.timestamp.normalize() == eventDay.calendar.timeInMillis.normalize() } ?: Day(eventDay.calendar.timeInMillis.normalize()))
-            }
-        }
+        binding.calendarView.selectionMode = MaterialCalendarView.SELECTION_MODE_NONE
+//        val yesterday = Calendar.getInstance().apply { timeInMillis -= ONE_DAY }
+//        binding.calendarView.setMinimumDate(yesterday)
+//        binding.calendarView.showCurrentMonthPage()
+//        binding.calendarView.setOnDayClickListener { eventDay ->
+//            if (eventDay.calendar.after(yesterday)) {
+//                DayDetailBottomSheetFragment.show(
+//                    childFragmentManager,
+//                    events.findLast { it.timestamp.normalize() == eventDay.calendar.timeInMillis.normalize() } ?: Day(eventDay.calendar.timeInMillis.normalize()))
+//            }
+//        }
     }
 
     override fun onStart() {
@@ -95,18 +96,18 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     override fun onTextEntered(text: String, day: Day) = updateDay(day.apply { description = text })
 
     private fun updateEvents() {
-        binding.calendarView.setEvents(events.map {
-            EventDay(
-                Calendar.getInstance().apply { timeInMillis = it.timestamp.normalize() },
-                when (it.type) {
-                    Day.BUSY -> R.drawable.ic_day_busy_24dp
-                    Day.GIG -> R.drawable.ic_day_gig_24dp
-                    Day.MEETUP -> R.drawable.ic_day_meetup_24dp
-                    Day.REHEARSAL -> R.drawable.ic_day_rehearsal_24dp
-                    else -> 0
-                }
-            )
-        })
+//        binding.calendarView.setEvents(events.map {
+//            EventDay(
+//                Calendar.getInstance().apply { timeInMillis = it.timestamp.normalize() },
+//                when (it.type) {
+//                    Day.BUSY -> R.drawable.ic_day_busy_24dp
+//                    Day.GIG -> R.drawable.ic_day_gig_24dp
+//                    Day.MEETUP -> R.drawable.ic_day_meetup_24dp
+//                    Day.REHEARSAL -> R.drawable.ic_day_rehearsal_24dp
+//                    else -> 0
+//                }
+//            )
+//        })
     }
 
     private fun updateDay(day: Day) {

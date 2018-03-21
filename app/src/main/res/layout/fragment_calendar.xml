@@ -21,16 +21,19 @@
             android:fillViewport="true"
             android:scrollbars="none">
 
-            <com.applandeo.materialcalendarview.CalendarView
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                 android:id="@+id/calendar_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:abbreviationsLabelsColor="@color/primary"
-                app:forwardButtonSrc="@drawable/ic_navigate_next_24dp"
-                app:headerColor="@color/white"
-                app:headerLabelColor="@color/primary"
-                app:previousButtonSrc="@drawable/ic_navigate_previous_24dp"
-                app:todayLabelColor="@color/accent" />
+                app:mcv_arrowColor="@color/primary"
+                app:mcv_firstDayOfWeek="monday"
+                app:mcv_leftArrowMask="@drawable/ic_navigate_previous_24dp"
+                app:mcv_monthLabels="@array/calendar_months"
+                app:mcv_rightArrowMask="@drawable/ic_navigate_next_24dp"
+                app:mcv_selectionColor="@color/accent"
+                app:mcv_titleAnimationOrientation="horizontal"
+                app:mcv_weekDayLabels="@array/calendar_days"
+                app:mcv_weekDayTextAppearance="@style/CalendarDay" />
 
         </ScrollView>
 

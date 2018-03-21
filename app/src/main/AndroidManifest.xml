@@ -17,6 +17,7 @@
 
         <activity
             android:name=".feature.authentication.AuthenticationActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
 
             <intent-filter>
@@ -29,6 +30,7 @@
         <activity
             android:name=".feature.home.HomeActivity"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
 
         <service

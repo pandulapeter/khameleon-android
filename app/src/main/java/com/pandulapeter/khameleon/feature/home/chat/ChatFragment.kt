@@ -15,8 +15,10 @@ import com.pandulapeter.khameleon.data.model.User
 import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
+import com.pandulapeter.khameleon.feature.home.HomeActivity
 import com.pandulapeter.khameleon.feature.home.shared.AlertDialogFragment
 import com.pandulapeter.khameleon.util.BundleArgumentDelegate
+import com.pandulapeter.khameleon.util.consume
 import com.pandulapeter.khameleon.util.showSnackbar
 import org.koin.android.ext.android.inject
 import java.util.*
@@ -57,7 +59,14 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             }
         },
         onErrorCallback = { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } },
-        onItemClickedCallback = { message ->
+        onItemClickedCallback = {
+            when {
+                it.song != null -> consume { (activity as? HomeActivity)?.openSongsScreen() }
+                it.event != null -> consume { (activity as? HomeActivity)?.openCalendarScreen() }
+                else -> false
+            }
+        },
+        onItemLongClickedCallback = { message ->
             userRepository.getSignedInUser()?.let { user ->
                 if (message.sender?.id == user.id) {
                     if (message.event != null || message.song != null) {

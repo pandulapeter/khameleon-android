@@ -25,7 +25,7 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
             messageRepository.setPushNotificationsEnabled(preferenceRepository.chatNotifications)
-            supportFragmentManager.handleReplace { ChatFragment() }
+            openChatScreen()
         }
         binding.bottomNavigation.setOnNavigationItemSelectedListener {
             consume {
@@ -39,8 +39,22 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
         }
     }
 
-    override fun onBackPressed() {
-        supportFinishAfterTransition()
+    override fun onBackPressed() = supportFinishAfterTransition()
+
+    fun openChatScreen() {
+        binding.bottomNavigation.selectedItemId = R.id.chat
+    }
+
+    fun openCalendarScreen() {
+        binding.bottomNavigation.selectedItemId = R.id.calendar
+    }
+
+    fun openSongsScreen() {
+        binding.bottomNavigation.selectedItemId = R.id.songs
+    }
+
+    fun openSettingsScreen() {
+        binding.bottomNavigation.selectedItemId = R.id.settings
     }
 
     private inline fun <reified T : Fragment> FragmentManager.handleReplace(crossinline newInstance: () -> T) {

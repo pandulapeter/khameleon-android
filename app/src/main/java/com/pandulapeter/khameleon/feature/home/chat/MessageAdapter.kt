@@ -15,10 +15,18 @@ class MessageAdapter(
     options: FirebaseRecyclerOptions<Message>,
     private val onDataChangedCallback: () -> Unit,
     private val onErrorCallback: (String) -> Unit,
-    private val onItemClickedCallback: (Message) -> Unit
+    private val onItemClickedCallback: (Message) -> Boolean,
+    private val onItemLongClickedCallback: (Message) -> Unit
 ) : FirebaseRecyclerAdapter<Message, MessageAdapter.MessageViewHolder>(options) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MessageViewHolder.create(parent) { onItemClickedCallback(getItem(it)) }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MessageViewHolder.create(
+        parent,
+        {
+            if (!onItemClickedCallback(getItem(it))) {
+                onItemLongClickedCallback(getItem(it))
+            }
+        },
+        { onItemLongClickedCallback(getItem(it)) })
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int, model: Message) {
         holder.messageViewModel = MessageViewModel(model, holder.itemView.context)
@@ -28,7 +36,11 @@ class MessageAdapter(
 
     override fun onError(error: DatabaseError) = onErrorCallback(error.message)
 
-    class MessageViewHolder(private val binding: MessageItemBinding, private val onItemClicked: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
+    class MessageViewHolder(
+        private val binding: MessageItemBinding,
+        private val onItemClicked: (Int) -> Unit,
+        private val onItemLongClicked: (Int) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         var messageViewModel
             get() = binding.viewModel
@@ -37,10 +49,17 @@ class MessageAdapter(
             }
 
         init {
-            binding.root.setOnLongClickListener {
+            binding.root.setOnClickListener {
                 adapterPosition.let {
                     if (it != RecyclerView.NO_POSITION) {
                         onItemClicked(it)
+                    }
+                }
+            }
+            binding.root.setOnLongClickListener {
+                adapterPosition.let {
+                    if (it != RecyclerView.NO_POSITION) {
+                        onItemLongClicked(it)
                         true
                     } else false
                 }
@@ -48,8 +67,15 @@ class MessageAdapter(
         }
 
         companion object {
-            fun create(parent: ViewGroup, onItemClicked: (Int) -> Unit) =
-                MessageViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_message, parent, false), onItemClicked)
+            fun create(
+                parent: ViewGroup,
+                onItemClicked: (Int) -> Unit,
+                onItemLongClicked: (Int) -> Unit
+            ) = MessageViewHolder(
+                DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_message, parent, false),
+                onItemClicked,
+                onItemLongClicked
+            )
         }
     }
 }

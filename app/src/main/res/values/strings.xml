@@ -5,6 +5,7 @@
     <string name="khameleon">Khameleon</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="something_went_wrong_reason">Something went wrong (%s)</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
     <!-- Authentication -->
@@ -22,7 +23,6 @@
     <string name="enter_your_message">Enter your message</string>
     <string name="this_is_an_announcement">This is an announcement</string>
     <string name="send">Send</string>
-    <string name="edit">Edit</string>
     <string name="new_messages">New messages</string>
     <string name="message_modification_error_automatic">You cannot modify automatic messages</string>
     <string name="message_modification_error">You can only modify your own messages</string>

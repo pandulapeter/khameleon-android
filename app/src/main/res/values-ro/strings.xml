@@ -22,7 +22,7 @@
     <string name="enter_your_message">Introdu mesajul</string>
     <string name="this_is_an_announcement">Anunț important</string>
     <string name="send">Trimite</string>
-    <string name="edit">Editare</string>
+    <string name="ok">Editare</string>
     <string name="new_messages">Mesaje noi</string>
     <string name="message_modification_error_automatic">Nu poți modifica mesajele automate</string>
     <string name="message_modification_error">Poți modifica doar mesajele tale</string>

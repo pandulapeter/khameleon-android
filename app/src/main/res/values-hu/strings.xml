@@ -22,7 +22,7 @@
     <string name="enter_your_message">Írd be az üzeneted</string>
     <string name="this_is_an_announcement">Kiemenlten fontos</string>
     <string name="send">Küldés</string>
-    <string name="edit">Szerkesztés</string>
+    <string name="ok">Szerkesztés</string>
     <string name="new_messages">Új üzenetek</string>
     <string name="message_modification_error_automatic">Nem módosíthatsz rendszerüzeneteket</string>
     <string name="message_modification_error">Csak a saját üzeneteidet módosíthatod</string>

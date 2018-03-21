@@ -150,7 +150,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         messageToEdit = message
         messageRepository.workInProgressMessageText = message.text
         messageRepository.workInProgressMessageImportant = message.isImportant
-        MessageInputDialogFragment.show(childFragmentManager, R.string.edit_message, R.string.edit)
+        MessageInputDialogFragment.show(childFragmentManager, R.string.edit_message, R.string.ok)
     }
 
     override fun onDeleteSelected(message: Message) {

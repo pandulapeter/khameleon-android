@@ -25,7 +25,7 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
             messageRepository.setPushNotificationsEnabled(preferenceRepository.chatNotifications)
-            openChatScreen()
+            supportFragmentManager.handleReplace { ChatFragment() }
         }
         binding.bottomNavigation.setOnNavigationItemSelectedListener {
             consume {

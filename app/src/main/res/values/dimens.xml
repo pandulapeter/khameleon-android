@@ -12,6 +12,7 @@
     <dimen name="drawable_padding">24dp</dimen>
 
     <dimen name="text_small">10sp</dimen>
+    <dimen name="text_medium">12sp</dimen>
     <dimen name="text_large">16sp</dimen>
 
 </resources>

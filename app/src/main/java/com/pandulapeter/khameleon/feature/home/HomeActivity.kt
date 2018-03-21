@@ -7,6 +7,7 @@ import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
+import android.util.Log
 import com.pandulapeter.khameleon.HomeActivityBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.repository.ChatRepository
@@ -54,6 +55,7 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
+        Log.d("HELLO", "onNewIntent: ${intent?.item}")
         when (intent?.item) {
             AppShortcutManager.CHAT_ID -> openChatScreen()
             AppShortcutManager.CALENDAR_ID -> openCalendarScreen()

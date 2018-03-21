@@ -28,6 +28,7 @@
 
         <activity
             android:name=".feature.home.HomeActivity"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="adjustNothing" />
 
         <service

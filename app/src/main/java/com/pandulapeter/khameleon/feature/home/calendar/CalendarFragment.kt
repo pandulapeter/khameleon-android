@@ -20,7 +20,7 @@ import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.integration.AppShortcutManager
 import com.pandulapeter.khameleon.util.showSnackbar
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import com.prolificinteractive.materialcalendarview.CalendarDay
 import org.koin.android.ext.android.inject
 import java.util.*
 
@@ -31,7 +31,6 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
 
     companion object {
         private const val TIME_FORMAT = "%02d:%02d"
-        private const val ONE_DAY = 24 * 60 * 60 * 1000
     }
 
     override val viewModel = CalendarViewModel()
@@ -45,17 +44,15 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         appShortcutManager.onCalendarOpened()
-        binding.calendarView.selectionMode = MaterialCalendarView.SELECTION_MODE_NONE
-//        val yesterday = Calendar.getInstance().apply { timeInMillis -= ONE_DAY }
-//        binding.calendarView.setMinimumDate(yesterday)
-//        binding.calendarView.showCurrentMonthPage()
-//        binding.calendarView.setOnDayClickListener { eventDay ->
-//            if (eventDay.calendar.after(yesterday)) {
-//                DayDetailBottomSheetFragment.show(
-//                    childFragmentManager,
-//                    events.findLast { it.timestamp.normalize() == eventDay.calendar.timeInMillis.normalize() } ?: Day(eventDay.calendar.timeInMillis.normalize()))
-//            }
-//        }
+        binding.calendarView.state().edit().setMinimumDate(CalendarDay.today()).commit()
+        binding.calendarView.setOnDateChangedListener { widget, date, selected ->
+            if (selected) {
+                DayDetailBottomSheetFragment.show(
+                    childFragmentManager,
+                    events.findLast { it.timestamp.normalize() == date.calendar.timeInMillis.normalize() } ?: Day(date.calendar.timeInMillis.normalize()))
+                widget.clearSelection()
+            }
+        }
     }
 
     override fun onStart() {

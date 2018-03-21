@@ -26,11 +26,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:mcv_arrowColor="@color/primary"
+                app:mcv_dateTextAppearance="@style/CalendarDate"
                 app:mcv_firstDayOfWeek="monday"
                 app:mcv_leftArrowMask="@drawable/ic_navigate_previous_24dp"
                 app:mcv_monthLabels="@array/calendar_months"
                 app:mcv_rightArrowMask="@drawable/ic_navigate_next_24dp"
-                app:mcv_selectionColor="@color/accent"
+                app:mcv_showOtherDates="all"
                 app:mcv_titleAnimationOrientation="horizontal"
                 app:mcv_weekDayLabels="@array/calendar_days"
                 app:mcv_weekDayTextAppearance="@style/CalendarDay" />

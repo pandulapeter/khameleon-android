@@ -37,4 +37,8 @@
         <item name="android:textColor">@color/primary</item>
     </style>
 
+    <style name="CalendarDate" parent="TextAppearance.MaterialCalendarWidget.Date">
+        <item name="android:textColor">@color/date</item>
+    </style>
+
 </resources>

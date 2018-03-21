@@ -4,10 +4,7 @@ import android.app.Application
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.google.firebase.database.FirebaseDatabase
-import com.pandulapeter.khameleon.injection.calendarModule
-import com.pandulapeter.khameleon.injection.chatModule
-import com.pandulapeter.khameleon.injection.songsModule
-import com.pandulapeter.khameleon.injection.userModule
+import com.pandulapeter.khameleon.injection.*
 import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.startKoin
 
@@ -24,6 +21,6 @@ class KhameleonApplication : Application() {
             ).build()
         )
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
-        startKoin(this, listOf(userModule, chatModule, calendarModule, songsModule))
+        startKoin(this, listOf(integrationModule, userModule, chatModule, calendarModule, songsModule))
     }
 }

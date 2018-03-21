@@ -12,6 +12,7 @@ import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.feature.authentication.AuthenticationActivity
 import com.pandulapeter.khameleon.feature.home.shared.AlertDialogFragment
+import com.pandulapeter.khameleon.integration.AppShortcutManager
 import com.pandulapeter.khameleon.util.onPropertyChanged
 import org.koin.android.ext.android.inject
 
@@ -21,6 +22,7 @@ class SettingsFragment : KhameleonFragment<SettingsFragmentBinding, SettingsView
     private val preferenceRepository by inject<PreferenceRepository>()
     private val userRepository by inject<UserRepository>()
     private val messageRepository by inject<ChatRepository>()
+    private val appShortcutManager by inject<AppShortcutManager>()
     override val viewModel = SettingsViewModel(
         preferenceRepository.chatNotifications,
         preferenceRepository.eventNotifications,
@@ -30,6 +32,7 @@ class SettingsFragment : KhameleonFragment<SettingsFragmentBinding, SettingsView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        appShortcutManager.onSettingsOpened()
         binding.signOut.setOnClickListener {
             AlertDialogFragment.show(
                 childFragmentManager,

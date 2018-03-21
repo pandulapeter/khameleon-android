@@ -17,6 +17,7 @@ import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.feature.home.HomeActivity
 import com.pandulapeter.khameleon.feature.home.shared.AlertDialogFragment
+import com.pandulapeter.khameleon.integration.AppShortcutManager
 import com.pandulapeter.khameleon.util.BundleArgumentDelegate
 import com.pandulapeter.khameleon.util.consume
 import com.pandulapeter.khameleon.util.showSnackbar
@@ -44,6 +45,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     private var myChange = false
     private val userRepository by inject<UserRepository>()
     private val messageRepository by inject<ChatRepository>()
+    private val appShortcutManager by inject<AppShortcutManager>()
     private lateinit var linearLayoutManager: LinearLayoutManager
     private val messageAdapter = MessageAdapter(
         options = FirebaseRecyclerOptions.Builder<Message>().setQuery(messageRepository.chatDatabase.limitToLast(MESSAGE_LIMIT), Message::class.java).build(),
@@ -87,6 +89,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        appShortcutManager.onChatOpened()
         savedInstanceState?.let {
             messageToDelete = it.messageToDelete
             messageToEdit = it.messageToEdit

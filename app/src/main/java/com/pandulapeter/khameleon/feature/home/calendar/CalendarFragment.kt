@@ -19,6 +19,7 @@ import com.pandulapeter.khameleon.data.repository.CalendarRepository
 import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
+import com.pandulapeter.khameleon.integration.AppShortcutManager
 import com.pandulapeter.khameleon.util.showSnackbar
 import org.koin.android.ext.android.inject
 import java.util.*
@@ -38,10 +39,12 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     private val calendarRepository by inject<CalendarRepository>()
     private val chatRepository by inject<ChatRepository>()
     private val userRepository by inject<UserRepository>()
+    private val appShortcutManager by inject<AppShortcutManager>()
     private val events = FirebaseArray(calendarRepository.calendarDatabase, ClassSnapshotParser(Day::class.java))
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        appShortcutManager.onCalendarOpened()
         val yesterday = Calendar.getInstance().apply { timeInMillis -= ONE_DAY }
         binding.calendarView.setMinimumDate(yesterday)
         binding.calendarView.showCurrentMonthPage()

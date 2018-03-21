@@ -22,6 +22,7 @@ import com.pandulapeter.khameleon.data.repository.SongRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.feature.home.chat.MessageViewModel
+import com.pandulapeter.khameleon.integration.AppShortcutManager
 import com.pandulapeter.khameleon.util.consume
 import com.pandulapeter.khameleon.util.dimension
 import com.pandulapeter.khameleon.util.showSnackbar
@@ -36,6 +37,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
     private val songsRepository by inject<SongRepository>()
     private val chatRepository by inject<ChatRepository>()
     private val userRepository by inject<UserRepository>()
+    private val appShortcutManager by inject<AppShortcutManager>()
     private lateinit var linearLayoutManager: LinearLayoutManager
     private val songAdapter = SongAdapter(
         options = FirebaseRecyclerOptions.Builder<Song>().setQuery(songsRepository.songsDarabase.orderByChild("order"), Song::class.java).build(),
@@ -50,6 +52,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        appShortcutManager.onSongsOpened()
         linearLayoutManager = LinearLayoutManager(context)
         binding.floatingActionButton.setOnClickListener { SongInputDialogFragment.show(childFragmentManager, R.string.new_song, R.string.add) }
         binding.recyclerView.run {

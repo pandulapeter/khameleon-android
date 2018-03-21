@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.Toast
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -98,7 +97,8 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         linearLayoutManager = LinearLayoutManager(context).apply { stackFromEnd = true }
         binding.floatingActionMenu.setClosedOnTouchOutside(true)
         binding.thumbsUp.setOnClickListener {
-            Toast.makeText(context, "Thumbs up", Toast.LENGTH_SHORT).show()
+            messageToEdit = null
+            onTextEntered("\uD83D\uDC4D", false)
             closeFloatingActionMenu()
         }
         binding.newMessage.setOnClickListener {

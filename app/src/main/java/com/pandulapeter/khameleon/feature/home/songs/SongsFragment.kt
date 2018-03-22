@@ -41,10 +41,31 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
     private val userRepository by inject<UserRepository>()
     private val appShortcutManager by inject<AppShortcutManager>()
     private lateinit var linearLayoutManager: LinearLayoutManager
+    private val itemTouchHelper: ItemTouchHelper = ItemTouchHelper(object : ElevationItemTouchHelperCallback((context?.dimension(R.dimen.content_padding) ?: 0).toFloat()) {
+
+        override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?) =
+            makeMovementFlags(
+                if (songAdapter.itemCount > 1 && isEditModeEnabled) ItemTouchHelper.UP or ItemTouchHelper.DOWN else 0,
+                if (isEditModeEnabled) ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
+            )
+
+        override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?) = consume {
+            viewHolder?.adapterPosition?.let { originalPosition ->
+                target?.adapterPosition?.let { targetPosition ->
+                    swapSongsInPlaylist(originalPosition, targetPosition)
+                }
+            }
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+            viewHolder?.adapterPosition?.let { position -> deleteSong(songAdapter.getItem(position)) }
+        }
+    })
     private val songAdapter = SongAdapter(
         options = FirebaseRecyclerOptions.Builder<Song>().setQuery(songsRepository.songsDarabase.orderByChild("order"), Song::class.java).build(),
         onErrorCallback = { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } },
-        onItemClickedCallback = { SongInputDialogFragment.show(childFragmentManager, R.string.edit_song, R.string.ok, it) }
+        onItemClickedCallback = { SongInputDialogFragment.show(childFragmentManager, R.string.edit_song, R.string.ok, it) },
+        onItemTouchedCallback = { itemTouchHelper.startDrag(binding.recyclerView.findViewHolderForAdapterPosition(it)) }
     )
     private var editMenuItem: MenuItem? = null
     private var isEditModeEnabled = false
@@ -64,32 +85,18 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
         super.onViewCreated(view, savedInstanceState)
         appShortcutManager.onSongsOpened()
         linearLayoutManager = LinearLayoutManager(context)
-        binding.floatingActionButton.setOnClickListener { SongInputDialogFragment.show(childFragmentManager, R.string.new_song, R.string.add) }
+        binding.floatingActionButton.setOnClickListener {
+            SongInputDialogFragment.show(childFragmentManager, R.string.new_song, R.string.add)
+            if (isEditModeEnabled) {
+                isEditModeEnabled = false
+            }
+        }
         binding.recyclerView.run {
             layoutManager = linearLayoutManager
             adapter = songAdapter
             setHasFixedSize(true)
             context?.let { addItemDecoration(SpacesItemDecoration(it.dimension(R.dimen.content_padding))) }
-            ItemTouchHelper(object : ElevationItemTouchHelperCallback((context?.dimension(R.dimen.content_padding) ?: 0).toFloat()) {
-
-                override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?) =
-                    makeMovementFlags(
-                        if (adapter.itemCount > 1 && isEditModeEnabled) ItemTouchHelper.UP or ItemTouchHelper.DOWN else 0,
-                        if (isEditModeEnabled) ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
-                    )
-
-                override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?) = consume {
-                    viewHolder?.adapterPosition?.let { originalPosition ->
-                        target?.adapterPosition?.let { targetPosition ->
-                            swapSongsInPlaylist(originalPosition, targetPosition)
-                        }
-                    }
-                }
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-                    viewHolder?.adapterPosition?.let { position -> deleteSong(songAdapter.getItem(position)) }
-                }
-            }).attachToRecyclerView(this)
+            itemTouchHelper.attachToRecyclerView(this)
         }
     }
 

@@ -14,7 +14,6 @@ import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.SongsFragmentBinding
 import com.pandulapeter.khameleon.data.model.Message
 import com.pandulapeter.khameleon.data.model.Song
@@ -149,6 +148,11 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
         super.onStop()
         songAdapter.stopListening()
     }
+
+    override fun onBackPressed() = if (isEditModeEnabled) {
+        isEditModeEnabled = false
+        true
+    } else false
 
     override fun onSongEntered(song: Song, autoOrder: Boolean, isUpdate: Boolean) {
         if (!isEditModeEnabled) {

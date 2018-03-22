@@ -25,6 +25,7 @@ import com.pandulapeter.khameleon.feature.home.chat.MessageViewModel
 import com.pandulapeter.khameleon.integration.AppShortcutManager
 import com.pandulapeter.khameleon.util.consume
 import com.pandulapeter.khameleon.util.dimension
+import com.pandulapeter.khameleon.util.drawable
 import com.pandulapeter.khameleon.util.showSnackbar
 import org.koin.android.ext.android.inject
 import java.util.*
@@ -44,6 +45,12 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
         onErrorCallback = { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } },
         onItemClickedCallback = { SongInputDialogFragment.show(childFragmentManager, R.string.edit_song, R.string.ok, it) }
     )
+    private var editMenuItem: MenuItem? = null
+    private var isEditModeEnabled = false
+        set(value) {
+            field = value
+            editMenuItem?.icon = context?.drawable(if (value) R.drawable.ic_close_24dp else R.drawable.ic_edit_24dp)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +70,10 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
             ItemTouchHelper(object : ElevationItemTouchHelperCallback((context?.dimension(R.dimen.content_padding) ?: 0).toFloat()) {
 
                 override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?) =
-                    makeMovementFlags(if (adapter.itemCount > 1) ItemTouchHelper.UP or ItemTouchHelper.DOWN else 0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
+                    makeMovementFlags(
+                        if (adapter.itemCount > 1 && isEditModeEnabled) ItemTouchHelper.UP or ItemTouchHelper.DOWN else 0,
+                        if (isEditModeEnabled) ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
+                    )
 
                 override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?) = consume {
                     viewHolder?.adapterPosition?.let { originalPosition ->
@@ -82,6 +92,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.songs, menu)
+        editMenuItem = menu?.findItem(R.id.edit)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {
@@ -97,6 +108,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
                 type = "text/plain"
             }.putExtra(Intent.EXTRA_TEXT, text), getString(R.string.export_list)))
         }
+        R.id.edit -> consume { isEditModeEnabled = !isEditModeEnabled }
         else -> super.onOptionsItemSelected(item)
     }
 

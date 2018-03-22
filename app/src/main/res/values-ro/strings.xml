@@ -82,6 +82,7 @@
 
     <!-- Songs -->
     <string name="export_list">Exportare ca listă</string>
+    <string name="edit">Editare</string>
     <string name="play">Ascultă</string>
     <string name="lyrics">Versuri</string>
     <string name="new_song">Piesă nouă</string>

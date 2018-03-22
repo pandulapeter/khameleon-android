@@ -43,7 +43,8 @@ class SongAdapter(
         { onItemTouchedCallback(it) })
 
     override fun onBindViewHolder(holder: SongViewHolder, position: Int, model: Song) {
-        holder.model = SongViewModel(model)
+        val actualSong = if (isInEditMode) localListCopy?.get(position) ?: model else model
+        holder.model = SongViewModel(actualSong)
         holder.isInEditMode = isInEditMode
     }
 

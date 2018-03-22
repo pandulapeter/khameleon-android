@@ -46,7 +46,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
         override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?) =
             makeMovementFlags(
                 if (songAdapter.itemCount > 1 && isEditModeEnabled) ItemTouchHelper.UP or ItemTouchHelper.DOWN else 0,
-                if (isEditModeEnabled) ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
+                if (!isEditModeEnabled) ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
             )
 
         override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?) = consume {
@@ -141,17 +141,19 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
     }
 
     override fun onSongEntered(song: Song, autoOrder: Boolean, isUpdate: Boolean) {
-        if (isUpdate) {
-            updateSong(song)
-        } else {
-            songsRepository.songsDarabase.push().setValue(song.apply {
-                if (autoOrder) {
-                    order = -1//if (songAdapter.itemCount == 0) 0 else songAdapter.getItem(songAdapter.itemCount - 1).order + 1
-                }
-            })
-            sendAutomaticChatMessage(song, true)
+        if (!isEditModeEnabled) {
+            if (isUpdate) {
+                updateSong(song)
+            } else {
+                songsRepository.songsDarabase.push().setValue(song.apply {
+                    if (autoOrder) {
+                        order = -1//if (songAdapter.itemCount == 0) 0 else songAdapter.getItem(songAdapter.itemCount - 1).order + 1
+                    }
+                })
+                sendAutomaticChatMessage(song, true)
+            }
+            binding.recyclerView.smoothScrollToPosition(Math.max(0, song.order))
         }
-        binding.recyclerView.smoothScrollToPosition(Math.max(0, song.order))
     }
 
     private fun deleteSong(song: Song) {
@@ -166,7 +168,11 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
                         if (it.hasChildren()) {
                             it.children.iterator().next().ref.removeValue()
                             sendAutomaticChatMessage(song, false)
-                            context?.let { binding.root.showSnackbar(it.getString(R.string.song_deleted, song.title)) { onSongEntered(song, false, false) } }
+                            context?.let {
+                                binding.root.showSnackbar(it.getString(R.string.song_deleted, song.title)) {
+                                    onSongEntered(song, false, false)
+                                }
+                            }
                             return
                         }
                     }

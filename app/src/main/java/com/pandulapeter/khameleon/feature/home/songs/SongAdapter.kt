@@ -26,7 +26,7 @@ class SongAdapter(
         set(value) {
             if (field != value) {
                 field = value
-                notifyDataSetChanged()
+                notifyItemRangeChanged(0, itemCount)
             }
         }
 

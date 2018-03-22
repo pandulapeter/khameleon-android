@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,10 @@ abstract class KhameleonFragment<B : ViewDataBinding, out VM : KhameleonViewMode
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        activity?.let { it.title = it.getString(title) }
+        activity?.let {
+            it.title = it.getString(title)
+            (it as? AppCompatActivity)?.supportActionBar?.subtitle = null
+        }
     }
 
     open fun onBackPressed() = false

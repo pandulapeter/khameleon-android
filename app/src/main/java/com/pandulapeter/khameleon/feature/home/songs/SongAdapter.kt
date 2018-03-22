@@ -3,6 +3,7 @@ package com.pandulapeter.khameleon.feature.home.songs
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.firebase.ui.common.ChangeEventType
 import com.firebase.ui.database.FirebaseRecyclerAdapter
@@ -19,11 +20,19 @@ class SongAdapter(
     private val onItemClickedCallback: (Song) -> Unit
 ) : FirebaseRecyclerAdapter<Song, SongAdapter.SongViewHolder>(options) {
     private var allowNotifyEvents = true
+    var isInEditMode = false
+        set(value) {
+            if (field != value) {
+                field = value
+                notifyDataSetChanged()
+            }
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = SongViewHolder.create(parent) { onItemClickedCallback(getItem(it)) }
 
     override fun onBindViewHolder(holder: SongViewHolder, position: Int, model: Song) {
         holder.model = SongViewModel(model)
+        holder.isInEditMode = isInEditMode
     }
 
     override fun onChildChanged(type: ChangeEventType, snapshot: DataSnapshot, newIndex: Int, oldIndex: Int) {
@@ -36,11 +45,16 @@ class SongAdapter(
 
     override fun onError(error: DatabaseError) = onErrorCallback(error.message)
 
-    class SongViewHolder(
-        private val binding: SongItemBinding,
-        private val onItemClicked: (Int) -> Unit
-    ) : RecyclerView.ViewHolder(binding.root) {
+    class SongViewHolder(private val binding: SongItemBinding, private val onItemClicked: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
 
+        var isInEditMode = false
+            set(value) {
+                field = value
+                val visibility = if (value) View.GONE else View.VISIBLE
+                binding.play.visibility = visibility
+                binding.lyrics.visibility = visibility
+                binding.key.visibility = visibility
+            }
         var model
             get() = binding.viewModel
             set(value) {
@@ -50,7 +64,7 @@ class SongAdapter(
         init {
             binding.root.setOnClickListener {
                 adapterPosition.let {
-                    if (it != RecyclerView.NO_POSITION) {
+                    if (it != RecyclerView.NO_POSITION && !isInEditMode) {
                         onItemClicked(it)
                     }
                 }

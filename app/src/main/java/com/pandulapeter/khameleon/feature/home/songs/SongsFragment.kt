@@ -2,6 +2,7 @@ package com.pandulapeter.khameleon.feature.home.songs
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -50,6 +51,8 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
         set(value) {
             field = value
             editMenuItem?.icon = context?.drawable(if (value) R.drawable.ic_close_24dp else R.drawable.ic_edit_24dp)
+            songAdapter.isInEditMode = value
+            (activity as? AppCompatActivity)?.supportActionBar?.subtitle = if (value) context?.getString(R.string.edit_mode) else null
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,6 +96,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.songs, menu)
         editMenuItem = menu?.findItem(R.id.edit)
+        isEditModeEnabled = isEditModeEnabled
     }
 
     override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {
@@ -115,6 +119,11 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
     override fun onStart() {
         super.onStart()
         songAdapter.startListening()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isEditModeEnabled = false
     }
 
     override fun onStop() {

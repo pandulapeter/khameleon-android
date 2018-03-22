@@ -80,7 +80,6 @@ class GiphyApiHelper(private val apiKey: String, private val limit: Int, private
                     val images = gif.getJSONObject("images")
                     val previewImage = images.getJSONObject("downsized_still")
                     val previewGif = images.getJSONObject(PREVIEW_SIZE[previewSize])
-                    val originalSize = images.getJSONObject("original")
                     var downsized: JSONObject? = null
 
                     // Return the highest quality GIF under MaxSizeLimit.
@@ -96,15 +95,7 @@ class GiphyApiHelper(private val apiKey: String, private val limit: Int, private
                     }
 
                     if (downsized != null) {
-                        gifList.add(
-                            Gif(
-                                name,
-                                previewImage.getString("url"),
-                                previewGif.getString("url"),
-                                downsized.getString("url"),
-                                originalSize.getString("mp4")
-                            )
-                        )
+                        gifList.add(Gif(name, previewImage.getString("url"), previewGif.getString("url")))
                     }
                 }
 
@@ -120,22 +111,15 @@ class GiphyApiHelper(private val apiKey: String, private val limit: Int, private
         }
 
         @Throws(UnsupportedEncodingException::class)
-        protected open fun buildSearchUrl(query: String?): String {
-            return "http://api.giphy.com/v1/gifs/search?q=" + URLEncoder.encode(query, "UTF-8") + "&limit=" + limit + "&api_key=" + apiKey
-        }
+        protected open fun buildSearchUrl(query: String?) =
+            "http://api.giphy.com/v1/gifs/search?q=" + URLEncoder.encode(query, "UTF-8") + "&limit=" + limit + "&api_key=" + apiKey
 
-        private fun getResponseText(inStream: InputStream): String {
-            return Scanner(inStream).useDelimiter("\\A").next()
-        }
+        private fun getResponseText(inStream: InputStream) = Scanner(inStream).useDelimiter("\\A").next()
     }
 
-    class Gif(name: String, previewImage: String, previewGif: String, gifUrl: String, mp4Url: String) {
+    class Gif(name: String, previewImage: String, previewGif: String) {
         var name = URLDecoder.decode(name, "UTF-8")
         var previewImage = URLDecoder.decode(previewImage, "UTF-8")
         var previewGif = URLDecoder.decode(previewGif, "UTF-8")
-        var gifUrl = URLDecoder.decode(gifUrl, "UTF-8")
-        var mp4Url = URLDecoder.decode(mp4Url, "UTF-8")
-        var previewDownloaded = false
-        var gifDownloaded = false
     }
 }

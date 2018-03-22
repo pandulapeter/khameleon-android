@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.util.setGifUrl
-import xyz.klinker.giphy.R
 
 class GiphyAdapter(private val callback: GiphyAdapter.Callback) : RecyclerView.Adapter<GiphyAdapter.GifViewHolder>() {
     private val gifs = mutableListOf<GiphyApiHelper.Gif>()
@@ -16,7 +16,7 @@ class GiphyAdapter(private val callback: GiphyAdapter.Callback) : RecyclerView.A
         fun onClick(item: GiphyApiHelper.Gif)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = GifViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_item_gif, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = GifViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_image_giphy, parent, false))
 
     override fun onBindViewHolder(holder: GifViewHolder, position: Int) {
         holder.bind(gifs[position])
@@ -31,11 +31,9 @@ class GiphyAdapter(private val callback: GiphyAdapter.Callback) : RecyclerView.A
     }
 
     inner class GifViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val gifIv = itemView.findViewById<ImageView>(R.id.gif)
-        private val gifPreview = itemView.findViewById<ImageView>(R.id.gifpreview)
+        private val gifPreview = itemView.findViewById<ImageView>(R.id.gif)
 
         fun bind(gif: GiphyApiHelper.Gif) {
-            gifIv.visibility = View.GONE
             setGifUrl(gifPreview, gif.previewGif)
             gifPreview.setOnClickListener { callback.onClick(gif) }
         }

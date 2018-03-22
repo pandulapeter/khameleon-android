@@ -2,6 +2,8 @@ package com.pandulapeter.khameleon.feature.authentication
 
 import android.content.Intent
 import android.os.Bundle
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.firebase.ui.common.ChangeEventType
 import com.firebase.ui.database.ChangeEventListener
 import com.firebase.ui.database.ClassSnapshotParser
@@ -17,7 +19,6 @@ import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.home.HomeActivity
 import com.pandulapeter.khameleon.feature.shared.KhameleonActivity
-import com.pandulapeter.khameleon.util.GlideApp
 import com.pandulapeter.khameleon.util.showSnackbar
 import org.koin.android.ext.android.inject
 
@@ -41,9 +42,9 @@ class AuthenticationActivity : KhameleonActivity<AuthenticationActivityBinding>(
             messageRepository.setPushNotificationsEnabled(false)
             binding.signInButton.setSize(SignInButton.SIZE_WIDE)
             binding.signInButton.setOnClickListener { startActivityForResult(userRepository.getSignInIntent(), AUTHENTICATION_REQUEST) }
-            GlideApp.with(this)
+            Glide.with(this)
                 .load(BACKGROUND_IMAGE_URL)
-                .centerCrop()
+                .apply(RequestOptions.circleCropTransform())
                 .into(binding.logo)
         } else {
             startHomeScreen()

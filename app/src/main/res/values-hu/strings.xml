@@ -20,6 +20,7 @@
     <!-- Chat -->
     <string name="new_message">Új üzenet</string>
     <string name="thumbs_up">Like küldése</string>
+    <string name="send_gif">GIF küldése</string>
     <string name="enter_your_message">Írd be az üzeneted</string>
     <string name="this_is_an_announcement">Kiemenlten fontos</string>
     <string name="send">Küldés</string>

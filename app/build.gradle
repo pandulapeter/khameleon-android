@@ -83,9 +83,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:3.2.2'
 
     // Image loading
-    def glideVersion = "4.6.1"
-    implementation "com.github.bumptech.glide:glide:$glideVersion"
-    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+    implementation "com.klinkerapps:giphy:1.1.0"
 
     // Floating action menu
     implementation "com.github.clans:fab:1.6.4"

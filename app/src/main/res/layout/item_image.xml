@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--suppress AndroidUnknownAttribute -->
+    <data class=".ImageItemBinding">
+
+        <variable
+            name="viewModel"
+            type="com.pandulapeter.khameleon.feature.home.chat.ImageViewModel" />
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackground"
+        android:padding="@dimen/content_padding">
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/avatar_size"
+            android:layout_height="@dimen/avatar_size"
+            android:layout_marginStart="@dimen/content_padding"
+            android:contentDescription="@{viewModel.name}"
+            app:avatar="@{viewModel.avatar}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/content_padding"
+            android:layout_marginStart="@dimen/large_content_padding"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center_vertical"
+            android:text="@{viewModel.name}"
+            android:textColor="@{viewModel.nameColor}"
+            app:layout_constraintEnd_toStartOf="@+id/date"
+            app:layout_constraintStart_toEndOf="@id/avatar"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/full_names" />
+
+        <TextView
+            android:id="@id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/content_padding"
+            android:fontFamily="sans-serif-thin"
+            android:text="@{viewModel.timestamp}"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/name"
+            tools:text="@tools:sample/date/hhmm" />
+
+        <ImageView
+            android:id="@+id/gif"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/content_padding"
+            app:gifUrl="@{viewModel.gifUrl}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/name"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            tools:ignore="ContentDescription"
+            tools:src="@tools:sample/avatars" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

@@ -1,5 +1,7 @@
 package com.pandulapeter.khameleon.feature.home.chat
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -16,6 +18,7 @@ import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.feature.home.HomeActivity
+import com.pandulapeter.khameleon.feature.home.chat.giphy.GiphyActivity
 import com.pandulapeter.khameleon.feature.home.shared.AlertDialogFragment
 import com.pandulapeter.khameleon.integration.AppShortcutManager
 import com.pandulapeter.khameleon.util.BundleArgumentDelegate
@@ -33,6 +36,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
     companion object {
         private const val MESSAGE_LIMIT = 300
         private const val MESSAGE_MODIFY_LIMIT = 1000L * 60 * 60 * 6
+        private const val REQUEST_GIPHY = 12
     }
 
     override val viewModel = ChatViewModel()
@@ -101,6 +105,10 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             onTextEntered("\uD83D\uDC4D", false)
             closeFloatingActionMenu()
         }
+        binding.sendGif.setOnClickListener {
+            startActivityForResult(Intent(context, GiphyActivity::class.java), REQUEST_GIPHY)
+            closeFloatingActionMenu()
+        }
         binding.newMessage.setOnClickListener {
             messageToEdit = null
             MessageInputDialogFragment.show(childFragmentManager, R.string.new_message, R.string.send)
@@ -118,6 +126,23 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             })
         }
         binding.newMessagesIndicator.setOnClickListener { scrollToBottom() }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            REQUEST_GIPHY -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    data?.getStringExtra(GiphyActivity.RESULT_GIF_URL)?.let { gifUrl ->
+                        userRepository.getSignedInUser()?.let {
+                            sendGif(it, gifUrl)
+                            //TODO: sendNotification(it, "GIF")
+                            scrollToBottom()
+                        }
+                    }
+                }
+            }
+            else -> super.onActivityResult(requestCode, resultCode, data)
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -214,6 +239,10 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                 binding.root.showSnackbar(R.string.something_went_wrong)
             }
         })
+
+    private fun sendGif(user: User, gifUrl: String) = messageRepository.chatDatabase
+        .push()
+        .setValue(Message(UUID.randomUUID().toString(), "", user, false, null, null, gifUrl))
 
     private fun sendMessage(user: User, message: String, isImportant: Boolean) = messageRepository.chatDatabase
         .push()

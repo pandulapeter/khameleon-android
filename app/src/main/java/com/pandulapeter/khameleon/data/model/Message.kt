@@ -11,5 +11,6 @@ data class Message(
     var isImportant: Boolean = false,
     val event: Day? = null,
     val song: Song? = null,
+    val gifUrl: String? = null,
     val timestamp: Long = System.currentTimeMillis()
 ) : Parcelable

@@ -51,6 +51,16 @@
                 app:fab_colorPressed="@color/primary" />
 
             <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/send_gif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_gif_24dp"
+                app:fab_label="@string/send_gif"
+                app:fab_size="mini"
+                app:fab_colorNormal="@color/primary"
+                app:fab_colorPressed="@color/primary" />
+
+            <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/new_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

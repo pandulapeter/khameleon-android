@@ -1,6 +1,7 @@
 package com.pandulapeter.khameleon.util
 
 import android.databinding.BindingAdapter
+import android.net.Uri
 import android.support.annotation.ColorRes
 import android.text.Spannable
 import android.text.SpannableString
@@ -10,6 +11,7 @@ import android.text.style.TypefaceSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.pandulapeter.khameleon.R
 
@@ -29,11 +31,16 @@ fun setBackground(view: View, @ColorRes color: Int) {
 
 @BindingAdapter("avatar")
 fun setAvatar(view: ImageView, url: String) {
-    GlideApp.with(view)
+    Glide.with(view)
         .load(url)
         .apply(RequestOptions.circleCropTransform())
-        .placeholder(view.context.drawable(R.drawable.bg_placeholder))
+        .apply(RequestOptions.placeholderOf(R.drawable.bg_placeholder))
         .into(view)
+}
+
+@BindingAdapter("gifUrl")
+fun setGifUrl(view: ImageView, url: String) {
+    Glide.with(view).asGif().load(Uri.parse(url)).into(view)
 }
 
 @BindingAdapter(value = ["title", "description"], requireAll = false)

@@ -33,6 +33,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
 
+        <activity
+            android:name=".feature.home.chat.giphy.GiphyActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+
         <service
             android:name=".integration.MessagingService"
             tools:ignore="ExportedService">

@@ -14,6 +14,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.SongsFragmentBinding
 import com.pandulapeter.khameleon.data.model.Message
 import com.pandulapeter.khameleon.data.model.Song
@@ -44,8 +45,8 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
 
         override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?) =
             makeMovementFlags(
-                if (songAdapter.itemCount > 1 && isEditModeEnabled) ItemTouchHelper.UP or ItemTouchHelper.DOWN else 0,
-                if (!isEditModeEnabled) ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
+                if (songAdapter.itemCount > 1 && isSortingModeEnabled) ItemTouchHelper.UP or ItemTouchHelper.DOWN else 0,
+                if (!isSortingModeEnabled) ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
             )
 
         override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?) = consume {
@@ -67,9 +68,9 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
         onItemTouchedCallback = { itemTouchHelper.startDrag(binding.recyclerView.findViewHolderForAdapterPosition(it)) },
         updateSong = ::updateSong
     )
-    private var editMenuItem: MenuItem? = null
+    private var sortMenuItem: MenuItem? = null
     private var exportMenuItem: MenuItem? = null
-    private var isEditModeEnabled = false
+    private var isSortingModeEnabled = false
         set(value) {
             if (field != value && isAdded) {
                 if (value) {
@@ -80,7 +81,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
             }
             field = value
             exportMenuItem?.isVisible = !value
-            editMenuItem?.icon = context?.drawable(if (value) R.drawable.ic_done_24dp else R.drawable.ic_sort_24dp)
+            sortMenuItem?.icon = context?.drawable(if (value) R.drawable.ic_done_24dp else R.drawable.ic_sort_24dp)
             songAdapter.isInEditMode = value
             (activity as? AppCompatActivity)?.supportActionBar?.subtitle = if (value) context?.getString(R.string.sorting_mode) else null
             songAdapter.allowNotifyEvents = !value
@@ -97,8 +98,8 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
         linearLayoutManager = LinearLayoutManager(context)
         binding.floatingActionButton.setOnClickListener {
             SongInputDialogFragment.show(childFragmentManager, R.string.new_song, R.string.add)
-            if (isEditModeEnabled) {
-                isEditModeEnabled = false
+            if (isSortingModeEnabled) {
+                isSortingModeEnabled = false
             }
         }
         binding.recyclerView.run {
@@ -112,9 +113,9 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.songs, menu)
-        editMenuItem = menu?.findItem(R.id.edit)
+        sortMenuItem = menu?.findItem(R.id.sort)
         exportMenuItem = menu?.findItem(R.id.export)
-        isEditModeEnabled = isEditModeEnabled
+        isSortingModeEnabled = isSortingModeEnabled
     }
 
     override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {
@@ -130,7 +131,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
                 type = "text/plain"
             }.putExtra(Intent.EXTRA_TEXT, text), getString(R.string.export_list)))
         }
-        R.id.edit -> consume { isEditModeEnabled = !isEditModeEnabled }
+        R.id.sort -> consume { isSortingModeEnabled = !isSortingModeEnabled }
         else -> super.onOptionsItemSelected(item)
     }
 
@@ -141,7 +142,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
 
     override fun onPause() {
         super.onPause()
-        isEditModeEnabled = false
+        isSortingModeEnabled = false
     }
 
     override fun onStop() {
@@ -149,13 +150,13 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
         songAdapter.stopListening()
     }
 
-    override fun onBackPressed() = if (isEditModeEnabled) {
-        isEditModeEnabled = false
+    override fun onBackPressed() = if (isSortingModeEnabled) {
+        isSortingModeEnabled = false
         true
     } else false
 
     override fun onSongEntered(song: Song, autoOrder: Boolean, isUpdate: Boolean) {
-        if (!isEditModeEnabled) {
+        if (!isSortingModeEnabled) {
             if (isUpdate) {
                 updateSong(song)
             } else {

@@ -9,7 +9,7 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/edit"
+        android:id="@+id/sort"
         android:icon="@drawable/ic_sort_24dp"
         android:title="@string/sorting_mode"
         app:showAsAction="ifRoom" />

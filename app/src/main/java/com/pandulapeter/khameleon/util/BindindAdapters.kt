@@ -1,6 +1,7 @@
 package com.pandulapeter.khameleon.util
 
 import android.databinding.BindingAdapter
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.support.annotation.ColorRes
 import android.text.Spannable
@@ -12,7 +13,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.gif.GifDrawable
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.pandulapeter.khameleon.R
 
 @BindingAdapter("android:visibility")
@@ -41,7 +47,17 @@ fun setAvatar(view: ImageView, url: String) {
 @BindingAdapter("gifUrl")
 fun setGifUrl(view: ImageView, url: String) {
     Glide.with(view.context)
+        .asDrawable()
         .load(Uri.parse(url))
+        .listener(object : RequestListener<Drawable> {
+            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean) = false
+
+            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                (resource as? GifDrawable)?.start()
+                //TODO: Not working.
+                return false
+            }
+        })
         .into(view)
 }
 

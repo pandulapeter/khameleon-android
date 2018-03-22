@@ -65,14 +65,14 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             }
         },
         onErrorCallback = { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } },
-        onItemClickedCallback = {
+        onItemClickedCallback = { message, isImage ->
             when {
-                it.song != null -> consume { (activity as? HomeActivity)?.openSongsScreen() }
-                it.event != null -> consume { (activity as? HomeActivity)?.openCalendarScreen() }
+                message.song != null -> consume { (activity as? HomeActivity)?.openSongsScreen() }
+                message.event != null -> consume { (activity as? HomeActivity)?.openCalendarScreen() }
                 else -> false
             }
         },
-        onItemLongClickedCallback = { message ->
+        onItemLongClickedCallback = { message, isImage ->
             userRepository.getSignedInUser()?.let { user ->
                 if (message.sender?.id == user.id) {
                     if (message.event != null || message.song != null) {
@@ -81,7 +81,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                         if (System.currentTimeMillis() - message.timestamp > MESSAGE_MODIFY_LIMIT) {
                             binding.root.showSnackbar(R.string.message_too_old)
                         } else {
-                            MessageModifyBottomSheetFragment.show(childFragmentManager, message)
+                            MessageModifyBottomSheetFragment.show(childFragmentManager, message, isImage)
                         }
                     }
                 } else {

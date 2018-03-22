@@ -16,8 +16,8 @@ class MessageAdapter(
     options: FirebaseRecyclerOptions<Message>,
     private val onDataChangedCallback: () -> Unit,
     private val onErrorCallback: (String) -> Unit,
-    private val onItemClickedCallback: (Message) -> Boolean,
-    private val onItemLongClickedCallback: (Message) -> Unit
+    private val onItemClickedCallback: (Message, Boolean) -> Boolean,
+    private val onItemLongClickedCallback: (Message, Boolean) -> Unit
 ) : FirebaseRecyclerAdapter<Message, RecyclerView.ViewHolder>(options) {
 
     companion object {
@@ -28,18 +28,18 @@ class MessageAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
         MESSAGE -> MessageViewHolder.create(parent,
             {
-                if (!onItemClickedCallback(getItem(it))) {
-                    onItemLongClickedCallback(getItem(it))
+                if (!onItemClickedCallback(getItem(it), false)) {
+                    onItemLongClickedCallback(getItem(it), false)
                 }
             },
-            { onItemLongClickedCallback(getItem(it)) })
+            { onItemLongClickedCallback(getItem(it), false) })
         else -> ImageViewHolder.create(parent,
             {
-                if (!onItemClickedCallback(getItem(it))) {
-                    onItemLongClickedCallback(getItem(it))
+                if (!onItemClickedCallback(getItem(it), true)) {
+                    onItemLongClickedCallback(getItem(it), true)
                 }
             },
-            { onItemLongClickedCallback(getItem(it)) })
+            { onItemLongClickedCallback(getItem(it), true) })
     }
 
     override fun getItemViewType(position: Int) = when {

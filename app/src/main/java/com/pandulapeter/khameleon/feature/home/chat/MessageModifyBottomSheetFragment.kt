@@ -20,10 +20,12 @@ class MessageModifyBottomSheetFragment : AppCompatDialogFragment() {
 
     companion object {
         private var Bundle.message by BundleArgumentDelegate.Parcelable<Message>("message")
+        private var Bundle.isImage by BundleArgumentDelegate.Boolean("isImage")
 
-        fun show(fragmentManager: FragmentManager, message: Message) {
+        fun show(fragmentManager: FragmentManager, message: Message, isImage: Boolean) {
             MessageModifyBottomSheetFragment().setArguments {
                 it.message = message
+                it.isImage = isImage
             }.run { (this as DialogFragment).show(fragmentManager, tag) }
         }
     }
@@ -35,9 +37,13 @@ class MessageModifyBottomSheetFragment : AppCompatDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?) = context?.let {
         CustomWidthBottomSheetDialog(it, theme).apply {
             binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_message_modify, null, false)
-            binding.editMessage.setOnClickListener {
-                arguments?.message?.let { onDialogItemSelectedListener?.onEditSelected(it) }
-                dismiss()
+            if (arguments?.isImage == true) {
+                binding.editMessage.visibility = View.GONE
+            } else {
+                binding.editMessage.setOnClickListener {
+                    arguments?.message?.let { onDialogItemSelectedListener?.onEditSelected(it) }
+                    dismiss()
+                }
             }
             binding.deleteMessage.setOnClickListener {
                 arguments?.message?.let { onDialogItemSelectedListener?.onDeleteSelected(it) }

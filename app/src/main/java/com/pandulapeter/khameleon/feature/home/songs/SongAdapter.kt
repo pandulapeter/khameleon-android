@@ -14,19 +14,26 @@ import com.google.firebase.database.DatabaseError
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.SongItemBinding
 import com.pandulapeter.khameleon.data.model.Song
+import java.util.*
 
 class SongAdapter(
     options: FirebaseRecyclerOptions<Song>,
     private val onErrorCallback: (String) -> Unit,
     private val onItemClickedCallback: (Song) -> Unit,
-    private var onItemTouchedCallback: ((position: Int) -> Unit)
+    private var onItemTouchedCallback: ((position: Int) -> Unit),
+    private var updateSong: (Song) -> Unit
 ) : FirebaseRecyclerAdapter<Song, SongAdapter.SongViewHolder>(options) {
-    private var allowNotifyEvents = true
+    private var localListCopy: MutableList<Song>? = null
+    var allowNotifyEvents = true
     var isInEditMode = false
         set(value) {
             if (field != value) {
                 field = value
                 notifyItemRangeChanged(0, itemCount)
+                if (!value) {
+                    localListCopy?.forEachIndexed { index, song -> updateSong(song.apply { order = index }) }
+                    localListCopy = null
+                }
             }
         }
 
@@ -49,6 +56,22 @@ class SongAdapter(
     override fun onDataChanged() = Unit
 
     override fun onError(error: DatabaseError) = onErrorCallback(error.message)
+
+    fun swapSongsInPlaylist(originalPosition: Int, targetPosition: Int) {
+        if (localListCopy == null) {
+            localListCopy = MutableList(itemCount) { getItem(it) }
+        }
+        if (originalPosition < targetPosition) {
+            for (i in originalPosition until targetPosition) {
+                Collections.swap(localListCopy, i, i + 1)
+            }
+        } else {
+            for (i in originalPosition downTo targetPosition + 1) {
+                Collections.swap(localListCopy, i, i - 1)
+            }
+        }
+        notifyItemMoved(originalPosition, targetPosition)
+    }
 
     class SongViewHolder(
         private val binding: SongItemBinding,

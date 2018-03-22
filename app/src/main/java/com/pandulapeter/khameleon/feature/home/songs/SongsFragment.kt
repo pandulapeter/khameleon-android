@@ -52,7 +52,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
         override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?) = consume {
             viewHolder?.adapterPosition?.let { originalPosition ->
                 target?.adapterPosition?.let { targetPosition ->
-                    swapSongsInPlaylist(originalPosition, targetPosition)
+                    songAdapter.swapSongsInPlaylist(originalPosition, targetPosition)
                 }
             }
         }
@@ -65,7 +65,8 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
         options = FirebaseRecyclerOptions.Builder<Song>().setQuery(songsRepository.songsDarabase.orderByChild("order"), Song::class.java).build(),
         onErrorCallback = { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } },
         onItemClickedCallback = { SongInputDialogFragment.show(childFragmentManager, R.string.edit_song, R.string.ok, it) },
-        onItemTouchedCallback = { itemTouchHelper.startDrag(binding.recyclerView.findViewHolderForAdapterPosition(it)) }
+        onItemTouchedCallback = { itemTouchHelper.startDrag(binding.recyclerView.findViewHolderForAdapterPosition(it)) },
+        updateSong = ::updateSong
     )
     private var editMenuItem: MenuItem? = null
     private var isEditModeEnabled = false
@@ -74,6 +75,7 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
             editMenuItem?.icon = context?.drawable(if (value) R.drawable.ic_close_24dp else R.drawable.ic_edit_24dp)
             songAdapter.isInEditMode = value
             (activity as? AppCompatActivity)?.supportActionBar?.subtitle = if (value) context?.getString(R.string.edit_mode) else null
+            songAdapter.allowNotifyEvents = !value
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -150,20 +152,6 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
             sendAutomaticChatMessage(song, true)
         }
         binding.recyclerView.smoothScrollToPosition(Math.max(0, song.order))
-    }
-
-    private fun swapSongsInPlaylist(originalPosition: Int, targetPosition: Int) {
-        val items = MutableList(songAdapter.itemCount) { songAdapter.getItem(it) }
-        if (originalPosition < targetPosition) {
-            for (i in originalPosition until targetPosition) {
-                Collections.swap(items, i, i + 1)
-            }
-        } else {
-            for (i in originalPosition downTo targetPosition + 1) {
-                Collections.swap(items, i, i - 1)
-            }
-        }
-        items.forEachIndexed { index, song -> updateSong(song.apply { order = index }) }
     }
 
     private fun deleteSong(song: Song) {

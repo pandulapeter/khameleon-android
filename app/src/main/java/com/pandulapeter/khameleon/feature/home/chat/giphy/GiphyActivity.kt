@@ -27,8 +27,12 @@ class GiphyActivity : AppCompatActivity() {
 
     private var queried = false
     private var helper: GiphyApiHelper? = null
-    private var recycler: RecyclerView? = null
-    private var adapter: GiphyAdapter? = null
+    private var giphyAdapter = GiphyAdapter(object : GiphyAdapter.Callback {
+        override fun onClick(item: GiphyApiHelper.Gif) {
+            setResult(Activity.RESULT_OK, Intent().putExtra(RESULT_GIF_URL, item.previewImage))
+            supportFinishAfterTransition()
+        }
+    })
     private var progressSpinner: View? = null
     private var searchView: MaterialSearchView? = null
 
@@ -41,13 +45,16 @@ class GiphyActivity : AppCompatActivity() {
             )
         )
         super.onCreate(savedInstanceState)
-        helper = GiphyApiHelper("dc6zaTOxFJmzC", GiphyApiHelper.NO_SIZE_LIMIT, Giphy.PREVIEW_SMALL, GiphyApiHelper.NO_SIZE_LIMIT.toLong())
+        helper = GiphyApiHelper("dc6zaTOxFJmzC", GiphyApiHelper.NO_SIZE_LIMIT, Giphy.PREVIEW_MEDIUM, GiphyApiHelper.NO_SIZE_LIMIT.toLong())
         try {
             window.requestFeature(Window.FEATURE_NO_TITLE)
         } catch (e: Exception) {
         }
         setContentView(R.layout.giffy_search_activity)
-        recycler = findViewById(R.id.recycler_view)
+        findViewById<RecyclerView>(R.id.recycler_view).apply {
+            layoutManager = LinearLayoutManager(this@GiphyActivity)
+            this.adapter = giphyAdapter
+        }
         progressSpinner = findViewById(R.id.list_progress)
         searchView = findViewById(R.id.search_view)
         searchView?.setVoiceSearch(false)
@@ -59,7 +66,6 @@ class GiphyActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String) = false
         })
-
         searchView?.setOnSearchViewListener(object : MaterialSearchView.SearchViewListener {
             override fun onSearchViewShown() = Unit
 
@@ -68,7 +74,7 @@ class GiphyActivity : AppCompatActivity() {
                     queried = false
                     searchView?.setQuery("", false)
                     loadTrending()
-                    Handler().postDelayed({ searchView!!.showSearch(false) }, 25)
+                    Handler().postDelayed({ searchView?.showSearch(false) }, 25)
                 } else {
                     setResult(Activity.RESULT_CANCELED)
                     supportFinishAfterTransition()
@@ -101,10 +107,10 @@ class GiphyActivity : AppCompatActivity() {
     }
 
     private fun loadTrending() {
-        progressSpinner!!.visibility = View.VISIBLE
-        helper!!.trends(object : GiphyApiHelper.Callback {
+        progressSpinner?.visibility = View.VISIBLE
+        helper?.trends(object : GiphyApiHelper.Callback {
             override fun onResponse(gifs: List<GiphyApiHelper.Gif>) {
-                setAdapter(gifs)
+                updateAdapter(gifs)
             }
         })
     }
@@ -115,20 +121,13 @@ class GiphyActivity : AppCompatActivity() {
         hideKeyboard(currentFocus)
         helper?.search(query, object : GiphyApiHelper.Callback {
             override fun onResponse(gifs: List<GiphyApiHelper.Gif>) {
-                setAdapter(gifs)
+                updateAdapter(gifs)
             }
         })
     }
 
-    private fun setAdapter(gifs: List<GiphyApiHelper.Gif>) {
-        progressSpinner!!.visibility = View.GONE
-        adapter = GiphyAdapter(gifs, object : GiphyAdapter.Callback {
-            override fun onClick(item: GiphyApiHelper.Gif) {
-                setResult(Activity.RESULT_OK, Intent().putExtra(RESULT_GIF_URL, item.previewImage))
-                supportFinishAfterTransition()
-            }
-        })
-        recycler?.layoutManager = LinearLayoutManager(this)
-        recycler?.adapter = adapter
+    private fun updateAdapter(gifs: List<GiphyApiHelper.Gif>) {
+        progressSpinner?.visibility = View.GONE
+        giphyAdapter.setItems(gifs)
     }
 }

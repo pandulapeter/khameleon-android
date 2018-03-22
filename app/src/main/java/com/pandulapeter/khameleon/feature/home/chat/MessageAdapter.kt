@@ -89,11 +89,7 @@ class MessageAdapter(
         }
 
         companion object {
-            fun create(
-                parent: ViewGroup,
-                onItemClicked: (Int) -> Unit,
-                onItemLongClicked: (Int) -> Unit
-            ) = MessageViewHolder(
+            fun create(parent: ViewGroup, onItemClicked: (Int) -> Unit, onItemLongClicked: (Int) -> Unit) = MessageViewHolder(
                 DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_message, parent, false),
                 onItemClicked,
                 onItemLongClicked
@@ -132,11 +128,7 @@ class MessageAdapter(
         }
 
         companion object {
-            fun create(
-                parent: ViewGroup,
-                onItemClicked: (Int) -> Unit,
-                onItemLongClicked: (Int) -> Unit
-            ) = ImageViewHolder(
+            fun create(parent: ViewGroup, onItemClicked: (Int) -> Unit, onItemLongClicked: (Int) -> Unit) = ImageViewHolder(
                 DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_image, parent, false),
                 onItemClicked,
                 onItemLongClicked

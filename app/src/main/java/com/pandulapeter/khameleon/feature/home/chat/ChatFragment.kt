@@ -65,7 +65,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             }
         },
         onErrorCallback = { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } },
-        onItemClickedCallback = { message, isImage ->
+        onItemClickedCallback = { message, _ ->
             when {
                 message.song != null -> consume { (activity as? HomeActivity)?.openSongsScreen() }
                 message.event != null -> consume { (activity as? HomeActivity)?.openCalendarScreen() }

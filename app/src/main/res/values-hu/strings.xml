@@ -82,7 +82,7 @@
 
     <!-- Songs -->
     <string name="export_list">Lista exportálása</string>
-    <string name="edit_mode">Szerkesztő mód</string>
+    <string name="sorting_mode">Átrendező mód</string>
     <string name="play">Lejátszás</string>
     <string name="lyrics">Dalszöveg</string>
     <string name="new_song">Új dal</string>

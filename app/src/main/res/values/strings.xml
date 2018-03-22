@@ -82,7 +82,7 @@
 
     <!-- Songs -->
     <string name="export_list">Export list</string>
-    <string name="edit_mode">Edit mode</string>
+    <string name="sorting_mode">Sorting mode</string>
     <string name="play">Play</string>
     <string name="lyrics">Lyrics</string>
     <string name="new_song">New song</string>

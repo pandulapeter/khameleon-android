@@ -72,9 +72,9 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
     private var isEditModeEnabled = false
         set(value) {
             field = value
-            editMenuItem?.icon = context?.drawable(if (value) R.drawable.ic_close_24dp else R.drawable.ic_edit_24dp)
+            editMenuItem?.icon = context?.drawable(if (value) R.drawable.ic_close_24dp else R.drawable.ic_sort_24dp)
             songAdapter.isInEditMode = value
-            (activity as? AppCompatActivity)?.supportActionBar?.subtitle = if (value) context?.getString(R.string.edit_mode) else null
+            (activity as? AppCompatActivity)?.supportActionBar?.subtitle = if (value) context?.getString(R.string.sorting_mode) else null
             songAdapter.allowNotifyEvents = !value
         }
 

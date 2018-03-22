@@ -10,8 +10,8 @@
 
     <item
         android:id="@+id/edit"
-        android:icon="@drawable/ic_edit_24dp"
-        android:title="@string/edit_mode"
+        android:icon="@drawable/ic_sort_24dp"
+        android:title="@string/sorting_mode"
         app:showAsAction="ifRoom" />
 
 </menu>

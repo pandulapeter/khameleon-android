@@ -41,26 +41,28 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
     private val userRepository by inject<UserRepository>()
     private val appShortcutManager by inject<AppShortcutManager>()
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private val itemTouchHelper: ItemTouchHelper = ItemTouchHelper(object : ElevationItemTouchHelperCallback((context?.dimension(R.dimen.content_padding) ?: 0).toFloat()) {
+    private val itemTouchHelper: ItemTouchHelper by lazy {
+        ItemTouchHelper(object : ElevationItemTouchHelperCallback((context?.dimension(R.dimen.content_padding) ?: 0).toFloat()) {
 
-        override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?) =
-            makeMovementFlags(
-                if (songAdapter.itemCount > 1 && isSortingModeEnabled) ItemTouchHelper.UP or ItemTouchHelper.DOWN else 0,
-                if (!isSortingModeEnabled) ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
-            )
+            override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?) =
+                makeMovementFlags(
+                    if (songAdapter.itemCount > 1 && isSortingModeEnabled) ItemTouchHelper.UP or ItemTouchHelper.DOWN else 0,
+                    if (!isSortingModeEnabled) ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT else 0
+                )
 
-        override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?) = consume {
-            viewHolder?.adapterPosition?.let { originalPosition ->
-                target?.adapterPosition?.let { targetPosition ->
-                    songAdapter.swapSongsInPlaylist(originalPosition, targetPosition)
+            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?) = consume {
+                viewHolder?.adapterPosition?.let { originalPosition ->
+                    target?.adapterPosition?.let { targetPosition ->
+                        songAdapter.swapSongsInPlaylist(originalPosition, targetPosition)
+                    }
                 }
             }
-        }
 
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-            viewHolder?.adapterPosition?.let { position -> deleteSong(songAdapter.getItem(position)) }
-        }
-    })
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+                viewHolder?.adapterPosition?.let { position -> deleteSong(songAdapter.getItem(position)) }
+            }
+        })
+    }
     private val songAdapter = SongAdapter(
         options = FirebaseRecyclerOptions.Builder<Song>().setQuery(songsRepository.songsDarabase.orderByChild("order"), Song::class.java).build(),
         onErrorCallback = { error -> context?.let { binding.root.showSnackbar(it.getString(R.string.something_went_wrong_reason, error)) } },

@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.MenuItem
 import android.view.View
-import com.pandulapeter.khameleon.GiphyActivityBinding
+import com.pandulapeter.khameleon.GifPickerActivityBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.feature.shared.KhameleonActivity
 import com.pandulapeter.khameleon.util.consume
@@ -17,7 +17,7 @@ import com.pandulapeter.khameleon.util.dimension
 import com.pandulapeter.khameleon.util.drawable
 import com.pandulapeter.khameleon.util.onTextChanged
 
-class GiphyActivity : KhameleonActivity<GiphyActivityBinding>(R.layout.activity_giphy) {
+class GifPickerActivity : KhameleonActivity<GifPickerActivityBinding>(R.layout.activity_giphy) {
 
     companion object {
         const val RESULT_GIF_URL = "resultGifUrl"
@@ -26,7 +26,7 @@ class GiphyActivity : KhameleonActivity<GiphyActivityBinding>(R.layout.activity_
 
     private var lastKeyPressTimestamp = 0L
     private var helper: GiphyApiHelper? = null
-    private var giphyAdapter = GiphyAdapter {
+    private var giphyAdapter = GifAdapter {
         setResult(Activity.RESULT_OK, Intent().putExtra(RESULT_GIF_URL, it))
         supportFinishAfterTransition()
     }

@@ -18,7 +18,7 @@ import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.feature.home.HomeActivity
-import com.pandulapeter.khameleon.feature.home.chat.giphy.GiphyActivity
+import com.pandulapeter.khameleon.feature.home.chat.giphy.GifPickerActivity
 import com.pandulapeter.khameleon.feature.home.shared.AlertDialogFragment
 import com.pandulapeter.khameleon.integration.AppShortcutManager
 import com.pandulapeter.khameleon.util.BundleArgumentDelegate
@@ -81,7 +81,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
 //                        if (System.currentTimeMillis() - message.timestamp > MESSAGE_MODIFY_LIMIT) {
 //                            binding.root.showSnackbar(R.string.message_too_old)
 //                        } else {
-                            MessageModifyBottomSheetFragment.show(childFragmentManager, message, isImage)
+                        MessageModifyBottomSheetFragment.show(childFragmentManager, message, isImage)
 //                        }
                     }
                 } else {
@@ -106,7 +106,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             closeFloatingActionMenu()
         }
         binding.sendGif.setOnClickListener {
-            startActivityForResult(Intent(context, GiphyActivity::class.java), REQUEST_GIPHY)
+            startActivityForResult(Intent(context, GifPickerActivity::class.java), REQUEST_GIPHY)
             closeFloatingActionMenu()
         }
         binding.newMessage.setOnClickListener {
@@ -132,10 +132,10 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         when (requestCode) {
             REQUEST_GIPHY -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    data?.getStringExtra(GiphyActivity.RESULT_GIF_URL)?.let { gifUrl ->
+                    data?.getStringExtra(GifPickerActivity.RESULT_GIF_URL)?.let { gifUrl ->
                         userRepository.getSignedInUser()?.let {
                             sendGif(it, gifUrl)
-                            //TODO: sendNotification(it, "GIF")
+                            sendNotification(it, "Gif")
                             scrollToBottom()
                         }
                     }

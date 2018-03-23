@@ -9,7 +9,7 @@ import android.widget.ImageView
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.util.setImage
 
-class GiphyAdapter(private val onItemClicked: (String) -> Unit) : RecyclerView.Adapter<GiphyAdapter.GifViewHolder>() {
+class GifAdapter(private val onItemClicked: (String) -> Unit) : RecyclerView.Adapter<GifAdapter.GifViewHolder>() {
 
     private val gifUrls = mutableListOf<String>()
 

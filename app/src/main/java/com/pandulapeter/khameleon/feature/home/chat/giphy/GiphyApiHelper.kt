@@ -32,8 +32,7 @@ class GiphyApiHelper(private val apiKey: String, private val limit: Int, private
         GiffyTrends(apiKey, previewSize, maxSize, callback).execute()
     }
 
-    private class GiffyTrends(apiKey: String, previewSize: Int, maxSize: Long, callback: Callback) :
-        SearchGiffy(apiKey, -1, previewSize, maxSize, null, callback) {
+    private class GiffyTrends(apiKey: String, previewSize: Int, maxSize: Long, callback: Callback) : SearchGiffy(apiKey, -1, previewSize, maxSize, null, callback) {
 
         @Throws(UnsupportedEncodingException::class)
         override fun buildSearchUrl(query: String?) = "http://api.giphy.com/v1/gifs/trending?api_key=$apiKey"

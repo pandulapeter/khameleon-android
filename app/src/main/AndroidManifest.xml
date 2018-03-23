@@ -34,7 +34,7 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".feature.home.chat.giphy.GiphyActivity"
+            android:name=".feature.home.chat.giphy.GifPickerActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/GiphyTheme"

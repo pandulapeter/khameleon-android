@@ -9,11 +9,13 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatDialogFragment
 import android.view.LayoutInflater
 import android.view.WindowManager
+import android.widget.ArrayAdapter
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.SongInputDialogBinding
 import com.pandulapeter.khameleon.data.model.Song
 import com.pandulapeter.khameleon.util.*
 import java.util.*
+
 
 class SongInputDialogFragment : AppCompatDialogFragment() {
 
@@ -37,18 +39,21 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?) = context?.let { context ->
         binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_song_input, null, false)
-        arguments.song?.let {
-            binding.artistInputField.setText(it.artist)
-            binding.titleInputField.setText(it.title)
-            binding.keyInputField.setText(it.key)
-            if (it.bpm != 0) {
-                binding.bpmInputField.setText(it.bpm.toString())
+        val adapter = ArrayAdapter.createFromResource(context, R.array.keys, R.layout.item_key)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.keyInputField.adapter = adapter
+        arguments.song?.let { song ->
+            binding.artistInputField.setText(song.artist)
+            binding.titleInputField.setText(song.title)
+            binding.keyInputField.setSelection(Math.max(0, context.resources.getStringArray(R.array.keys).indexOf(song.key)))
+            if (song.bpm != 0) {
+                binding.bpmInputField.setText(song.bpm.toString())
             }
-            binding.checkbox.isChecked = it.isHighlighted
+            binding.checkbox.isChecked = song.isHighlighted
         }
         binding.artistInputField.onTextChanged { validateInputs() }
         binding.titleInputField.onTextChanged { validateInputs() }
-        binding.keyInputField.onTextChanged { validateInputs() }
+
         AlertDialog.Builder(context, R.style.AlertDialog)
             .setTitle(arguments.title)
             .setView(binding.root)
@@ -64,7 +69,6 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
             showKeyboard(binding.titleInputField)
             binding.artistInputField.setSelection(binding.artistInputField.text?.length ?: 0)
             binding.titleInputField.setSelection(binding.titleInputField.text?.length ?: 0)
-            binding.keyInputField.setSelection(binding.keyInputField.text?.length ?: 0)
         }
         validateInputs()
     }
@@ -82,15 +86,17 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
                     arguments?.song?.id ?: UUID.randomUUID().toString(),
                     binding.artistInputField.text.toString(),
                     binding.titleInputField.text.toString(),
-                    binding.keyInputField.text.toString(),
+                    binding.keyInputField.selectedItem.toString(),
                     arguments?.song?.order ?: 0,
-                    Integer.parseInt(binding.bpmInputField.text.toString()),
+                    binding.bpmInputField.text.toInt(),
                     binding.checkbox.isChecked
                 ), !isUpdate, isUpdate
             )
             dismiss()
         }
     }
+
+    private fun CharSequence?.toInt() = if (isNullOrEmpty()) 0 else Integer.parseInt(toString())
 
     private fun validateInputs() {
         positiveButton.isEnabled = areInputsValid()

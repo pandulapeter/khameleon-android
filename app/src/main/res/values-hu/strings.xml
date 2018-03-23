@@ -90,13 +90,28 @@
     <string name="new_song">Új dal</string>
     <string name="edit_song">Dal szerkesztése</string>
     <string name="add">Hozzáadás</string>
-    <string name="enter_song_artist">Add meg az előadót</string>
-    <string name="enter_song_title">Add meg a címet</string>
+    <string name="enter_song_artist">Előadó</string>
+    <string name="enter_song_title">Cím</string>
     <string name="enter_song_key">Hangnem</string>
     <string name="enter_song_bpm">BPM</string>
     <string name="undo">Mégse</string>
     <string name="song_deleted">%s törölve</string>
     <string name="highlight_song">Dal kiemelése</string>
+    <string-array name="keys">
+        <item>"?"</item>
+        <item>C</item>
+        <item>C#</item>
+        <item>D</item>
+        <item>D#</item>
+        <item>E</item>
+        <item>F</item>
+        <item>F#</item>
+        <item>G</item>
+        <item>G#</item>
+        <item>A</item>
+        <item>A#</item>
+        <item>B</item>
+    </string-array>
 
     <!-- Settings -->
     <string name="notifications">Értesítések</string>

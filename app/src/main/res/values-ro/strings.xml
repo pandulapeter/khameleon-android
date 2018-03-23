@@ -90,13 +90,28 @@
     <string name="new_song">Piesă nouă</string>
     <string name="edit_song">Editare piesă</string>
     <string name="add">Adaugă</string>
-    <string name="enter_song_artist">Introdu artistul</string>
-    <string name="enter_song_title">Introdu titlul</string>
+    <string name="enter_song_artist">Artist</string>
+    <string name="enter_song_title">Titlu</string>
     <string name="enter_song_key">Gamă</string>
     <string name="enter_song_bpm">BPM</string>
     <string name="undo">Anulare</string>
     <string name="song_deleted">%s șters</string>
     <string name="highlight_song">Piesă importantă</string>
+    <string-array name="keys">
+        <item>"?"</item>
+        <item>C</item>
+        <item>C#</item>
+        <item>D</item>
+        <item>D#</item>
+        <item>E</item>
+        <item>F</item>
+        <item>F#</item>
+        <item>G</item>
+        <item>G#</item>
+        <item>A</item>
+        <item>A#</item>
+        <item>B</item>
+    </string-array>
 
     <!-- Settings -->
     <string name="notifications">Niotificări</string>

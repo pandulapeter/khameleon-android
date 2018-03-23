@@ -11,6 +11,7 @@ import com.pandulapeter.khameleon.ImageItemBinding
 import com.pandulapeter.khameleon.MessageItemBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.model.Message
+import com.pandulapeter.khameleon.util.setGifUrl
 
 class MessageAdapter(
     options: FirebaseRecyclerOptions<Message>,
@@ -107,6 +108,7 @@ class MessageAdapter(
             get() = binding.viewModel
             set(value) {
                 binding.viewModel = value
+                value?.gifUrl?.let { setGifUrl(binding.gif, it) }
             }
 
         init {

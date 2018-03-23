@@ -3,9 +3,11 @@ package com.pandulapeter.khameleon.feature.home.chat.giphy
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.Menu
 import android.view.View
 import android.view.Window
@@ -13,6 +15,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView
 import com.pandulapeter.khameleon.GiphyActivityBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.feature.shared.KhameleonActivity
+import com.pandulapeter.khameleon.util.dimension
 import com.pandulapeter.khameleon.util.hideKeyboard
 import xyz.klinker.giphy.Giphy
 
@@ -40,8 +43,20 @@ class GiphyActivity : KhameleonActivity<GiphyActivityBinding>(R.layout.activity_
         }
         binding.recyclerView.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@GiphyActivity)
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             adapter = giphyAdapter
+            addItemDecoration(object : RecyclerView.ItemDecoration() {
+                val space = context.dimension(R.dimen.content_padding) / 2
+
+                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+                    outRect.apply {
+                        left = space
+                        top = space
+                        right = space
+                        bottom = space
+                    }
+                }
+            })
         }
         binding.searchView.setVoiceSearch(false)
         binding.searchView.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {

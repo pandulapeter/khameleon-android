@@ -78,11 +78,11 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                     if (message.event != null || message.song != null) {
                         binding.root.showSnackbar(R.string.message_modification_error_automatic)
                     } else {
-                        if (System.currentTimeMillis() - message.timestamp > MESSAGE_MODIFY_LIMIT) {
-                            binding.root.showSnackbar(R.string.message_too_old)
-                        } else {
+//                        if (System.currentTimeMillis() - message.timestamp > MESSAGE_MODIFY_LIMIT) {
+//                            binding.root.showSnackbar(R.string.message_too_old)
+//                        } else {
                             MessageModifyBottomSheetFragment.show(childFragmentManager, message, isImage)
-                        }
+//                        }
                     }
                 } else {
                     binding.root.showSnackbar(R.string.message_modification_error)

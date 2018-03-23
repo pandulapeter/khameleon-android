@@ -26,6 +26,7 @@
                     android:background="@android:color/transparent"
                     android:hint="@string/search"
                     android:imeOptions="actionSearch"
+                    android:inputType="textEmailSubject"
                     android:lines="1" />
 
             </android.support.v7.widget.Toolbar>

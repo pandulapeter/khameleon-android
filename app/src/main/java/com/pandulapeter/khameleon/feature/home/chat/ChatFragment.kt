@@ -126,6 +126,13 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             })
         }
         binding.newMessagesIndicator.setOnClickListener { scrollToBottom() }
+        val home = activity as? HomeActivity
+        home?.defaultMessage?.let {
+            home.defaultMessage = null
+            messageToEdit = null
+            messageRepository.workInProgressMessageText = it
+            MessageInputDialogFragment.show(childFragmentManager, R.string.new_message, R.string.send)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

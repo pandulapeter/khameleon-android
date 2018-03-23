@@ -11,7 +11,9 @@ import com.pandulapeter.khameleon.HomeActivityBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.PreferenceRepository
+import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
+import com.pandulapeter.khameleon.feature.authentication.AuthenticationActivity
 import com.pandulapeter.khameleon.feature.home.calendar.CalendarFragment
 import com.pandulapeter.khameleon.feature.home.chat.ChatFragment
 import com.pandulapeter.khameleon.feature.home.settings.SettingsFragment
@@ -32,25 +34,33 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
         }
     }
 
+    private val userRepository by inject<UserRepository>()
     private val messageRepository by inject<ChatRepository>()
     private val preferenceRepository by inject<PreferenceRepository>()
     var calendarTimestamp: Long? = null
+    var defaultMessage: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.HomeTheme)
         super.onCreate(savedInstanceState)
-        if (savedInstanceState == null) {
-            messageRepository.setPushNotificationsEnabled(preferenceRepository.chatNotifications)
-            when (intent.item) {
-                AppShortcutManager.CHAT_ID -> openChatScreen()
-                AppShortcutManager.CALENDAR_ID -> openCalendarScreen()
-                AppShortcutManager.SONGS_ID -> openSongsScreen()
-                AppShortcutManager.SETTINGS_ID -> openSettingsScreen()
-            }
-            updateDisplayedFragment(binding.bottomNavigation.selectedItemId)
+        if (userRepository.getSignedInUser() == null) {
+            startActivity(Intent(this, AuthenticationActivity::class.java))
+            finish()
         }
         binding.bottomNavigation.setOnNavigationItemSelectedListener {
             consume { updateDisplayedFragment(it.itemId) }
+        }
+        if (!handleShareIntent()) {
+            if (savedInstanceState == null) {
+                messageRepository.setPushNotificationsEnabled(preferenceRepository.chatNotifications)
+                when (intent.item) {
+                    AppShortcutManager.CHAT_ID -> openChatScreen()
+                    AppShortcutManager.CALENDAR_ID -> openCalendarScreen()
+                    AppShortcutManager.SONGS_ID -> openSongsScreen()
+                    AppShortcutManager.SETTINGS_ID -> openSettingsScreen()
+                }
+                updateDisplayedFragment(binding.bottomNavigation.selectedItemId)
+            }
         }
     }
 
@@ -61,6 +71,7 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
             AppShortcutManager.CALENDAR_ID -> openCalendarScreen()
             AppShortcutManager.SONGS_ID -> openSongsScreen()
             AppShortcutManager.SETTINGS_ID -> openSettingsScreen()
+            else -> handleShareIntent()
         }
     }
 
@@ -79,7 +90,8 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
         }
     }
 
-    private fun openChatScreen() {
+    private fun openChatScreen(defaultMessage: String? = null) {
+        this.defaultMessage = defaultMessage
         binding.bottomNavigation.selectedItemId = R.id.chat
     }
 
@@ -94,6 +106,16 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
 
     private fun openSettingsScreen() {
         binding.bottomNavigation.selectedItemId = R.id.settings
+    }
+
+    private fun handleShareIntent(): Boolean {
+        if (intent.action == Intent.ACTION_SEND && intent.type == "text/plain") {
+            intent.getStringExtra(Intent.EXTRA_TEXT)?.let {
+                openChatScreen(it)
+                return true
+            }
+        }
+        return false
     }
 
     private inline fun <reified T : Fragment> FragmentManager.handleReplace(crossinline newInstance: () -> T) {

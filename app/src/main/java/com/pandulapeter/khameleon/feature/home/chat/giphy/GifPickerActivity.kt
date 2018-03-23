@@ -17,7 +17,7 @@ import com.pandulapeter.khameleon.util.dimension
 import com.pandulapeter.khameleon.util.drawable
 import com.pandulapeter.khameleon.util.onTextChanged
 
-class GifPickerActivity : KhameleonActivity<GifPickerActivityBinding>(R.layout.activity_giphy) {
+class GifPickerActivity : KhameleonActivity<GifPickerActivityBinding>(R.layout.activity_gif_picker) {
 
     companion object {
         const val RESULT_GIF_URL = "resultGifUrl"

@@ -18,7 +18,7 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="GiphyTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="GifPickerTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:navigationBarColor">@color/primary_dark</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>

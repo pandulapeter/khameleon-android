@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.pandulapeter.khameleon.R
-import com.pandulapeter.khameleon.util.setGifUrl
+import com.pandulapeter.khameleon.util.setImage
 
 class GiphyAdapter(private val callback: GiphyAdapter.Callback) : RecyclerView.Adapter<GiphyAdapter.GifViewHolder>() {
     private val gifs = mutableListOf<GiphyApiHelper.Gif>()
@@ -34,7 +34,7 @@ class GiphyAdapter(private val callback: GiphyAdapter.Callback) : RecyclerView.A
         private val gifPreview = itemView.findViewById<ImageView>(R.id.gif)
 
         fun bind(gif: GiphyApiHelper.Gif) {
-            setGifUrl(gifPreview, gif.previewGif)
+            setImage(gifPreview, gif.previewGif)
             gifPreview.setOnClickListener { callback.onClick(gif) }
         }
     }

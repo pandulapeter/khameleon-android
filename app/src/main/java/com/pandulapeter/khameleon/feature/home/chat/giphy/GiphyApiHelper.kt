@@ -40,7 +40,7 @@ class GiphyApiHelper(private val apiKey: String, private val limit: Int, private
     }
 
     private open class SearchGiffy(
-        internal val apiKey: String,
+        val apiKey: String,
         private val limit: Int,
         private val previewSize: Int,
         private val maxSize: Long,

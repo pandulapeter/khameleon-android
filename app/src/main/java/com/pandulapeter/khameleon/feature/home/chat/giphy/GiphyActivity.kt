@@ -16,7 +16,6 @@ import com.pandulapeter.khameleon.util.consume
 import com.pandulapeter.khameleon.util.dimension
 import com.pandulapeter.khameleon.util.drawable
 import com.pandulapeter.khameleon.util.onTextChanged
-import xyz.klinker.giphy.Giphy
 
 class GiphyActivity : KhameleonActivity<GiphyActivityBinding>(R.layout.activity_giphy) {
 
@@ -47,7 +46,7 @@ class GiphyActivity : KhameleonActivity<GiphyActivityBinding>(R.layout.activity_
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        helper = GiphyApiHelper("dc6zaTOxFJmzC", GiphyApiHelper.NO_SIZE_LIMIT, Giphy.PREVIEW_MEDIUM, GiphyApiHelper.NO_SIZE_LIMIT.toLong())
+        helper = GiphyApiHelper("dc6zaTOxFJmzC", GiphyApiHelper.NO_SIZE_LIMIT, 1, GiphyApiHelper.NO_SIZE_LIMIT.toLong())
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)

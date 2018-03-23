@@ -74,7 +74,7 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:1.0.2"
 
     // Firebase
-    final firebaseVersion = "11.8.0"
+    final firebaseVersion = "12.0.0"
     compile "com.google.firebase:firebase-core:$firebaseVersion"
     compile "com.google.firebase:firebase-auth:$firebaseVersion"
     compile "com.google.firebase:firebase-database:$firebaseVersion"
@@ -83,7 +83,9 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:3.2.2'
 
     // Image loading
-    implementation "com.klinkerapps:giphy:1.1.0"
+    def glideVersion = "4.6.1"
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
 
     // Floating action menu
     implementation "com.github.clans:fab:1.6.4"

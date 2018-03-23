@@ -39,7 +39,7 @@ fun setAvatar(view: ImageView, url: String) {
 }
 
 @BindingAdapter("imageUrl")
-fun setGifUrl(view: ImageView, url: String) {
+fun setImage(view: ImageView, url: String) {
     Glide.with(view.context)
         .load(Uri.parse(url))
         .into(view)

@@ -21,17 +21,15 @@ class GiphyActivity : KhameleonActivity<GiphyActivityBinding>(R.layout.activity_
 
     companion object {
         const val RESULT_GIF_URL = "resultGifUrl"
-        private const val QUERY_DELAY = 200L
+        private const val QUERY_DELAY = 400L
     }
 
     private var lastKeyPressTimestamp = 0L
     private var helper: GiphyApiHelper? = null
-    private var giphyAdapter = GiphyAdapter(object : GiphyAdapter.Callback {
-        override fun onClick(item: GiphyApiHelper.Gif) {
-            setResult(Activity.RESULT_OK, Intent().putExtra(RESULT_GIF_URL, item.previewImage))
-            supportFinishAfterTransition()
-        }
-    })
+    private var giphyAdapter = GiphyAdapter {
+        setResult(Activity.RESULT_OK, Intent().putExtra(RESULT_GIF_URL, it))
+        supportFinishAfterTransition()
+    }
     private var queryRunnable = Runnable {
         if (System.currentTimeMillis() - lastKeyPressTimestamp >= QUERY_DELAY) {
             binding.searchView.text?.toString()?.let {
@@ -84,7 +82,7 @@ class GiphyActivity : KhameleonActivity<GiphyActivityBinding>(R.layout.activity_
     private fun loadTrending() {
         binding.loadingIndicator.visibility = View.VISIBLE
         helper?.trends(object : GiphyApiHelper.Callback {
-            override fun onResponse(gifs: List<GiphyApiHelper.Gif>) {
+            override fun onResponse(gifs: List<String>) {
                 updateAdapter(gifs)
             }
         })
@@ -94,14 +92,14 @@ class GiphyActivity : KhameleonActivity<GiphyActivityBinding>(R.layout.activity_
         if (!isFinishing && !isDestroyed) {
             binding.loadingIndicator.visibility = View.VISIBLE
             helper?.search(query, object : GiphyApiHelper.Callback {
-                override fun onResponse(gifs: List<GiphyApiHelper.Gif>) {
+                override fun onResponse(gifs: List<String>) {
                     updateAdapter(gifs)
                 }
             })
         }
     }
 
-    private fun updateAdapter(gifs: List<GiphyApiHelper.Gif>) {
+    private fun updateAdapter(gifs: List<String>) {
         binding.loadingIndicator.visibility = View.GONE
         giphyAdapter.setItems(gifs)
     }

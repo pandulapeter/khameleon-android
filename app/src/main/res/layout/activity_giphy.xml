@@ -25,7 +25,8 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:hint="@string/search"
-                    android:imeOptions="actionSearch" />
+                    android:imeOptions="actionSearch"
+                    android:lines="1" />
 
             </android.support.v7.widget.Toolbar>
 

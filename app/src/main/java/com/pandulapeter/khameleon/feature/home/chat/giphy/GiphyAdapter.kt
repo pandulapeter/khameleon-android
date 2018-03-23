@@ -9,33 +9,36 @@ import android.widget.ImageView
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.util.setImage
 
-class GiphyAdapter(private val callback: GiphyAdapter.Callback) : RecyclerView.Adapter<GiphyAdapter.GifViewHolder>() {
-    private val gifs = mutableListOf<GiphyApiHelper.Gif>()
+class GiphyAdapter(private val onItemClicked: (String) -> Unit) : RecyclerView.Adapter<GiphyAdapter.GifViewHolder>() {
 
-    interface Callback {
-        fun onClick(item: GiphyApiHelper.Gif)
-    }
+    private val gifUrls = mutableListOf<String>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = GifViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_image_giphy, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        GifViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_image_giphy, parent, false)) {
+            onItemClicked(gifUrls[it])
+        }
 
     override fun onBindViewHolder(holder: GifViewHolder, position: Int) {
-        holder.bind(gifs[position])
+        holder.bind(gifUrls[position])
     }
 
-    override fun getItemCount() = gifs.size
+    override fun getItemCount() = gifUrls.size
 
-    fun setItems(list: List<GiphyApiHelper.Gif>) {
-        gifs.clear()
-        gifs.addAll(list)
+    fun setItems(list: List<String>) {
+        gifUrls.clear()
+        gifUrls.addAll(list)
         notifyDataSetChanged()
     }
 
-    inner class GifViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class GifViewHolder(itemView: View, onItemClicked: (Int) -> Unit) : RecyclerView.ViewHolder(itemView) {
         private val gifPreview = itemView.findViewById<ImageView>(R.id.gif)
 
-        fun bind(gif: GiphyApiHelper.Gif) {
-            setImage(gifPreview, gif.previewGif)
-            gifPreview.setOnClickListener { callback.onClick(gif) }
+        init {
+            gifPreview.setOnClickListener { onItemClicked(adapterPosition) }
+        }
+
+        fun bind(gifUrl: String) {
+            setImage(gifPreview, gifUrl)
         }
     }
 }

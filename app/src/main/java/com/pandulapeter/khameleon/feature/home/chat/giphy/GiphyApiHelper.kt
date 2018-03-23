@@ -21,7 +21,7 @@ class GiphyApiHelper(private val apiKey: String, private val limit: Int, private
     }
 
     interface Callback {
-        fun onResponse(gifs: List<Gif>)
+        fun onResponse(gifs: List<String>)
     }
 
     fun search(query: String, callback: Callback) {
@@ -46,10 +46,10 @@ class GiphyApiHelper(private val apiKey: String, private val limit: Int, private
         private val maxSize: Long,
         private val query: String?,
         private val callback: Callback?
-    ) : AsyncTask<Void, Void, List<Gif>>() {
+    ) : AsyncTask<Void, Void, List<String>>() {
 
-        override fun doInBackground(vararg arg0: Void): List<Gif> {
-            val gifList = ArrayList<Gif>()
+        override fun doInBackground(vararg arg0: Void): List<String> {
+            val gifList = ArrayList<String>()
 
             try {
                 // create the connection
@@ -78,7 +78,6 @@ class GiphyApiHelper(private val apiKey: String, private val limit: Int, private
                     val name = gif.getString("slug")
                     Log.d("GIF Name", name)
                     val images = gif.getJSONObject("images")
-                    val previewImage = images.getJSONObject("downsized_still")
                     val previewGif = images.getJSONObject(PREVIEW_SIZE[previewSize])
                     var downsized: JSONObject? = null
 
@@ -93,9 +92,8 @@ class GiphyApiHelper(private val apiKey: String, private val limit: Int, private
                             downsized = null
                         }
                     }
-
                     if (downsized != null) {
-                        gifList.add(Gif(name, previewImage.getString("url"), previewGif.getString("url")))
+                        gifList.add(URLDecoder.decode(previewGif.getString("url"), "UTF-8"))
                     }
                 }
 
@@ -106,7 +104,7 @@ class GiphyApiHelper(private val apiKey: String, private val limit: Int, private
             return gifList
         }
 
-        override fun onPostExecute(result: List<Gif>) {
+        override fun onPostExecute(result: List<String>) {
             callback?.onResponse(result)
         }
 
@@ -115,11 +113,5 @@ class GiphyApiHelper(private val apiKey: String, private val limit: Int, private
             "http://api.giphy.com/v1/gifs/search?q=" + URLEncoder.encode(query, "UTF-8") + "&limit=" + limit + "&api_key=" + apiKey
 
         private fun getResponseText(inStream: InputStream) = Scanner(inStream).useDelimiter("\\A").next()
-    }
-
-    class Gif(name: String, previewImage: String, previewGif: String) {
-        var name = URLDecoder.decode(name, "UTF-8")
-        var previewImage = URLDecoder.decode(previewImage, "UTF-8")
-        var previewGif = URLDecoder.decode(previewGif, "UTF-8")
     }
 }

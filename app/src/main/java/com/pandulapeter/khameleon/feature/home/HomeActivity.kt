@@ -34,6 +34,7 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
 
     private val messageRepository by inject<ChatRepository>()
     private val preferenceRepository by inject<PreferenceRepository>()
+    var calendarTimestamp: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.HomeTheme)
@@ -82,7 +83,8 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
         binding.bottomNavigation.selectedItemId = R.id.chat
     }
 
-    fun openCalendarScreen() {
+    fun openCalendarScreen(timestamp: Long? = null) {
+        this.calendarTimestamp = timestamp
         binding.bottomNavigation.selectedItemId = R.id.calendar
     }
 

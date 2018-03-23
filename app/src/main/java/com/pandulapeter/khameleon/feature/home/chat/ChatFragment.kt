@@ -68,7 +68,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
         onItemClickedCallback = { message, _ ->
             when {
                 message.song != null -> consume { (activity as? HomeActivity)?.openSongsScreen() }
-                message.event != null -> consume { (activity as? HomeActivity)?.openCalendarScreen() }
+                message.event != null -> consume { (activity as? HomeActivity)?.openCalendarScreen(message.event.timestamp) }
                 else -> false
             }
         },

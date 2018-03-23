@@ -25,6 +25,7 @@ import com.pandulapeter.khameleon.data.repository.CalendarRepository
 import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
+import com.pandulapeter.khameleon.feature.home.HomeActivity
 import com.pandulapeter.khameleon.integration.AppShortcutManager
 import com.pandulapeter.khameleon.util.color
 import com.pandulapeter.khameleon.util.consume
@@ -122,6 +123,11 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
             getTodayDecorator(Day.MEETUP, R.drawable.ic_day_meetup_24dp)
         )
         binding.calendarView.setOnMonthChangedListener { _, _ -> refreshTodayButtonVisibility() }
+        val home = activity as? HomeActivity
+        home?.calendarTimestamp?.let {
+            binding.calendarView.run { postDelayed({ setCurrentDate(Calendar.getInstance().apply { timeInMillis = Math.max(timeInMillis, it) }) }, 100) }
+            home.calendarTimestamp = null
+        }
     }
 
     override fun onStart() {
@@ -175,7 +181,7 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     private fun updateEvents() {
         if (!isInvalidationScheduled) {
             isInvalidationScheduled = true
-            binding.calendarView.postDelayed(invalidateRunnable, 100)
+            binding.calendarView.postDelayed(invalidateRunnable, 50)
         }
 
     }

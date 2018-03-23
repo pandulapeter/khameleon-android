@@ -41,7 +41,9 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
             binding.artistInputField.setText(it.artist)
             binding.titleInputField.setText(it.title)
             binding.keyInputField.setText(it.key)
-            binding.bpmInputField.setText(it.bpm.toString())
+            if (it.bpm != 0) {
+                binding.bpmInputField.setText(it.bpm.toString())
+            }
             binding.checkbox.isChecked = it.isHighlighted
         }
         binding.artistInputField.onTextChanged { validateInputs() }

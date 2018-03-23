@@ -59,6 +59,7 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
         }
         isInvalidationScheduled = false
     }
+    private var todayMenuItem: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,6 +121,7 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
             getEnabledDecorator(Day.MEETUP, R.drawable.ic_day_meetup_24dp),
             getTodayDecorator(Day.MEETUP, R.drawable.ic_day_meetup_24dp)
         )
+        binding.calendarView.setOnMonthChangedListener { _, _ -> refreshTodayButtonVisibility() }
     }
 
     override fun onStart() {
@@ -136,6 +138,8 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.calendar, menu)
+        todayMenuItem = menu?.findItem(R.id.today)
+        refreshTodayButtonVisibility()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {
@@ -214,6 +218,10 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
             chatRepository.chatDatabase.push()
                 .setValue(Message(UUID.randomUUID().toString(), "", user, false, day))
         }
+    }
+
+    private fun refreshTodayButtonVisibility() {
+        todayMenuItem?.isVisible = binding.calendarView.currentDate.month != CalendarDay.today().month
     }
 
     private fun Long.normalize() = Calendar.getInstance().apply {

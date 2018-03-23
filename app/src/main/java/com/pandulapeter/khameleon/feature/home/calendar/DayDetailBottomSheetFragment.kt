@@ -16,6 +16,7 @@ import com.pandulapeter.khameleon.data.model.Day
 import com.pandulapeter.khameleon.feature.home.shared.CustomWidthBottomSheetDialog
 import com.pandulapeter.khameleon.util.BundleArgumentDelegate
 import com.pandulapeter.khameleon.util.color
+import com.pandulapeter.khameleon.util.forceCapitalize
 import com.pandulapeter.khameleon.util.setArguments
 import java.util.*
 
@@ -44,7 +45,7 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
             binding.gig.setOnClickListener { handleClick(Day.GIG) }
             binding.meetup.setOnClickListener { handleClick(Day.MEETUP) }
             arguments?.day?.also {
-                it.timestamp.let { binding.label.text = DateFormat.format("EEEE, MMMM d", Date(it)).toString().capitalize() }
+                it.timestamp.let { binding.label.text = DateFormat.format("EEEE, MMMM d", Date(it)).toString().forceCapitalize() }
                 when (it.type) {
                     Day.EMPTY -> binding.empty
                     Day.BUSY -> binding.busy

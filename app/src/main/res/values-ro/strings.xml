@@ -29,7 +29,6 @@
     <string name="new_messages">Mesaje noi</string>
     <string name="message_modification_error_automatic">Nu poți modifica mesajele automate</string>
     <string name="message_modification_error">Poți modifica doar mesajele tale</string>
-    <string name="message_too_old">Mesajul e prea vechi pentru a modifica</string>
     <string name="select_an_option">Selectează o opțiune</string>
     <string name="edit_message">Editare mesaj</string>
     <string name="delete_message">Ștergere mesaj</string>

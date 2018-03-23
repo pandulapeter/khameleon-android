@@ -17,6 +17,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import com.pandulapeter.khameleon.R
+import java.util.regex.Pattern
 
 fun Context.color(@ColorRes colorId: Int) = ContextCompat.getColor(this, colorId)
 
@@ -52,4 +53,13 @@ inline fun ObservableBoolean.onPropertyChanged(fragment: Fragment? = null, cross
             }
         }
     })
+}
+
+fun String.forceCapitalize(): String {
+    val capBuffer = StringBuffer()
+    val capMatcher = Pattern.compile("([a-z-áăâéíîóöőúüűșț])([a-z-áăâéíîóöőúüűșț]*)", Pattern.CASE_INSENSITIVE).matcher(this)
+    while (capMatcher.find()) {
+        capMatcher.appendReplacement(capBuffer, capMatcher.group(1).toUpperCase() + capMatcher.group(2).toLowerCase())
+    }
+    return capMatcher.appendTail(capBuffer).toString()
 }

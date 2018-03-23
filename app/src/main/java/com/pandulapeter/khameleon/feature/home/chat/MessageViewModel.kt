@@ -8,6 +8,7 @@ import com.pandulapeter.khameleon.data.model.Message
 import com.pandulapeter.khameleon.data.model.Song
 import com.pandulapeter.khameleon.util.color
 import com.pandulapeter.khameleon.util.drawable
+import com.pandulapeter.khameleon.util.forceCapitalize
 import java.util.*
 
 class MessageViewModel(model: Message, context: Context) {
@@ -47,10 +48,10 @@ class MessageViewModel(model: Message, context: Context) {
         }
     )
     val avatar = model.sender?.avatar ?: ""
-    val timestamp = DateFormat.format("MMM d, HH:mm", Date(model.timestamp)).toString().capitalize()
+    val timestamp = DateFormat.format("MMM d, HH:mm", Date(model.timestamp)).toString().forceCapitalize()
     val text = if (model.song == null) model.event?.getDescription(context) ?: model.text else ""
 
-    private fun Long.format() = DateFormat.format("EEEE, MMMM d", Date(this)).toString().capitalize()
+    private fun Long.format() = DateFormat.format("EEEE, MMMM d", Date(this)).toString().forceCapitalize()
 
     private fun Day.getDescription(context: Context) = if (description.isEmpty()) "" else when (type) {
         Day.REHEARSAL -> context.getString(R.string.rehearsal_starts_from, description)

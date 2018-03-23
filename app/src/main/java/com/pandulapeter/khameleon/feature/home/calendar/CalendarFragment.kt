@@ -6,6 +6,9 @@ import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.TextAppearanceSpan
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import com.firebase.ui.common.ChangeEventType
 import com.firebase.ui.database.ChangeEventListener
@@ -24,6 +27,7 @@ import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.integration.AppShortcutManager
 import com.pandulapeter.khameleon.util.color
+import com.pandulapeter.khameleon.util.consume
 import com.pandulapeter.khameleon.util.drawable
 import com.pandulapeter.khameleon.util.showSnackbar
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -54,6 +58,11 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
             binding.calendarView.invalidateDecorators()
         }
         isInvalidationScheduled = false
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -123,6 +132,15 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     override fun onStop() {
         super.onStop()
         events.removeChangeEventListener(this)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.calendar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {
+        R.id.today -> consume { binding.calendarView.setCurrentDate(Calendar.getInstance()) }
+        else -> super.onOptionsItemSelected(item)
     }
 
     override fun onItemClicked(itemType: Int, day: Day) {

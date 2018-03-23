@@ -47,6 +47,7 @@
     <string name="gig_at">Helyszín: %s.</string>
 
     <!-- Calendar -->
+    <string name="today">Ma</string>
     <array name="calendar_days">
         <item>Vas</item>
         <item>Hét</item>

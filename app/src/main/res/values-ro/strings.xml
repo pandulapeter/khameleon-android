@@ -47,6 +47,7 @@
     <string name="gig_at">Concertul va fi în %s.</string>
 
     <!-- Calendar -->
+    <string name="today">Astăzi</string>
     <array name="calendar_days">
         <item>Dum</item>
         <item>Lun</item>

@@ -47,6 +47,7 @@
     <string name="gig_at">The concert will be at %s.</string>
 
     <!-- Calendar -->
+    <string name="today">Today</string>
     <array name="calendar_days">
         <item>Sun</item>
         <item>Mon</item>

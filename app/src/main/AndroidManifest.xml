@@ -37,6 +37,7 @@
             android:name=".feature.home.chat.giphy.GiphyActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
+            android:theme="@style/GiphyTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
 
         <service

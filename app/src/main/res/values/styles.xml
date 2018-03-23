@@ -18,6 +18,20 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="GiphyTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:navigationBarColor">@color/primary_dark</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <style name="AppBarTheme" parent="Theme.AppCompat">
+        <item name="android:navigationBarColor">@color/primary_dark</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
     <style name="HomeTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:navigationBarColor">@color/primary_dark</item>
         <item name="colorPrimary">@color/primary</item>

@@ -167,6 +167,7 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
             }
             Day.GIG -> DescriptionInputDialogFragment.show(childFragmentManager, day.apply { type = itemType }, R.string.new_gig)
             Day.MEETUP -> DescriptionInputDialogFragment.show(childFragmentManager, day.apply { type = itemType }, R.string.new_meetup)
+            else -> updateDay(day)
         }
     }
 

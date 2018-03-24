@@ -13,11 +13,10 @@ import android.view.View
 import com.pandulapeter.khameleon.DayDetailDialogBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.model.Day
+import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.home.shared.CustomWidthBottomSheetDialog
-import com.pandulapeter.khameleon.util.BundleArgumentDelegate
-import com.pandulapeter.khameleon.util.color
-import com.pandulapeter.khameleon.util.forceCapitalize
-import com.pandulapeter.khameleon.util.setArguments
+import com.pandulapeter.khameleon.util.*
+import org.koin.android.ext.android.inject
 import java.util.*
 
 class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
@@ -33,6 +32,7 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
     }
 
     private lateinit var binding: DayDetailDialogBinding
+    private val userRepository by inject<UserRepository>()
     private val onDialogItemSelectedListener get() = parentFragment as? OnDialogItemSelectedListener ?: activity as? OnDialogItemSelectedListener
     private val behavior: BottomSheetBehavior<*> by lazy { ((binding.root.parent as View).layoutParams as CoordinatorLayout.LayoutParams).behavior as BottomSheetBehavior<*> }
     private val viewModel = DayDetailBottomSheetViewModel()
@@ -64,7 +64,34 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
                         }
                     }
                 }
-                viewModel.goodForMe.set(it.type != Day.BUSY)//TODO: check by user id
+                userRepository.getSignedInUser()?.let { user ->
+                    if (it.notGoodFor?.any { it.id == user.id } == true) {
+                        viewModel.goodForMe.set(false)
+                    }
+                }
+                viewModel.goodForMe.onPropertyChanged { isItGoodForMe ->
+                    arguments?.day?.let {
+                        onDialogItemSelectedListener?.onItemClicked(-1, it.apply {
+                            userRepository.getSignedInUser()?.let { me ->
+                                val currentItems = it.notGoodFor ?: listOf()
+                                if (isItGoodForMe) {
+                                    it.notGoodFor = currentItems.toMutableList().filter { it.id == me.id }
+                                    if (it.notGoodFor?.isEmpty() == true && it.type == Day.BUSY) {
+                                        it.type = Day.EMPTY
+                                    }
+                                } else {
+                                    if (!currentItems.any { it.id == me.id }) {
+                                        it.notGoodFor = currentItems.toMutableList().apply { add(me) }
+                                    }
+                                    if (it.type == Day.EMPTY) {
+                                        it.type = Day.BUSY
+                                    }
+                                }
+                            }
+                        })
+                    }
+                    dismiss()
+                }
             }
             setContentView(binding.root)
             binding.root.run { post { behavior.peekHeight = height } }

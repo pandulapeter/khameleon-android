@@ -35,11 +35,7 @@
     <string name="delete_message_title">Are you sure?</string>
     <string name="delete_message_message">This will permanently delete the message.</string>
     <string name="delete">Delete</string>
-    <string name="day_cleared">%1$s cleared the day %2$s.</string>
-    <string name="day_marked_busy">%1$s marked %2$s as busy.</string>
-    <string name="day_marked_rehearsal">%1$s scheduled a rehearsal for %2$s.</string>
-    <string name="day_marked_gig">%1$s scheduled a gig for %2$s.</string>
-    <string name="day_marked_meetup">%1$s scheduled a meetup for %2$s.</string>
+    <string name="day_modified">%1$s modified the day %2$s.</string>
     <string name="song_added_pattern">%1$s added the song %2$s - %3$s.</string>
     <string name="song_deleted_pattern">%1$s deleted the song %2$s - %3$s.</string>
     <string name="rehearsal_starts_from">The rehearsal starts from %s.</string>
@@ -85,9 +81,9 @@
     <string name="good_for_me_description">I am free on this day</string>
     <string name="not_good_for_me_description">I am busy on this day</string>
     <string name="availability">Availability</string>
-    <string name="everybody_is_free">This day is good for everybody.</string>
-    <string name="somebody_is_busy">Somebody is busy on this day.</string>
-    <string name="they_are_busy">Who has other plans</string>
+    <string name="the_day_is_good_for_everybody">This day is good for everybody.</string>
+    <string name="somebody_is_busy_on_this_day">Somebody is busy on this day.</string>
+    <string name="who_has_other_plans">Who has other plans</string>
 
     <!-- Songs -->
     <string name="export_list">Export list</string>

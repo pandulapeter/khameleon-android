@@ -35,11 +35,7 @@
     <string name="delete_message_title">Biztos vagy benne?</string>
     <string name="delete_message_message">Biztosan szeretnéd véglegesen törölni az üzenetet?</string>
     <string name="delete">Törlés</string>
-    <string name="day_cleared">%1$s törölt mindent eseményt erről a napról: %2$s.</string>
-    <string name="day_marked_busy">%1$s foglalt ezen a napon: %2$s.</string>
-    <string name="day_marked_rehearsal">%1$s próbát rakott erre a napra: %2$s.</string>
-    <string name="day_marked_gig">%1$s koncertet rakott erre a napra: %2$s.</string>
-    <string name="day_marked_meetup">%1$s találkozót rakott erre a napra: %2$s.</string>
+    <string name="day_modified">%1$s módosította ezt a napot: %2$s.</string>
     <string name="song_added_pattern">%1$s hozzáadta ezt a dalt: %2$s - %3$s.</string>
     <string name="song_deleted_pattern">%1$s kitörölte ezt a dalt: %2$s - %3$s.</string>
     <string name="rehearsal_starts_from">A próba %s-kor kezdődik.</string>
@@ -85,9 +81,9 @@
     <string name="good_for_me_description">Ezen a napon ráérek</string>
     <string name="not_good_for_me_description">Ezen a napon nem érek rá</string>
     <string name="availability">Elérhetőség</string>
-    <string name="everybody_is_free">Mindenki szabad ezen a napon.</string>
-    <string name="somebody_is_busy">Valaki elfoglalt ezen a napon.</string>
-    <string name="they_are_busy">Ki nem ér rá</string>
+    <string name="the_day_is_good_for_everybody">Mindenki szabad ezen a napon.</string>
+    <string name="somebody_is_busy_on_this_day">Valaki elfoglalt ezen a napon.</string>
+    <string name="who_has_other_plans">Ki nem ér rá</string>
 
     <!-- Songs -->
     <string name="export_list">Lista exportálása</string>

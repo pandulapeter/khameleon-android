@@ -54,13 +54,13 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
                 binding.status.text = getString(
                     if (it.notGoodFor == null || it.notGoodFor?.isEmpty() == true) {
                         if (it.type == Day.BUSY) {
-                            R.string.somebody_is_busy
+                            R.string.somebody_is_busy_on_this_day
                         } else {
-                            R.string.everybody_is_free
+                            R.string.the_day_is_good_for_everybody
                         }
                     } else {
                         binding.status.setTextColor(context.color(R.color.primary))
-                        R.string.they_are_busy
+                        R.string.who_has_other_plans
                     }
                 )
                 it.notGoodFor?.forEach {

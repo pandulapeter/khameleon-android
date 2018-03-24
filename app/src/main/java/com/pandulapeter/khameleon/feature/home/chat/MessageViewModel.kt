@@ -22,16 +22,15 @@ class MessageViewModel(model: Message, context: Context) {
     val nameColor = context.color(if (systemMessage) R.color.light else R.color.primary)
     val linkColor = context.color(if (model.isImportant) R.color.primary else R.color.accent)
     val name: String = (model.sender?.getFormattedName() ?: "").let {
-        when (model.event?.type) {
-            Day.EMPTY -> context.getString(R.string.day_cleared, it, model.event.timestamp.format())
-            Day.BUSY -> context.getString(R.string.day_marked_busy, it, model.event.timestamp.format())
-            Day.REHEARSAL -> context.getString(R.string.day_marked_rehearsal, it, model.event.timestamp.format())
-            Day.GIG -> context.getString(R.string.day_marked_gig, it, model.event.timestamp.format())
-            Day.MEETUP -> context.getString(R.string.day_marked_meetup, it, model.event.timestamp.format())
-            else -> when (model.song) {
-                is Song -> context.getString(if (model.text == SONG_ADDED) R.string.song_added_pattern else R.string.song_deleted_pattern, it, model.song.artist, model.song.title)
-                else -> it
-            }
+        when {
+            model.event != null -> context.getString(R.string.day_modified, it, model.event.timestamp.format())
+            model.song != null -> context.getString(
+                if (model.text == SONG_ADDED) R.string.song_added_pattern else R.string.song_deleted_pattern,
+                it,
+                model.song.artist,
+                model.song.title
+            )
+            else -> it
         }
     }
     val icon = context.drawable(

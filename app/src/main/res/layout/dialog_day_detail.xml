@@ -113,7 +113,7 @@
                 android:layout_marginTop="@dimen/content_padding"
                 android:fontFamily="sans-serif-medium"
                 android:padding="@dimen/content_padding"
-                tools:text="@string/everybody_is_free" />
+                tools:text="@string/the_day_is_good_for_everybody" />
 
             <LinearLayout
                 android:id="@+id/busy_users_container"

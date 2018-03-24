@@ -35,11 +35,7 @@
     <string name="delete_message_title">Ești sigur?</string>
     <string name="delete_message_message">Asta va șterge permanent mesajul.</string>
     <string name="delete">Șterge</string>
-    <string name="day_cleared">%1$s a anulat evenimentele din ziua %2$s.</string>
-    <string name="day_marked_busy">%1$s este ocupat în data de %2$s.</string>
-    <string name="day_marked_rehearsal">%1$s a planificat o repetiție pe data de %2$s.</string>
-    <string name="day_marked_gig">%1$s a planificat un concert pe data de %2$s.</string>
-    <string name="day_marked_meetup">%1$s a planificat o întâlnire pe data de %2$s.</string>
+    <string name="day_modified">%1$s a modificat ziua %2$s.</string>
     <string name="song_added_pattern">%1$s a adăugat piesa %2$s - %3$s.</string>
     <string name="song_deleted_pattern">%1$s a șters piesa %2$s - %3$s.</string>
     <string name="rehearsal_starts_from">Repetiția începe la ora %s.</string>
@@ -81,13 +77,13 @@
     <string name="new_gig">Concert nou</string>
     <string name="new_meetup">Întâlnire nouă</string>
     <string name="enter_location">Introdu locația</string>
-    <string name="good_for_me_title">Ok pentru mine</string>
+    <string name="good_for_me_title">E OK pentru mine</string>
     <string name="good_for_me_description">Sunt liber pe data asta</string>
     <string name="not_good_for_me_description">Nu sunt liber pe data asta</string>
     <string name="availability">Disponibilitate</string>
-    <string name="everybody_is_free">Toate lumea este liber.</string>
-    <string name="somebody_is_busy">Cineva are alt program.</string>
-    <string name="they_are_busy">Cine are alt program</string>
+    <string name="the_day_is_good_for_everybody">Toate lumea este liber.</string>
+    <string name="somebody_is_busy_on_this_day">Cineva este ocupat.</string>
+    <string name="who_has_other_plans">Cine are alt program</string>
 
     <!-- Songs -->
     <string name="export_list">Exportare ca listă</string>

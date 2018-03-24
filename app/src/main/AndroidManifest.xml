@@ -17,7 +17,7 @@
 
         <activity
             android:name=".feature.authentication.AuthenticationActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
 
@@ -30,7 +30,7 @@
 
         <activity
             android:name=".feature.home.HomeActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing">
 
@@ -44,7 +44,7 @@
 
         <activity
             android:name=".feature.home.chat.gifPicker.GifPickerActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/GifPickerTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />

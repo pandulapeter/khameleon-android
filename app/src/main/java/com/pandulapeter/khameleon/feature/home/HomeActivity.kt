@@ -28,6 +28,7 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
 
     companion object {
         private var Intent.item by IntentExtraDelegate.String("item")
+        private var Intent.text by IntentExtraDelegate.String(Intent.EXTRA_TEXT)
 
         fun getStartIntent(context: Context, item: String) = Intent(context, HomeActivity::class.java).apply {
             this.item = item
@@ -110,9 +111,14 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
 
     private fun handleShareIntent(): Boolean {
         if (intent.action == Intent.ACTION_SEND && intent.type == "text/plain") {
-            intent.getStringExtra(Intent.EXTRA_TEXT)?.let {
-                openChatScreen(it)
-                return true
+            intent.text.let {
+                if (it.isNotEmpty()) {
+                    openChatScreen(it)
+                    intent.action = null
+                    intent.type = null
+                    intent.text = ""
+                    return true
+                }
             }
         }
         return false

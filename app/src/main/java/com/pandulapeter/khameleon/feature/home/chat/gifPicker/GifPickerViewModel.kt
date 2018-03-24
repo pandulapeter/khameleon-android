@@ -1,7 +1,6 @@
 package com.pandulapeter.khameleon.feature.home.chat.gifPicker
 
 import android.databinding.ObservableBoolean
-import android.util.Log
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -22,6 +21,7 @@ class GifPickerViewModel {
     }
 
     val loadingIndicatorVisible = ObservableBoolean(true)
+    val shouldShowErrorMessage = ObservableBoolean()
     private var coroutine: CoroutineContext? = null
 
     fun searchForGifs(query: String, callback: (List<String>) -> Unit) {
@@ -60,14 +60,10 @@ class GifPickerViewModel {
             } catch (e: Exception) {
             }
             for (i in 0 until data.length()) {
-                val gif = data.getJSONObject(i)
-                val name = gif.getString("slug")
-                Log.d("GIF Name", name)
-                val images = gif.getJSONObject("images")
-                val previewGif = images.getJSONObject("fixed_width")
-                add(URLDecoder.decode(previewGif.getString("url"), "UTF-8"))
+                add(URLDecoder.decode(data.getJSONObject(i).getJSONObject("images").getJSONObject("fixed_width").getString("url"), "UTF-8"))
             }
-        } catch (e: Exception) {
+        } catch (ignored: Exception) {
+            shouldShowErrorMessage.set(true)
         }
     }
 }

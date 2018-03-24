@@ -12,10 +12,7 @@ import android.view.View
 import com.pandulapeter.khameleon.GifPickerActivityBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.feature.shared.KhameleonActivity
-import com.pandulapeter.khameleon.util.consume
-import com.pandulapeter.khameleon.util.dimension
-import com.pandulapeter.khameleon.util.drawable
-import com.pandulapeter.khameleon.util.onTextChanged
+import com.pandulapeter.khameleon.util.*
 
 class GifPickerActivity : KhameleonActivity<GifPickerActivityBinding>(R.layout.activity_gif_picker) {
 
@@ -50,6 +47,7 @@ class GifPickerActivity : KhameleonActivity<GifPickerActivityBinding>(R.layout.a
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(drawable(R.drawable.ic_close_24dp))
         }
+        viewModel.shouldShowErrorMessage.onEventTriggered { binding.root.showSnackbar(R.string.something_went_wrong) }
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.adapter = adapter

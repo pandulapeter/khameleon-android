@@ -55,6 +55,17 @@ inline fun ObservableBoolean.onPropertyChanged(fragment: Fragment? = null, cross
     })
 }
 
+inline fun ObservableBoolean.onEventTriggered(fragment: Fragment? = null, crossinline callback: () -> Unit) {
+    addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+        override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+            if (get() && fragment?.isAdded != false) {
+                callback()
+                set(false)
+            }
+        }
+    })
+}
+
 fun String.forceCapitalize(): String {
     val capBuffer = StringBuffer()
     val capMatcher = Pattern.compile("([a-z-áăâéíîóöőúüűșț])([a-z-áăâéíîóöőúüűșț]*)", Pattern.CASE_INSENSITIVE).matcher(this)

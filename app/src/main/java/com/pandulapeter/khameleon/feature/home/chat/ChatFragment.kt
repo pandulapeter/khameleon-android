@@ -142,7 +142,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                     data?.getStringExtra(GifPickerActivity.RESULT_GIF_URL)?.let { gifUrl ->
                         userRepository.getSignedInUser()?.let {
                             sendGif(it, gifUrl)
-                            sendNotification(it, "Gif")
+                            sendNotification(it, "GIF")
                             scrollToBottom()
                         }
                     }

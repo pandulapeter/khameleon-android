@@ -35,12 +35,14 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
     private lateinit var binding: DayDetailDialogBinding
     private val onDialogItemSelectedListener get() = parentFragment as? OnDialogItemSelectedListener ?: activity as? OnDialogItemSelectedListener
     private val behavior: BottomSheetBehavior<*> by lazy { ((binding.root.parent as View).layoutParams as CoordinatorLayout.LayoutParams).behavior as BottomSheetBehavior<*> }
+    private val viewModel = DayDetailBottomSheetViewModel()
 
     override fun onCreateDialog(savedInstanceState: Bundle?) = context?.let { context ->
         CustomWidthBottomSheetDialog(context, theme).apply {
             binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_day_detail, null, false)
+            binding.viewModel = viewModel
             binding.empty.setOnClickListener { handleClick(Day.EMPTY) }
-            binding.busy.setOnClickListener { handleClick(Day.BUSY) }
+//            binding.busy.setOnClickListener { handleClick(Day.BUSY) }
             binding.rehearsal.setOnClickListener { handleClick(Day.REHEARSAL) }
             binding.gig.setOnClickListener { handleClick(Day.GIG) }
             binding.meetup.setOnClickListener { handleClick(Day.MEETUP) }
@@ -48,7 +50,7 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
                 it.timestamp.let { binding.label.text = DateFormat.format("EEEE, MMMM d", Date(it)).toString().forceCapitalize() }
                 when (it.type) {
                     Day.EMPTY -> binding.empty
-                    Day.BUSY -> binding.busy
+//                    Day.BUSY -> binding.busy
                     Day.REHEARSAL -> binding.rehearsal
                     Day.GIG -> binding.gig
                     Day.MEETUP -> binding.meetup
@@ -62,6 +64,7 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
                         }
                     }
                 }
+                viewModel.goodForMe.set(it.type != Day.BUSY)//TODO: check by user id
             }
             setContentView(binding.root)
             binding.root.run { post { behavior.peekHeight = height } }

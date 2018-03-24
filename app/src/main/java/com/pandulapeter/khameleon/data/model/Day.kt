@@ -7,7 +7,8 @@ import kotlinx.android.parcel.Parcelize
 data class Day(
     var timestamp: Long = 0L,
     var type: Int = EMPTY,
-    var description: String = ""
+    var description: String = "",
+    var notGoodFor: List<User>? = null
 ) : Parcelable {
 
     companion object {

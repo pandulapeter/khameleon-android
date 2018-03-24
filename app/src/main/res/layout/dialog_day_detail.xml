@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!--suppress AndroidUnknownAttribute -->
-    <data class=".DayDetailDialogBinding" />
+    <data class=".DayDetailDialogBinding">
+
+        <variable
+            name="viewModel"
+            type="com.pandulapeter.khameleon.feature.home.calendar.DayDetailBottomSheetViewModel" />
+
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,6 +25,29 @@
             android:layout_margin="@dimen/content_padding"
             android:fontFamily="sans-serif-medium"
             android:padding="@dimen/content_padding"
+            android:textColor="@color/primary"
+            tools:text="Date" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="@={viewModel.goodForMe}"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/touch_target"
+            android:paddingEnd="@dimen/large_content_padding"
+            android:paddingStart="@dimen/large_content_padding"
+            app:description="@{viewModel.goodForMe ? @string/good_for_me_description : @string/not_good_for_me_description}"
+            app:title="@{@string/good_for_me_title}"
+            tools:text="@string/good_for_me_title" />
+
+        <TextView
+            android:id="@+id/plan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/content_padding"
+            android:fontFamily="sans-serif-medium"
+            android:padding="@dimen/content_padding"
+            android:text="@string/event"
             android:textColor="@color/primary" />
 
         <TextView
@@ -30,18 +61,6 @@
             android:paddingEnd="@dimen/large_content_padding"
             android:paddingStart="@dimen/large_content_padding"
             android:text="@string/empty" />
-
-        <TextView
-            android:id="@+id/busy"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/touch_target"
-            android:background="?attr/selectableItemBackground"
-            android:drawablePadding="@dimen/drawable_padding"
-            android:drawableStart="@drawable/ic_day_busy_24dp"
-            android:gravity="center_vertical"
-            android:paddingEnd="@dimen/large_content_padding"
-            android:paddingStart="@dimen/large_content_padding"
-            android:text="@string/busy" />
 
         <TextView
             android:id="@+id/rehearsal"

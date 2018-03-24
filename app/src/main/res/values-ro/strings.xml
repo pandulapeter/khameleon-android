@@ -81,6 +81,10 @@
     <string name="new_gig">Concert nou</string>
     <string name="new_meetup">Întâlnire nouă</string>
     <string name="enter_location">Introdu locația</string>
+    <string name="good_for_me_title">Ok pentru mine</string>
+    <string name="good_for_me_description">Sunt liber pe data asta</string>
+    <string name="not_good_for_me_description">Nu sunt liber pe data asta</string>
+    <string name="event">Eveniment</string>
 
     <!-- Songs -->
     <string name="export_list">Exportare ca listă</string>

@@ -81,6 +81,10 @@
     <string name="new_gig">Új koncert</string>
     <string name="new_meetup">Új találkozó</string>
     <string name="enter_location">Add meg a helyszínt</string>
+    <string name="good_for_me_title">Nekem jó</string>
+    <string name="good_for_me_description">Ezen a napon ráérek</string>
+    <string name="not_good_for_me_description">Ezen a napon nem érek rá</string>
+    <string name="event">Esemény</string>
 
     <!-- Songs -->
     <string name="export_list">Lista exportálása</string>

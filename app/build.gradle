@@ -10,8 +10,8 @@ android {
         applicationId "com.pandulapeter.khameleon"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 5
-        versionName "0.0.5"
+        versionCode 7
+        versionName "0.0.7"
         vectorDrawables.useSupportLibrary = true
     }
     dataBinding {

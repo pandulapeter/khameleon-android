@@ -18,12 +18,13 @@
     <string name="settings">Beállítások</string>
 
     <!-- Chat -->
-    <string name="new_message">Új üzenet</string>
+    <string name="new_message">Üzenet</string>
     <string name="thumbs_up">Tetszik</string>
     <string name="send_gif">GIF</string>
-    <string name="new_poll">Új szavazás</string>
+    <string name="new_poll">Szavazás</string>
     <string name="search_gifs">GIF-ek keresése</string>
-    <string name="enter_your_message">Írd be az üzeneted</string>
+    <string name="enter_your_message">Üzenet</string>
+    <string name="enter_your_question">Kérdés</string>
     <string name="this_is_an_announcement">Kiemenlten fontos</string>
     <string name="send">Küldés</string>
     <string name="ok">Szerkesztés</string>

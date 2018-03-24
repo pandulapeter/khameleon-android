@@ -40,7 +40,7 @@ class MessageInputDialogFragment : AppCompatDialogFragment() {
             positiveButton.isEnabled = it.isTextValid()
             messageRepository.workInProgressMessageText = it
         }
-        binding.checkbox.setOnCheckedChangeListener { _, isChecked -> messageRepository.workInProgressMessageImportant = isChecked }
+        binding.checkboxAnnouncement.setOnCheckedChangeListener { _, isChecked -> messageRepository.workInProgressMessageImportant = isChecked }
         AlertDialog.Builder(context, R.style.AlertDialog)
             .setTitle(arguments.title)
             .setView(binding.root)
@@ -56,7 +56,7 @@ class MessageInputDialogFragment : AppCompatDialogFragment() {
         super.onStart()
         dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         binding.inputField.setText(messageRepository.workInProgressMessageText)
-        binding.checkbox.isChecked = messageRepository.workInProgressMessageImportant
+        binding.checkboxAnnouncement.isChecked = messageRepository.workInProgressMessageImportant
         binding.root.post {
             showKeyboard(binding.inputField)
             binding.inputField.setSelection(binding.inputField.text?.length ?: 0)
@@ -74,7 +74,7 @@ class MessageInputDialogFragment : AppCompatDialogFragment() {
     private fun onOkButtonPressed() {
         binding.inputField.text?.let {
             if (it.isTextValid()) {
-                onDialogTextEnteredListener?.onTextEntered(it.toString(), binding.checkbox.isChecked)
+                onDialogTextEnteredListener?.onTextEntered(it.toString(), binding.checkboxAnnouncement.isChecked)
                 messageRepository.workInProgressMessageText = ""
                 messageRepository.workInProgressMessageImportant = false
                 dismiss()

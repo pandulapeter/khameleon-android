@@ -49,11 +49,21 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
             if (song.bpm != 0) {
                 binding.bpmInputField.setText(song.bpm.toString())
             }
-            binding.checkbox.isChecked = song.isHighlighted
+            binding.checkboxHighlight.isChecked = song.isHighlighted
+            binding.checkboxHighlight.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    binding.checkboxArchive.isChecked = false
+                }
+            }
+            binding.checkboxArchive.isChecked = song.isArchived
+            binding.checkboxArchive.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    binding.checkboxHighlight.isChecked = false
+                }
+            }
         }
         binding.artistInputField.onTextChanged { validateInputs() }
         binding.titleInputField.onTextChanged { validateInputs() }
-
         AlertDialog.Builder(context, R.style.AlertDialog)
             .setTitle(arguments.title)
             .setView(binding.root)
@@ -89,7 +99,8 @@ class SongInputDialogFragment : AppCompatDialogFragment() {
                     binding.keyInputField.selectedItem.toString(),
                     arguments?.song?.order ?: 0,
                     binding.bpmInputField.text.toInt(),
-                    binding.checkbox.isChecked
+                    binding.checkboxHighlight.isChecked,
+                    binding.checkboxArchive.isChecked
                 ), !isUpdate, isUpdate
             )
             dismiss()

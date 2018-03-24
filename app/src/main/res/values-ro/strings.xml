@@ -101,7 +101,8 @@
     <string name="enter_song_bpm">BPM</string>
     <string name="undo">Anulare</string>
     <string name="song_deleted">%s șters</string>
-    <string name="highlight_song">Piesă importantă</string>
+    <string name="highlight_song">Important</string>
+    <string name="archive_song">Arhivat</string>
     <string-array name="keys">
         <item>"?"</item>
         <item>C</item>

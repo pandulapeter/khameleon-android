@@ -11,5 +11,6 @@ data class Song(
     val key: String = "",
     var order: Int = 0,
     var bpm: Int = 0,
-    var isHighlighted: Boolean = false
+    var isHighlighted: Boolean = false,
+    var isArchived: Boolean = false
 ) : Parcelable

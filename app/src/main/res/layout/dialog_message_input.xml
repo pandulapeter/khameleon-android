@@ -35,7 +35,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <CheckBox
-                android:id="@+id/checkbox"
+                android:id="@+id/checkbox_announcement"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/large_content_padding"

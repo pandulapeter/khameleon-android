@@ -65,7 +65,7 @@
                     android:paddingEnd="@dimen/content_padding"
                     android:paddingStart="20dp"
                     app:hintTextAppearance="@style/TextInputLayout"
-                    app:layout_constraintEnd_toStartOf="@id/checkbox"
+                    app:layout_constraintEnd_toStartOf="@+id/checkbox_container"
                     app:layout_constraintStart_toStartOf="parent">
 
                     <android.support.design.widget.TextInputEditText
@@ -98,14 +98,32 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/key_input_field" />
 
-                <CheckBox
-                    android:id="@+id/checkbox"
+                <LinearLayout
+                    android:id="@id/checkbox_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/large_content_padding"
-                    android:layout_marginTop="@dimen/content_padding"
-                    android:text="@string/highlight_song"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    android:orientation="vertical"
+                    android:paddingEnd="@dimen/content_padding"
+                    android:paddingStart="@dimen/content_padding"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <CheckBox
+                        android:id="@+id/checkbox_highlight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/large_content_padding"
+                        android:layout_marginTop="@dimen/content_padding"
+                        android:text="@string/highlight_song" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_archive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/large_content_padding"
+                        android:layout_marginTop="@dimen/small_content_padding"
+                        android:text="@string/archive_song" />
+
+                </LinearLayout>
 
             </android.support.constraint.ConstraintLayout>
 

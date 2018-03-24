@@ -1,4 +1,4 @@
-package com.pandulapeter.khameleon.feature.home.chat.giphy
+package com.pandulapeter.khameleon.feature.home.chat.gifPicker
 
 
 import android.support.v7.widget.RecyclerView

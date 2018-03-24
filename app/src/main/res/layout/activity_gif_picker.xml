@@ -3,7 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--suppress AndroidUnknownAttribute -->
-    <data class=".GifPickerActivityBinding" />
+    <data class=".GifPickerActivityBinding">
+
+        <variable
+            name="viewModel"
+            type="com.pandulapeter.khameleon.feature.home.chat.gifPicker.GifPickerViewModel" />
+
+    </data>
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -20,7 +26,7 @@
                 android:theme="@style/AppBarTheme">
 
                 <EditText
-                    android:id="@+id/search_view"
+                    android:id="@+id/search_input"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
@@ -39,12 +45,12 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <ProgressBar
-                android:id="@+id/loading_indicator"
                 style="@style/Widget.AppCompat.ProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:indeterminateOnly="true" />
+                android:indeterminateOnly="true"
+                android:visibility="@{viewModel.loadingIndicatorVisible}" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"

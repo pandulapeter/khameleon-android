@@ -18,7 +18,7 @@ import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.feature.home.HomeActivity
-import com.pandulapeter.khameleon.feature.home.chat.giphy.GifPickerActivity
+import com.pandulapeter.khameleon.feature.home.chat.gifPicker.GifPickerActivity
 import com.pandulapeter.khameleon.feature.home.shared.AlertDialogFragment
 import com.pandulapeter.khameleon.integration.AppShortcutManager
 import com.pandulapeter.khameleon.util.BundleArgumentDelegate

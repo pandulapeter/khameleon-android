@@ -42,7 +42,7 @@
         </activity>
 
         <activity
-            android:name=".feature.home.chat.giphy.GifPickerActivity"
+            android:name=".feature.home.chat.gifPicker.GifPickerActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/GifPickerTheme"

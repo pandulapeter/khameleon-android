@@ -1,4 +1,4 @@
-package com.pandulapeter.khameleon.feature.home.chat.giphy
+package com.pandulapeter.khameleon.feature.home.chat.gifPicker
 
 
 import android.app.Activity
@@ -24,15 +24,15 @@ class GifPickerActivity : KhameleonActivity<GifPickerActivityBinding>(R.layout.a
         private const val QUERY_DELAY = 400L
     }
 
+    private var viewModel = GifPickerViewModel()
     private var lastKeyPressTimestamp = 0L
-    private var helper: GiphyApiHelper? = null
-    private var giphyAdapter = GifAdapter {
+    private var adapter = GifAdapter {
         setResult(Activity.RESULT_OK, Intent().putExtra(RESULT_GIF_URL, it))
         supportFinishAfterTransition()
     }
     private var queryRunnable = Runnable {
         if (System.currentTimeMillis() - lastKeyPressTimestamp >= QUERY_DELAY) {
-            binding.searchView.text?.toString()?.let {
+            binding.searchInput.text?.toString()?.let {
                 if (it.isEmpty()) {
                     loadTrending()
                 } else {
@@ -44,7 +44,7 @@ class GifPickerActivity : KhameleonActivity<GifPickerActivityBinding>(R.layout.a
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        helper = GiphyApiHelper("dc6zaTOxFJmzC", GiphyApiHelper.NO_SIZE_LIMIT, 1, GiphyApiHelper.NO_SIZE_LIMIT.toLong())
+        binding.viewModel = viewModel
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -53,7 +53,7 @@ class GifPickerActivity : KhameleonActivity<GifPickerActivityBinding>(R.layout.a
         binding.recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            adapter = giphyAdapter
+            adapter = adapter
             addItemDecoration(object : RecyclerView.ItemDecoration() {
                 val space = context.dimension(R.dimen.small_content_padding)
 
@@ -67,9 +67,9 @@ class GifPickerActivity : KhameleonActivity<GifPickerActivityBinding>(R.layout.a
                 }
             })
         }
-        binding.searchView.onTextChanged {
+        binding.searchInput.onTextChanged {
             lastKeyPressTimestamp = System.currentTimeMillis()
-            binding.searchView.postDelayed(queryRunnable, QUERY_DELAY)
+            binding.searchInput.postDelayed(queryRunnable, QUERY_DELAY)
         }
         loadTrending()
     }
@@ -79,28 +79,11 @@ class GifPickerActivity : KhameleonActivity<GifPickerActivityBinding>(R.layout.a
         else -> super.onOptionsItemSelected(item)
     }
 
-    private fun loadTrending() {
-        binding.loadingIndicator.visibility = View.VISIBLE
-        helper?.trends(object : GiphyApiHelper.Callback {
-            override fun onResponse(gifs: List<String>) {
-                updateAdapter(gifs)
-            }
-        })
-    }
+    private fun loadTrending() = viewModel.getTrendingGifs { adapter.setItems(it) }
 
     private fun executeQuery(query: String) {
         if (!isFinishing && !isDestroyed) {
-            binding.loadingIndicator.visibility = View.VISIBLE
-            helper?.search(query, object : GiphyApiHelper.Callback {
-                override fun onResponse(gifs: List<String>) {
-                    updateAdapter(gifs)
-                }
-            })
+            viewModel.searchForGifs(query) { adapter.setItems(it) }
         }
-    }
-
-    private fun updateAdapter(gifs: List<String>) {
-        binding.loadingIndicator.visibility = View.GONE
-        giphyAdapter.setItems(gifs)
     }
 }

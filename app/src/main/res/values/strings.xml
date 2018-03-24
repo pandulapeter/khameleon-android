@@ -85,6 +85,9 @@
     <string name="good_for_me_description">I am free on this day</string>
     <string name="not_good_for_me_description">I am busy on this day</string>
     <string name="event">Event</string>
+    <string name="everybody_is_free">This day is good for everybody.</string>
+    <string name="somebody_is_busy">Somebody is busy on this day.</string>
+    <string name="they_are_busy">Who has other plans</string>
 
     <!-- Songs -->
     <string name="export_list">Export list</string>

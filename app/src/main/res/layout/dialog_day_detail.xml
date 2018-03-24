@@ -41,6 +41,16 @@
             tools:text="@string/good_for_me_title" />
 
         <TextView
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/content_padding"
+            android:layout_marginEnd="@dimen/content_padding"
+            android:fontFamily="sans-serif-medium"
+            android:padding="@dimen/content_padding"
+            tools:text="@string/everybody_is_free" />
+
+        <TextView
             android:id="@+id/plan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

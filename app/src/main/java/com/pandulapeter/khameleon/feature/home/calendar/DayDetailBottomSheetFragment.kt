@@ -42,15 +42,24 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
             binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_day_detail, null, false)
             binding.viewModel = viewModel
             binding.empty.setOnClickListener { handleClick(Day.EMPTY) }
-//            binding.busy.setOnClickListener { handleClick(Day.BUSY) }
             binding.rehearsal.setOnClickListener { handleClick(Day.REHEARSAL) }
             binding.gig.setOnClickListener { handleClick(Day.GIG) }
             binding.meetup.setOnClickListener { handleClick(Day.MEETUP) }
             arguments?.day?.also {
                 it.timestamp.let { binding.label.text = DateFormat.format("EEEE, MMMM d", Date(it)).toString().forceCapitalize() }
+                binding.status.text = getString(
+                    if (it.notGoodFor == null || it.notGoodFor?.isEmpty() == true) {
+                        if (it.type == Day.BUSY) {
+                            R.string.somebody_is_busy
+                        } else {
+                            R.string.everybody_is_free
+                        }
+                    } else {
+                        R.string.they_are_busy
+                    }
+                )
                 when (it.type) {
-                    Day.EMPTY -> binding.empty
-//                    Day.BUSY -> binding.busy
+                    Day.EMPTY, Day.BUSY -> binding.empty
                     Day.REHEARSAL -> binding.rehearsal
                     Day.GIG -> binding.gig
                     Day.MEETUP -> binding.meetup
@@ -71,11 +80,11 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
                 }
                 viewModel.goodForMe.onPropertyChanged { isItGoodForMe ->
                     arguments?.day?.let {
-                        onDialogItemSelectedListener?.onItemClicked(-1, it.apply {
+                        onDialogItemSelectedListener?.onItemClicked(-5, it.apply {
                             userRepository.getSignedInUser()?.let { me ->
                                 val currentItems = it.notGoodFor ?: listOf()
                                 if (isItGoodForMe) {
-                                    it.notGoodFor = currentItems.toMutableList().filter { it.id == me.id }
+                                    it.notGoodFor = currentItems.toMutableList().filter { it.id != me.id }
                                     if (it.notGoodFor?.isEmpty() == true && it.type == Day.BUSY) {
                                         it.type = Day.EMPTY
                                     }

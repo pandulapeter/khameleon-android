@@ -18,4 +18,14 @@ class PollViewModel(model: Message) {
     val option3 = if (model.poll?.size ?: 0 >= 3 && model.poll?.get(2)?.optionName?.isNotEmpty() == true) model.poll[2] else null
     val option4 = if (model.poll?.size ?: 0 >= 4 && model.poll?.get(3)?.optionName?.isNotEmpty() == true) model.poll[3] else null
     val option5 = if (model.poll?.size ?: 0 >= 5 && model.poll?.get(4)?.optionName?.isNotEmpty() == true) model.poll[4] else null
+
+    fun onOption1Clicked() = Unit
+
+    fun onOption2Clicked() = Unit
+
+    fun onOption3Clicked() = Unit
+
+    fun onOption4Clicked() = Unit
+
+    fun onOption5Clicked() = Unit
 }

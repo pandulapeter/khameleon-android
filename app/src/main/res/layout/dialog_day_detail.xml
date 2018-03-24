@@ -94,7 +94,7 @@
             <android.support.v7.widget.SwitchCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/content_padding"
+                android:layout_marginTop="@dimen/small_content_padding"
                 android:checked="@={viewModel.goodForMe}"
                 android:gravity="center_vertical"
                 android:minHeight="@dimen/touch_target"
@@ -110,16 +110,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/content_padding"
                 android:layout_marginStart="@dimen/content_padding"
-                android:layout_marginTop="@dimen/content_padding"
+                android:layout_marginTop="@dimen/small_content_padding"
                 android:fontFamily="sans-serif-medium"
                 android:padding="@dimen/content_padding"
+                android:textColor="@color/dark"
                 tools:text="@string/the_day_is_good_for_everybody" />
 
             <LinearLayout
                 android:id="@+id/busy_users_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/content_padding" />
 
         </LinearLayout>
 

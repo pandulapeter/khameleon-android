@@ -59,7 +59,6 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
                             R.string.the_day_is_good_for_everybody
                         }
                     } else {
-                        binding.status.setTextColor(context.color(R.color.primary))
                         R.string.who_has_other_plans
                     }
                 )

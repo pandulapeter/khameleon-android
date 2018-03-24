@@ -184,7 +184,6 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
             isInvalidationScheduled = true
             binding.calendarView.postDelayed(invalidateRunnable, 50)
         }
-
     }
 
     private fun updateDay(day: Day) {

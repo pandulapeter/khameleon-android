@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import com.pandulapeter.khameleon.HomeActivityBinding
 import com.pandulapeter.khameleon.R
+import com.pandulapeter.khameleon.data.repository.CalendarRepository
 import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.PreferenceRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
@@ -37,6 +38,7 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
 
     private val userRepository by inject<UserRepository>()
     private val messageRepository by inject<ChatRepository>()
+    private val calendarRepository by inject<CalendarRepository>()
     private val preferenceRepository by inject<PreferenceRepository>()
     var calendarTimestamp: Long? = null
     var defaultMessage: String? = null
@@ -54,6 +56,7 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
         if (!handleShareIntent()) {
             if (savedInstanceState == null) {
                 messageRepository.setPushNotificationsEnabled(preferenceRepository.chatNotifications)
+                calendarRepository.setEventReminderPushNotificationsEnabled(this, preferenceRepository.eventNotifications)
                 when (intent.item) {
                     AppShortcutManager.CHAT_ID -> openChatScreen()
                     AppShortcutManager.CALENDAR_ID -> openCalendarScreen()

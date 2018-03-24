@@ -64,7 +64,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:checked="@={viewModel.shouldEnableEventsPushNotifications}"
-                            android:enabled="false"
                             android:gravity="center_vertical"
                             android:minHeight="@dimen/touch_target"
                             app:description="@{viewModel.shouldEnableEventsPushNotifications ? @string/push_events_enabled : @string/push_events_disabled}"

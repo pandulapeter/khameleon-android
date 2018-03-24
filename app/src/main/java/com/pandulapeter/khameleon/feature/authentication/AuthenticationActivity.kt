@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.pandulapeter.khameleon.AuthenticationActivityBinding
 import com.pandulapeter.khameleon.R
+import com.pandulapeter.khameleon.data.repository.CalendarRepository
 import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.home.HomeActivity
@@ -32,6 +33,7 @@ class AuthenticationActivity : KhameleonActivity<AuthenticationActivityBinding>(
     }
 
     private val userRepository by inject<UserRepository>()
+    private val calendarRepository by inject<CalendarRepository>()
     private val messageRepository by inject<ChatRepository>()
     private val whitelistedEmailAddresses = FirebaseArray(userRepository.whitelistedEmailAddressDataBase, ClassSnapshotParser(String::class.java))
 
@@ -40,6 +42,7 @@ class AuthenticationActivity : KhameleonActivity<AuthenticationActivityBinding>(
         super.onCreate(savedInstanceState)
         if (userRepository.getSignedInUser() == null) {
             messageRepository.setPushNotificationsEnabled(false)
+            calendarRepository.setEventReminderPushNotificationsEnabled(this, false)
             binding.signInButton.setSize(SignInButton.SIZE_WIDE)
             binding.signInButton.setOnClickListener { startActivityForResult(userRepository.getSignInIntent(), AUTHENTICATION_REQUEST) }
             Glide.with(this)

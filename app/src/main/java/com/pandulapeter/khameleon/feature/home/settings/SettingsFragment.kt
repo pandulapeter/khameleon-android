@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.SettingsFragmentBinding
+import com.pandulapeter.khameleon.data.repository.CalendarRepository
 import com.pandulapeter.khameleon.data.repository.ChatRepository
 import com.pandulapeter.khameleon.data.repository.PreferenceRepository
 import com.pandulapeter.khameleon.data.repository.UserRepository
@@ -21,6 +22,7 @@ class SettingsFragment : KhameleonFragment<SettingsFragmentBinding, SettingsView
 
     private val preferenceRepository by inject<PreferenceRepository>()
     private val userRepository by inject<UserRepository>()
+    private val calendarRepository by inject<CalendarRepository>()
     private val messageRepository by inject<ChatRepository>()
     private val appShortcutManager by inject<AppShortcutManager>()
     override val viewModel = SettingsViewModel(
@@ -50,6 +52,10 @@ class SettingsFragment : KhameleonFragment<SettingsFragmentBinding, SettingsView
         viewModel.shouldEnableChatPushNotifications.onPropertyChanged {
             preferenceRepository.chatNotifications = it
             messageRepository.setPushNotificationsEnabled(it)
+        }
+        viewModel.shouldEnableEventsPushNotifications.onPropertyChanged {
+            preferenceRepository.eventNotifications = it
+            context?.let { context -> calendarRepository.setEventReminderPushNotificationsEnabled(context, it) }
         }
     }
 

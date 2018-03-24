@@ -125,7 +125,7 @@
     <string name="push_chat_enabled">Vei primi notificări despre fiecare mesaj.</string>
     <string name="push_chat_disabled">Nu vei primi nici-o notificare despre mesaje.</string>
     <string name="event_reminders">Reaminitiri</string>
-    <string name="push_events_enabled">Vei primi notificări înainte de concerte, repetiții și întâlniri (în curând).</string>
+    <string name="push_events_enabled">Vei primi notificări înainte de concerte, repetiții și întâlniri.</string>
     <string name="push_events_disabled">Nu vei primi nici-o notificare despre evenimente.</string>
     <string name="about">Despre aplicația</string>
     <string name="check_for_updates">Caută actualizări</string>

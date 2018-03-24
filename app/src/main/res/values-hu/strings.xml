@@ -125,7 +125,7 @@
     <string name="push_chat_enabled">Minden üzenetről értesítést fogsz kapni.</string>
     <string name="push_chat_disabled">Semmilyen üzenetről nem kapsz értesítést.</string>
     <string name="event_reminders">Esemény emlékeztetők</string>
-    <string name="push_events_enabled">Értesítést kapsz próbák, koncertek és találkozók előtt (nincs kész).</string>
+    <string name="push_events_enabled">Értesítést kapsz próbák, koncertek és találkozók előtt.</string>
     <string name="push_events_disabled">Semmilyen eseményről nem kapsz értesítést.</string>
     <string name="about">Az applikációról</string>
     <string name="check_for_updates">Frissítések keresése</string>

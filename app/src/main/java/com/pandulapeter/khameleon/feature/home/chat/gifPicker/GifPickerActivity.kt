@@ -50,23 +50,21 @@ class GifPickerActivity : KhameleonActivity<GifPickerActivityBinding>(R.layout.a
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(drawable(R.drawable.ic_close_24dp))
         }
-        binding.recyclerView.apply {
-            setHasFixedSize(true)
-            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            adapter = adapter
-            addItemDecoration(object : RecyclerView.ItemDecoration() {
-                val space = context.dimension(R.dimen.small_content_padding)
+        binding.recyclerView.setHasFixedSize(true)
+        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            val space = dimension(R.dimen.small_content_padding)
 
-                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
-                    outRect.apply {
-                        left = space
-                        top = space
-                        right = space
-                        bottom = space
-                    }
+            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+                outRect.apply {
+                    left = space
+                    top = space
+                    right = space
+                    bottom = space
                 }
-            })
-        }
+            }
+        })
         binding.searchInput.onTextChanged {
             lastKeyPressTimestamp = System.currentTimeMillis()
             binding.searchInput.postDelayed(queryRunnable, QUERY_DELAY)

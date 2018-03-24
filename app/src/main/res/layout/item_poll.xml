@@ -91,7 +91,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.option1.optionName}"
+                    android:text="@{viewModel.option1Text}"
                     tools:text="@string/option_1" />
 
             </android.support.v7.widget.CardView>
@@ -108,7 +108,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.option2.optionName}"
+                    android:text="@{viewModel.option2Text}"
                     tools:text="@string/option_2" />
 
             </android.support.v7.widget.CardView>
@@ -125,7 +125,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.option3.optionName}"
+                    android:text="@{viewModel.option3Text}"
                     tools:text="@string/option_3" />
 
             </android.support.v7.widget.CardView>
@@ -142,7 +142,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.option4.optionName}"
+                    android:text="@{viewModel.option4Text}"
                     tools:text="@string/option_4" />
 
             </android.support.v7.widget.CardView>
@@ -159,7 +159,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.option5.optionName}"
+                    android:text="@{viewModel.option5Text}"
                     tools:text="@string/option_5" />
 
             </android.support.v7.widget.CardView>

@@ -1,9 +1,11 @@
 package com.pandulapeter.khameleon.integration
 
-import android.app.*
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.job.JobParameters
 import android.app.job.JobService
-import android.content.Context
 import android.os.Build
 import android.os.Handler
 import android.support.v4.app.NotificationCompat
@@ -36,14 +38,12 @@ class EventJobService : JobService(), ChangeEventListener {
     private var jobParameters: JobParameters? = null
     private var isNotificationScheduled = false
     private val notificationRunnable = Runnable {
-        if (!isAppRunning()) {
-            val now = Calendar.getInstance().timeInMillis.normalize()
-            events.findLast { it.timestamp.normalize() == now }?.let {
-                when (it.type) {
-                    Day.REHEARSAL -> notifyTheUser(getString(R.string.rehearsal_today, it.description))
-                    Day.GIG -> notifyTheUser(getString(R.string.gig_today, it.description))
-                    Day.MEETUP -> notifyTheUser(getString(R.string.meetup_today, it.description))
-                }
+        val now = Calendar.getInstance().timeInMillis.normalize()
+        events.findLast { it.timestamp.normalize() == now }?.let {
+            when (it.type) {
+                Day.REHEARSAL -> notifyTheUser(getString(R.string.rehearsal_today, it.description))
+                Day.GIG -> notifyTheUser(getString(R.string.gig_today, it.description))
+                Day.MEETUP -> notifyTheUser(getString(R.string.meetup_today, it.description))
             }
         }
         isNotificationScheduled = false
@@ -53,7 +53,7 @@ class EventJobService : JobService(), ChangeEventListener {
     override fun onStartJob(params: JobParameters?): Boolean {
         jobParameters = params
         val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-        if (hour < 9 || hour > 16 || preferenceRepository.lastEventNotification.normalize() == Calendar.getInstance().timeInMillis.normalize()) {
+        if (hour < 9 || hour > 17 || preferenceRepository.lastEventNotification.normalize() == Calendar.getInstance().timeInMillis.normalize()) {
             return false
         }
         events.addChangeEventListener(this)
@@ -104,14 +104,5 @@ class EventJobService : JobService(), ChangeEventListener {
     private fun done() {
         events.removeChangeEventListener(this)
         jobFinished(jobParameters, true)
-    }
-
-    private fun isAppRunning(): Boolean {
-        (getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).runningAppProcesses?.forEach {
-            if (it.processName == packageName) {
-                return true
-            }
-        }
-        return false
     }
 }

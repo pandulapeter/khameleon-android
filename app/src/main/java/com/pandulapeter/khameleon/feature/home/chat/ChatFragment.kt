@@ -190,7 +190,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                         messageRepository.chatDatabase
                             .push()
                             .setValue(message)
-                        //TODO: userRepository.getSignedInUser()?.let { user -> sendNotification(user, message.text) }
+                        userRepository.getSignedInUser()?.let { user -> sendNotification(user, message.text) }
                     }
                 }
             }

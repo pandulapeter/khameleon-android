@@ -44,7 +44,7 @@ class AuthenticationActivity : KhameleonActivity<AuthenticationActivityBinding>(
             binding.signInButton.setOnClickListener { startActivityForResult(userRepository.getSignInIntent(), AUTHENTICATION_REQUEST) }
             Glide.with(this)
                 .load(BACKGROUND_IMAGE_URL)
-                .apply(RequestOptions.circleCropTransform())
+                .apply(RequestOptions.centerCropTransform())
                 .into(binding.logo)
         } else {
             startHomeScreen()

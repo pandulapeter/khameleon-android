@@ -10,8 +10,10 @@ import android.support.v7.app.AppCompatDialogFragment
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.pandulapeter.khameleon.DayDetailDialogBinding
 import com.pandulapeter.khameleon.R
+import com.pandulapeter.khameleon.UserItemBinding
 import com.pandulapeter.khameleon.data.model.Day
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.home.shared.CustomWidthBottomSheetDialog
@@ -39,7 +41,8 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?) = context?.let { context ->
         CustomWidthBottomSheetDialog(context, theme).apply {
-            binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_day_detail, null, false)
+            val layoutInflater = LayoutInflater.from(context)
+            binding = DataBindingUtil.inflate(layoutInflater, R.layout.dialog_day_detail, null, false)
             binding.viewModel = viewModel
             binding.empty.setOnClickListener { handleClick(Day.EMPTY) }
             binding.rehearsal.setOnClickListener { handleClick(Day.REHEARSAL) }
@@ -58,6 +61,13 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
                         R.string.they_are_busy
                     }
                 )
+                it.notGoodFor?.forEach {
+                    binding.busyUsersContainer.addView(
+                        DataBindingUtil.inflate<UserItemBinding>(layoutInflater, R.layout.item_user, binding.busyUsersContainer, false).apply {
+                            model = it
+                        }.root, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                }
                 when (it.type) {
                     Day.EMPTY, Day.BUSY -> binding.empty
                     Day.REHEARSAL -> binding.rehearsal

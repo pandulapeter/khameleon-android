@@ -101,7 +101,7 @@
     <string name="enter_song_bpm">BPM</string>
     <string name="undo">Mégse</string>
     <string name="song_deleted">%s törölve</string>
-    <string name="highlight_song">Kiemelt</string>
+    <string name="highlight_song">Fontos</string>
     <string name="archive_song">Archivált</string>
     <string-array name="keys">
         <item>"?"</item>

@@ -156,7 +156,12 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             }
             REQUEST_POLL -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    //TODO
+                    data?.getParcelableExtra<Message>(CreatePollActivity.RESULT_MESSAGE)?.let { message ->
+                        messageRepository.chatDatabase
+                            .push()
+                            .setValue(message)
+                        //TODO: userRepository.getSignedInUser()?.let { user -> sendNotification(user, message.text) }
+                    }
                 }
             }
             else -> super.onActivityResult(requestCode, resultCode, data)

@@ -17,6 +17,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import com.pandulapeter.khameleon.R
+import java.util.*
 import java.util.regex.Pattern
 
 fun Context.color(@ColorRes colorId: Int) = ContextCompat.getColor(this, colorId)
@@ -65,6 +66,15 @@ inline fun ObservableBoolean.onEventTriggered(fragment: Fragment? = null, crossi
         }
     })
 }
+
+fun Long.normalize() = Calendar.getInstance().apply {
+    timeInMillis = this@normalize
+    timeZone = TimeZone.getTimeZone("GMT")
+    set(Calendar.HOUR_OF_DAY, 12)
+    set(Calendar.MINUTE, 0)
+    set(Calendar.SECOND, 0)
+    set(Calendar.MILLISECOND, 0)
+}.timeInMillis
 
 fun String.forceCapitalize(): String {
     val capBuffer = StringBuffer()

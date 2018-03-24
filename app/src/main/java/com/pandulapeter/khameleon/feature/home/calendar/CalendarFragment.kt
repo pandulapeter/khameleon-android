@@ -27,10 +27,7 @@ import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.feature.home.HomeActivity
 import com.pandulapeter.khameleon.integration.AppShortcutManager
-import com.pandulapeter.khameleon.util.color
-import com.pandulapeter.khameleon.util.consume
-import com.pandulapeter.khameleon.util.drawable
-import com.pandulapeter.khameleon.util.showSnackbar
+import com.pandulapeter.khameleon.util.*
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
@@ -229,13 +226,4 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
     private fun refreshTodayButtonVisibility() {
         todayMenuItem?.isVisible = binding.calendarView.currentDate.month != CalendarDay.today().month
     }
-
-    private fun Long.normalize() = Calendar.getInstance().apply {
-        timeInMillis = this@normalize
-        timeZone = TimeZone.getTimeZone("GMT")
-        set(Calendar.HOUR_OF_DAY, 12)
-        set(Calendar.MINUTE, 0)
-        set(Calendar.SECOND, 0)
-        set(Calendar.MILLISECOND, 0)
-    }.timeInMillis
 }

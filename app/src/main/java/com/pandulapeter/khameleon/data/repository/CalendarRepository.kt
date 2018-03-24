@@ -24,7 +24,7 @@ class CalendarRepository {
             jobScheduler.cancel(JOB_ID)
             jobScheduler.schedule(
                 JobInfo.Builder(JOB_ID, ComponentName(context.applicationContext, EventJobService::class.java))
-                    .setPeriodic(TimeUnit.MINUTES.toMillis(16))
+                    .setPeriodic(TimeUnit.HOURS.toMillis(1))
                     .setPersisted(true)
                     .build()
             )

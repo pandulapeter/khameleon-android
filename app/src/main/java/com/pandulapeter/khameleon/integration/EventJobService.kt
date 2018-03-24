@@ -1,14 +1,12 @@
 package com.pandulapeter.khameleon.integration
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
+import android.app.*
 import android.app.job.JobParameters
 import android.app.job.JobService
+import android.content.Context
 import android.os.Build
 import android.os.Handler
 import android.support.v4.app.NotificationCompat
-import android.util.Log
 import com.firebase.ui.common.ChangeEventType
 import com.firebase.ui.database.ChangeEventListener
 import com.firebase.ui.database.ClassSnapshotParser
@@ -18,8 +16,12 @@ import com.google.firebase.database.DatabaseError
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.model.Day
 import com.pandulapeter.khameleon.data.repository.CalendarRepository
+import com.pandulapeter.khameleon.feature.home.HomeActivity
 import com.pandulapeter.khameleon.util.color
+import com.pandulapeter.khameleon.util.normalize
 import org.koin.android.ext.android.inject
+import java.util.*
+
 
 class EventJobService : JobService(), ChangeEventListener {
 
@@ -32,22 +34,27 @@ class EventJobService : JobService(), ChangeEventListener {
     private var jobParameters: JobParameters? = null
     private var isNotificationScheduled = false
     private val notificationRunnable = Runnable {
-        //TODO: Notify user
-        Log.d("NOTDEBUG", "Notifying user")
-        notifyTheUser()
-        jobFinished(jobParameters, true)
+        if (!isAppRunning()) {
+            val now = Calendar.getInstance().timeInMillis.normalize()
+            events.findLast { it.timestamp.normalize() == now }?.let {
+                notifyTheUser("Event for today: $it")
+            } ?: notifyTheUser("No events for today.")
+        }
         isNotificationScheduled = false
+        done()
     }
 
     override fun onStartJob(params: JobParameters?): Boolean {
-        Log.d("NOTDEBUG", "Service started")
         jobParameters = params
+//        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+//        if (hour < 9 || hour > 15) {
+//            return false
+//        }
         events.addChangeEventListener(this)
         return true
     }
 
     override fun onStopJob(params: JobParameters?): Boolean {
-        Log.d("NOTDEBUG", "Service ended")
         events.removeChangeEventListener(this)
         return true
     }
@@ -57,19 +64,17 @@ class EventJobService : JobService(), ChangeEventListener {
     override fun onChildChanged(type: ChangeEventType, snapshot: DataSnapshot, newIndex: Int, oldIndex: Int) = updateEvents()
 
     override fun onError(e: DatabaseError) {
-        Log.d("NOTDEBUG", "Database error $e")
-        jobFinished(jobParameters, true)
+        done()
     }
 
     private fun updateEvents() {
         if (!isNotificationScheduled) {
-            Log.d("NOTDEBUG", "Database updated")
             isNotificationScheduled = true
             Handler().postDelayed(notificationRunnable, 50)
         }
     }
 
-    private fun notifyTheUser() {
+    private fun notifyTheUser(message: String) {
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             manager.createNotificationChannel(NotificationChannel(PRIMARY_CHANNEL, getString(R.string.khameleon), NotificationManager.IMPORTANCE_DEFAULT).apply {
@@ -81,9 +86,25 @@ class EventJobService : JobService(), ChangeEventListener {
             0,
             NotificationCompat.Builder(applicationContext, PRIMARY_CHANNEL)
                 .setContentTitle(getString(R.string.khameleon))
-                .setContentText("Job dispatched")
+                .setContentText(message)
+                .setSmallIcon(R.drawable.ic_icon_song_24dp)
+                .setDeleteIntent(PendingIntent.getActivity(this, 0, HomeActivity.getStartIntent(this, AppShortcutManager.CALENDAR_ID), 0))
                 .setAutoCancel(true)
                 .build()
         )
+    }
+
+    private fun done() {
+        events.removeChangeEventListener(this)
+        jobFinished(jobParameters, true)
+    }
+
+    private fun isAppRunning(): Boolean {
+        (getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).runningAppProcesses?.forEach {
+            if (it.processName == packageName) {
+                return true
+            }
+        }
+        return false
     }
 }

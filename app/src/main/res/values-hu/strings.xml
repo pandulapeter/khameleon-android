@@ -19,8 +19,9 @@
 
     <!-- Chat -->
     <string name="new_message">Új üzenet</string>
-    <string name="thumbs_up">Like küldése</string>
-    <string name="send_gif">GIF küldése</string>
+    <string name="thumbs_up">Tetszik</string>
+    <string name="send_gif">GIF</string>
+    <string name="new_poll">Új szavazás</string>
     <string name="search_gifs">GIF-ek keresése</string>
     <string name="enter_your_message">Írd be az üzeneted</string>
     <string name="this_is_an_announcement">Kiemenlten fontos</string>

@@ -61,6 +61,13 @@
             android:theme="@style/GifPickerTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
 
+        <activity
+            android:name=".feature.home.chat.poll.CreatePollActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/HomeTheme"
+            android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />
+
         <service
             android:name=".integration.MessagingService"
             tools:ignore="ExportedService">

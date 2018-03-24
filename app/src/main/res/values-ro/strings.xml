@@ -19,8 +19,9 @@
 
     <!-- Chat -->
     <string name="new_message">Mesaj nou</string>
-    <string name="thumbs_up">Trimite like</string>
-    <string name="send_gif">Trimite un GIF</string>
+    <string name="thumbs_up">Like</string>
+    <string name="send_gif">GIF</string>
+    <string name="new_poll">Vot nou</string>
     <string name="search_gifs">Căutare GIF</string>
     <string name="enter_your_message">Introdu mesajul</string>
     <string name="this_is_an_announcement">Anunț important</string>

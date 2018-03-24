@@ -45,30 +45,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_thumbs_up_24dp"
-                app:fab_label="@string/thumbs_up"
-                app:fab_size="mini"
                 app:fab_colorNormal="@color/primary"
-                app:fab_colorPressed="@color/primary" />
+                app:fab_colorPressed="@color/primary"
+                app:fab_label="@string/thumbs_up"
+                app:fab_size="mini" />
 
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/send_gif"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_gif_24dp"
-                app:fab_label="@string/send_gif"
-                app:fab_size="mini"
                 app:fab_colorNormal="@color/primary"
-                app:fab_colorPressed="@color/primary" />
+                app:fab_colorPressed="@color/primary"
+                app:fab_label="@string/send_gif"
+                app:fab_size="mini" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/create_poll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_poll_24dp"
+                app:fab_colorNormal="@color/primary"
+                app:fab_colorPressed="@color/primary"
+                app:fab_label="@string/new_poll"
+                app:fab_size="mini" />
 
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/new_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_chat_24dp"
-                app:fab_label="@string/new_message"
-                app:fab_size="mini"
                 app:fab_colorNormal="@color/primary"
-                app:fab_colorPressed="@color/primary" />
+                app:fab_colorPressed="@color/primary"
+                app:fab_label="@string/new_message"
+                app:fab_size="mini" />
 
         </com.github.clans.fab.FloatingActionMenu>
 

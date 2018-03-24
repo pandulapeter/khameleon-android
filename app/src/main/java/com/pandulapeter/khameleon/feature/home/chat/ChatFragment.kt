@@ -19,6 +19,7 @@ import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.KhameleonFragment
 import com.pandulapeter.khameleon.feature.home.HomeActivity
 import com.pandulapeter.khameleon.feature.home.chat.gifPicker.GifPickerActivity
+import com.pandulapeter.khameleon.feature.home.chat.poll.CreatePollActivity
 import com.pandulapeter.khameleon.feature.home.shared.AlertDialogFragment
 import com.pandulapeter.khameleon.integration.AppShortcutManager
 import com.pandulapeter.khameleon.util.BundleArgumentDelegate
@@ -35,8 +36,9 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
 
     companion object {
         private const val MESSAGE_LIMIT = 300
-        private const val MESSAGE_MODIFY_LIMIT = 1000L * 60 * 60 * 6
-        private const val REQUEST_GIPHY = 12
+        //        private const val MESSAGE_MODIFY_LIMIT = 1000L * 60 * 60 * 6
+        private const val REQUEST_GIF = 1
+        private const val REQUEST_POLL = 2
     }
 
     override val viewModel = ChatViewModel()
@@ -105,8 +107,12 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
             onTextEntered("\uD83D\uDC4D", false)
             closeFloatingActionMenu()
         }
+        binding.createPoll.setOnClickListener {
+            startActivityForResult(Intent(context, CreatePollActivity::class.java), REQUEST_POLL)
+            closeFloatingActionMenu()
+        }
         binding.sendGif.setOnClickListener {
-            startActivityForResult(Intent(context, GifPickerActivity::class.java), REQUEST_GIPHY)
+            startActivityForResult(Intent(context, GifPickerActivity::class.java), REQUEST_GIF)
             closeFloatingActionMenu()
         }
         binding.newMessage.setOnClickListener {
@@ -137,7 +143,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
-            REQUEST_GIPHY -> {
+            REQUEST_GIF -> {
                 if (resultCode == Activity.RESULT_OK) {
                     data?.getStringExtra(GifPickerActivity.RESULT_GIF_URL)?.let { gifUrl ->
                         userRepository.getSignedInUser()?.let {
@@ -146,6 +152,11 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                             scrollToBottom()
                         }
                     }
+                }
+            }
+            REQUEST_POLL -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    //TODO
                 }
             }
             else -> super.onActivityResult(requestCode, resultCode, data)

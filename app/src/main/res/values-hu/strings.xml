@@ -86,6 +86,9 @@
     <string name="the_day_is_good_for_everybody">Mindenki szabad ezen a napon.</string>
     <string name="somebody_is_busy_on_this_day">Valaki elfoglalt ezen a napon.</string>
     <string name="who_has_other_plans">Ki nem ér rá</string>
+    <string name="rehearsal_today">Próba ma ekkor: %s.</string>
+    <string name="gig_today">Koncert ma. %s</string>
+    <string name="meetup_today">Találkozó ma. %s</string>
 
     <!-- Songs -->
     <string name="export_list">Lista exportálása</string>

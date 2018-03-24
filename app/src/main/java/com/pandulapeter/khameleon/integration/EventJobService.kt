@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.model.Day
 import com.pandulapeter.khameleon.data.repository.CalendarRepository
+import com.pandulapeter.khameleon.data.repository.PreferenceRepository
 import com.pandulapeter.khameleon.feature.home.HomeActivity
 import com.pandulapeter.khameleon.util.color
 import com.pandulapeter.khameleon.util.normalize
@@ -30,6 +31,7 @@ class EventJobService : JobService(), ChangeEventListener {
     }
 
     private val calendarRepository by inject<CalendarRepository>()
+    private val preferenceRepository by inject<PreferenceRepository>()
     private val events = FirebaseArray(calendarRepository.calendarDatabase, ClassSnapshotParser(Day::class.java))
     private var jobParameters: JobParameters? = null
     private var isNotificationScheduled = false
@@ -37,8 +39,12 @@ class EventJobService : JobService(), ChangeEventListener {
         if (!isAppRunning()) {
             val now = Calendar.getInstance().timeInMillis.normalize()
             events.findLast { it.timestamp.normalize() == now }?.let {
-                notifyTheUser("Event for today: $it")
-            } ?: notifyTheUser("No events for today.")
+                when (it.type) {
+                    Day.REHEARSAL -> notifyTheUser(getString(R.string.rehearsal_today, it.description))
+                    Day.GIG -> notifyTheUser(getString(R.string.gig_today, it.description))
+                    Day.MEETUP -> notifyTheUser(getString(R.string.meetup_today, it.description))
+                }
+            }
         }
         isNotificationScheduled = false
         done()
@@ -46,10 +52,10 @@ class EventJobService : JobService(), ChangeEventListener {
 
     override fun onStartJob(params: JobParameters?): Boolean {
         jobParameters = params
-//        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-//        if (hour < 9 || hour > 15) {
-//            return false
-//        }
+        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        if (hour < 9 || hour > 16 || preferenceRepository.lastEventNotification.normalize() == Calendar.getInstance().timeInMillis.normalize()) {
+            return false
+        }
         events.addChangeEventListener(this)
         return true
     }
@@ -70,7 +76,7 @@ class EventJobService : JobService(), ChangeEventListener {
     private fun updateEvents() {
         if (!isNotificationScheduled) {
             isNotificationScheduled = true
-            Handler().postDelayed(notificationRunnable, 50)
+            Handler().postDelayed(notificationRunnable, 100)
         }
     }
 
@@ -92,6 +98,7 @@ class EventJobService : JobService(), ChangeEventListener {
                 .setAutoCancel(true)
                 .build()
         )
+        preferenceRepository.lastEventNotification = Calendar.getInstance().timeInMillis
     }
 
     private fun done() {

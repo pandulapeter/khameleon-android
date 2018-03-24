@@ -86,6 +86,9 @@
     <string name="the_day_is_good_for_everybody">Toate lumea este liber.</string>
     <string name="somebody_is_busy_on_this_day">Cineva este ocupat.</string>
     <string name="who_has_other_plans">Cine are alt program</string>
+    <string name="rehearsal_today">Repetiție astăzi de la %s.</string>
+    <string name="gig_today">Concert astăzi. %s</string>
+    <string name="meetup_today">Întâlnire astăzi. %s</string>
 
     <!-- Songs -->
     <string name="export_list">Exportare ca listă</string>

@@ -38,8 +38,8 @@ class MessageAdapter(
         POLL -> PollViewHolder.create(
             parent,
             {
-                if (!onItemClickedCallback(getItem(it), false)) {
-                    onItemLongClickedCallback(getItem(it), false)
+                if (!onItemClickedCallback(getItem(it), true)) {
+                    onItemLongClickedCallback(getItem(it), true)
                 }
             },
             { onItemLongClickedCallback(getItem(it), false) })

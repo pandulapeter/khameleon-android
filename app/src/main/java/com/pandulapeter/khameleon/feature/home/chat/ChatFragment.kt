@@ -74,7 +74,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                 else -> false
             }
         },
-        onItemLongClickedCallback = { message, isImage ->
+        onItemLongClickedCallback = { message, shouldHideEdit ->
             userRepository.getSignedInUser()?.let { user ->
                 if (message.sender?.id == user.id) {
                     if (message.event != null || message.song != null) {
@@ -83,7 +83,7 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
 //                        if (System.currentTimeMillis() - message.timestamp > MESSAGE_MODIFY_LIMIT) {
 //                            binding.root.showSnackbar(R.string.message_too_old)
 //                        } else {
-                        MessageModifyBottomSheetFragment.show(childFragmentManager, message, isImage)
+                        MessageModifyBottomSheetFragment.show(childFragmentManager, message, shouldHideEdit)
 //                        }
                     }
                 } else {

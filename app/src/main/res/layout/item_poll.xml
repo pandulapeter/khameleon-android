@@ -69,6 +69,93 @@
             app:layout_constraintTop_toBottomOf="@id/name"
             tools:text="@tools:sample/lorem" />
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="@dimen/content_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.option1 != null}"
+                app:contentPadding="@dimen/content_padding">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.option1.optionName}"
+                    tools:text="@string/option_1" />
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_content_padding"
+                android:visibility="@{viewModel.option2 != null}"
+                app:contentPadding="@dimen/content_padding">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.option2.optionName}"
+                    tools:text="@string/option_2" />
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_content_padding"
+                android:visibility="@{viewModel.option3 != null}"
+                app:contentPadding="@dimen/content_padding">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.option3.optionName}"
+                    tools:text="@string/option_3" />
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_content_padding"
+                android:visibility="@{viewModel.option4 != null}"
+                app:contentPadding="@dimen/content_padding">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.option4.optionName}"
+                    tools:text="@string/option_4" />
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_content_padding"
+                android:visibility="@{viewModel.option5 != null}"
+                app:contentPadding="@dimen/content_padding">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.option5.optionName}"
+                    tools:text="@string/option_5" />
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
     </android.support.constraint.ConstraintLayout>
 
 </layout>

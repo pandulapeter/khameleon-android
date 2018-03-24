@@ -60,6 +60,7 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
                     AppShortcutManager.SONGS_ID -> openSongsScreen()
                     AppShortcutManager.SETTINGS_ID -> openSettingsScreen()
                 }
+                intent.item = ""
                 updateDisplayedFragment(binding.bottomNavigation.selectedItemId)
             }
         }
@@ -67,6 +68,7 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
+        this.intent = intent
         when (intent?.item) {
             AppShortcutManager.CHAT_ID -> openChatScreen()
             AppShortcutManager.CALENDAR_ID -> openCalendarScreen()
@@ -74,6 +76,7 @@ class HomeActivity : KhameleonActivity<HomeActivityBinding>(R.layout.activity_ho
             AppShortcutManager.SETTINGS_ID -> openSettingsScreen()
             else -> handleShareIntent()
         }
+        this.intent.item = ""
     }
 
     override fun onBackPressed() {

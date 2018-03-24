@@ -17,6 +17,7 @@
 
         <activity
             android:name=".feature.authentication.AuthenticationActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
 
@@ -29,7 +30,7 @@
 
         <activity
             android:name=".feature.home.HomeActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing">
 

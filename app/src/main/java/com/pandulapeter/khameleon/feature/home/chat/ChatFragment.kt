@@ -104,8 +104,8 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                                 if (it.hasChildren()) {
                                     myChange = true
                                     it.children.iterator().next().ref.setValue(message.apply {
-                                        val oldVoters = poll?.get(index)?.voters
-                                        poll?.get(index)?.voters = oldVoters?.toMutableList()?.apply {
+                                        val oldVoters = poll?.get(index)?.voters ?: listOf()
+                                        poll?.get(index)?.voters = oldVoters.toMutableList().apply {
                                             if (any { it.id == user.id }) {
                                                 removeAll { it.id == user.id }
                                             } else {

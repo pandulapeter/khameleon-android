@@ -7,6 +7,7 @@ import android.view.MenuItem
 import com.pandulapeter.khameleon.CreatePollActivityBinding
 import com.pandulapeter.khameleon.R
 import com.pandulapeter.khameleon.data.model.Message
+import com.pandulapeter.khameleon.data.model.PollOption
 import com.pandulapeter.khameleon.data.repository.UserRepository
 import com.pandulapeter.khameleon.feature.shared.KhameleonActivity
 import com.pandulapeter.khameleon.util.consume
@@ -58,11 +59,11 @@ class CreatePollActivity : KhameleonActivity<CreatePollActivityBinding>(R.layout
                             null,
                             null,
                             listOf(
-                                Pair(viewModel.option1.get(), listOf()),
-                                Pair(viewModel.option2.get(), listOf()),
-                                Pair(viewModel.option3.get(), listOf()),
-                                Pair(viewModel.option4.get(), listOf()),
-                                Pair(viewModel.option5.get(), listOf())
+                                PollOption(viewModel.option1.get(), listOf()),
+                                PollOption(viewModel.option2.get(), listOf()),
+                                PollOption(viewModel.option3.get(), listOf()),
+                                PollOption(viewModel.option4.get(), listOf()),
+                                PollOption(viewModel.option5.get(), listOf())
                             )
                         )
                     )

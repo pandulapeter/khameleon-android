@@ -4,20 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!--suppress AndroidUnknownAttribute -->
-    <data class=".MessageItemBinding">
+    <data class=".PollItemBinding">
 
         <variable
             name="viewModel"
-            type="com.pandulapeter.khameleon.feature.home.chat.MessageViewModel" />
-
-        <import type="android.text.TextUtils" />
+            type="com.pandulapeter.khameleon.feature.home.chat.PollViewModel" />
 
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@{viewModel.background}"
         android:foreground="?attr/selectableItemBackground"
         android:padding="@dimen/content_padding">
 
@@ -41,7 +38,7 @@
             android:fontFamily="sans-serif-medium"
             android:gravity="center_vertical"
             android:text="@{viewModel.name}"
-            android:textColor="@{viewModel.nameColor}"
+            android:textColor="@color/primary"
             app:layout_constraintEnd_toStartOf="@+id/date"
             app:layout_constraintStart_toEndOf="@id/avatar"
             app:layout_constraintTop_toTopOf="parent"
@@ -59,18 +56,6 @@
             app:layout_constraintTop_toTopOf="@id/name"
             tools:text="@tools:sample/date/hhmm" />
 
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/content_padding"
-            android:layout_marginTop="@dimen/small_content_padding"
-            android:src="@{viewModel.icon}"
-            android:visibility="@{viewModel.systemMessage}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/date"
-            tools:ignore="ContentDescription" />
-
         <TextView
             android:id="@+id/text"
             android:layout_width="0dp"
@@ -78,9 +63,8 @@
             android:layout_marginEnd="@dimen/content_padding"
             android:autoLink="all"
             android:text="@{viewModel.text}"
-            android:textColorLink="@{viewModel.linkColor}"
-            android:visibility="@{!TextUtils.isEmpty(viewModel.text)}"
-            app:layout_constraintEnd_toStartOf="@id/icon"
+            android:textColorLink="@color/accent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/name"
             app:layout_constraintTop_toBottomOf="@id/name"
             tools:text="@tools:sample/lorem" />

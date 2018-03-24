@@ -12,6 +12,6 @@ data class Message(
     val event: Day? = null,
     val song: Song? = null,
     val gifUrl: String? = null,
-    val poll: List<Pair<String, List<User>>>? = null,
+    val poll: List<PollOption>? = null,
     val timestamp: Long = System.currentTimeMillis()
 ) : Parcelable

@@ -25,6 +25,11 @@
     <string name="search_gifs">GIF-ek keresése</string>
     <string name="enter_your_message">Üzenet</string>
     <string name="enter_your_question">Kérdés</string>
+    <string name="option_1">1. Opció</string>
+    <string name="option_2">2. Opció</string>
+    <string name="option_3">3. Opció</string>
+    <string name="option_4">4. Opció</string>
+    <string name="option_5">5. Opció</string>
     <string name="this_is_an_announcement">Kiemenlten fontos</string>
     <string name="send">Küldés</string>
     <string name="ok">Szerkesztés</string>

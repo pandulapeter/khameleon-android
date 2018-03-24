@@ -26,6 +26,11 @@
     <string name="search_gifs">Search for GIF-s</string>
     <string name="enter_your_message">Message</string>
     <string name="enter_your_question">Question</string>
+    <string name="option_1">Option 1</string>
+    <string name="option_2">Option 2</string>
+    <string name="option_3">Option 3</string>
+    <string name="option_4">Option 4</string>
+    <string name="option_5">Option 5</string>
     <string name="this_is_an_announcement">This is an announcement</string>
     <string name="send">Send</string>
     <string name="new_messages">New messages</string>

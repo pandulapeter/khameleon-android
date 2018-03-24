@@ -3,32 +3,157 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!--suppress AndroidUnknownAttribute -->
-    <data class=".CreatePollActivityBinding" />
+    <data class=".CreatePollActivityBinding">
 
-    <LinearLayout
+        <variable
+            name="viewModel"
+            type="com.pandulapeter.khameleon.feature.home.chat.poll.CreatePollViewModel" />
+
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:scrollbars="none">
 
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_content_padding"
-            android:hint="@string/enter_your_question"
-            android:paddingEnd="@dimen/content_padding"
-            android:paddingStart="@dimen/large_content_padding"
-            app:hintTextAppearance="@style/TextInputLayout">
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/large_content_padding">
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/input_field"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapSentences|textMultiLine"
-                android:maxLength="500" />
+                android:layout_marginTop="@dimen/large_content_padding"
+                android:hint="@string/enter_your_question"
+                android:paddingEnd="@dimen/large_content_padding"
+                android:paddingStart="@dimen/large_content_padding"
+                app:hintTextAppearance="@style/TextInputLayout">
 
-        </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/input_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:maxLength="500"
+                    android:text="@={viewModel.question}" />
 
+            </android.support.design.widget.TextInputLayout>
 
-    </LinearLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_padding"
+                android:hint="@string/option_1"
+                android:paddingEnd="@dimen/large_content_padding"
+                android:paddingStart="72dp"
+                android:visibility="@{viewModel.option1Visible}"
+                app:hintTextAppearance="@style/TextInputLayout">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/option_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailSubject"
+                    android:lines="1"
+                    android:maxLength="100"
+                    android:text="@={viewModel.option1}" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_padding"
+                android:hint="@string/option_2"
+                android:paddingEnd="@dimen/large_content_padding"
+                android:paddingStart="72dp"
+                android:visibility="@{viewModel.option2Visible}"
+                app:hintTextAppearance="@style/TextInputLayout">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/option_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailSubject"
+                    android:lines="1"
+                    android:maxLength="100"
+                    android:text="@={viewModel.option2}" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_padding"
+                android:hint="@string/option_3"
+                android:paddingEnd="@dimen/large_content_padding"
+                android:paddingStart="72dp"
+                android:visibility="@{viewModel.option3Visible}"
+                app:hintTextAppearance="@style/TextInputLayout">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/option_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailSubject"
+                    android:lines="1"
+                    android:maxLength="100"
+                    android:text="@={viewModel.option3}" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_padding"
+                android:hint="@string/option_4"
+                android:paddingEnd="@dimen/large_content_padding"
+                android:paddingStart="72dp"
+                android:visibility="@{viewModel.option4Visible}"
+                app:hintTextAppearance="@style/TextInputLayout">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/option_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailSubject"
+                    android:lines="1"
+                    android:maxLength="100"
+                    android:text="@={viewModel.option4}" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_padding"
+                android:hint="@string/option_5"
+                android:paddingEnd="@dimen/large_content_padding"
+                android:paddingStart="72dp"
+                android:visibility="@{viewModel.option5Visible}"
+                app:hintTextAppearance="@style/TextInputLayout">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/option_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailSubject"
+                    android:lines="1"
+                    android:maxLength="100"
+                    android:text="@={viewModel.option5}" />
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </layout>

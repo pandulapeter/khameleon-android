@@ -25,6 +25,11 @@
     <string name="search_gifs">Căutare GIF</string>
     <string name="enter_your_message">Mesajul</string>
     <string name="enter_your_question">Întrebarea</string>
+    <string name="option_1">Opțiunea 1</string>
+    <string name="option_2">Opțiunea 2</string>
+    <string name="option_3">Opțiunea 3</string>
+    <string name="option_4">Opțiunea 4</string>
+    <string name="option_5">Opțiunea 5</string>
     <string name="this_is_an_announcement">Anunț important</string>
     <string name="send">Trimite</string>
     <string name="ok">Editare</string>

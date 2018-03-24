@@ -59,11 +59,11 @@ class CreatePollActivity : KhameleonActivity<CreatePollActivityBinding>(R.layout
                             null,
                             null,
                             listOf(
-                                PollOption(viewModel.option1.get(), listOf()),
-                                PollOption(viewModel.option2.get(), listOf()),
-                                PollOption(viewModel.option3.get(), listOf()),
-                                PollOption(viewModel.option4.get(), listOf()),
-                                PollOption(viewModel.option5.get(), listOf())
+                                PollOption(viewModel.option1.get()),
+                                PollOption(viewModel.option2.get()),
+                                PollOption(viewModel.option3.get()),
+                                PollOption(viewModel.option4.get()),
+                                PollOption(viewModel.option5.get())
                             )
                         )
                     )

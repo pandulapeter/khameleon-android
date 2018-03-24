@@ -9,7 +9,7 @@ import com.pandulapeter.khameleon.data.model.Message
 import com.pandulapeter.khameleon.util.forceCapitalize
 import java.util.*
 
-class PollViewModel(model: Message) {
+class PollViewModel(private val model: Message, private val vote: (Message, Int) -> Unit) {
 
     val background = if (model.isImportant) R.color.accent else 0
     val name: String = (model.sender?.getFormattedName() ?: "")
@@ -32,15 +32,15 @@ class PollViewModel(model: Message) {
     val option4Text = getFormattedString(option4?.optionName ?: "", option4Voters)
     val option5Text = getFormattedString(option5?.optionName ?: "", option5Voters)
 
-    fun onOption1Clicked() = Unit
+    fun onOption1Clicked() = vote(model, 0)
 
-    fun onOption2Clicked() = Unit
+    fun onOption2Clicked() = vote(model, 1)
 
-    fun onOption3Clicked() = Unit
+    fun onOption3Clicked() = vote(model, 2)
 
-    fun onOption4Clicked() = Unit
+    fun onOption4Clicked() = vote(model, 3)
 
-    fun onOption5Clicked() = Unit
+    fun onOption5Clicked() = vote(model, 4)
 
     private fun getFormattedString(firstPart: String, secondPart: String) =
         if (secondPart.isEmpty()) SpannableString(firstPart) else SpannableString("$firstPart\n$secondPart").apply {

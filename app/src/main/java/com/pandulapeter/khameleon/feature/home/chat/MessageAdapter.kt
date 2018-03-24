@@ -18,7 +18,8 @@ class MessageAdapter(
     private val onDataChangedCallback: () -> Unit,
     private val onErrorCallback: (String) -> Unit,
     private val onItemClickedCallback: (Message, Boolean) -> Boolean,
-    private val onItemLongClickedCallback: (Message, Boolean) -> Unit
+    private val onItemLongClickedCallback: (Message, Boolean) -> Unit,
+    private val vote: (Message, Int) -> Unit
 ) : FirebaseRecyclerAdapter<Message, RecyclerView.ViewHolder>(options) {
 
     companion object {
@@ -63,7 +64,7 @@ class MessageAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, model: Message) {
         when (holder) {
             is MessageViewHolder -> holder.messageViewModel = MessageViewModel(model, holder.itemView.context)
-            is PollViewHolder -> holder.pollViewModel = PollViewModel(model)
+            is PollViewHolder -> holder.pollViewModel = PollViewModel(model, vote)
             is ImageViewHolder -> holder.imageViewModel = ImageViewModel(model, holder.itemView.context)
         }
     }

@@ -90,6 +90,36 @@ class ChatFragment : KhameleonFragment<ChatFragmentBinding, ChatViewModel>(R.lay
                     binding.root.showSnackbar(R.string.message_modification_error)
                 }
             }
+        },
+        vote = { message, index ->
+            userRepository.getSignedInUser()?.let { user ->
+                messageRepository.chatDatabase
+                    .orderByChild("id")
+                    .equalTo(message.id)
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onCancelled(p0: DatabaseError?) = binding.root.showSnackbar(R.string.something_went_wrong)
+
+                        override fun onDataChange(p0: DataSnapshot?) {
+                            p0?.let {
+                                if (it.hasChildren()) {
+                                    myChange = true
+                                    it.children.iterator().next().ref.setValue(message.apply {
+                                        val oldVoters = poll?.get(index)?.voters
+                                        poll?.get(index)?.voters = oldVoters?.toMutableList()?.apply {
+                                            if (any { it.id == user.id }) {
+                                                removeAll { it.id == user.id }
+                                            } else {
+                                                add(user)
+                                            }
+                                        }
+                                    })
+                                    return
+                                }
+                            }
+                            binding.root.showSnackbar(R.string.something_went_wrong)
+                        }
+                    })
+            }
         }
     )
 

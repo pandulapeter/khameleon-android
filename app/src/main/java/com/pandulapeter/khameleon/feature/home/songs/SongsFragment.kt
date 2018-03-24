@@ -125,7 +125,9 @@ class SongsFragment : KhameleonFragment<SongsFragmentBinding, SongsViewModel>(R.
             var text = ""
             (0 until songAdapter.itemCount).forEach {
                 songAdapter.getItem(it).run {
-                    text = "$text\n$artist - $title (${if (key.isEmpty()) "?" else key}" + if (bpm == 0) ")" else ", $bpm)"
+                    if (!isArchived) {
+                        text = "$text\n$artist - $title (${if (key.isEmpty()) "?" else key}" + if (bpm == 0) ")" else ", $bpm)"
+                    }
                 }
             }
             startActivity(Intent.createChooser(Intent().apply {

@@ -84,7 +84,7 @@
     <string name="good_for_me_title">Nekem jó</string>
     <string name="good_for_me_description">Ezen a napon ráérek</string>
     <string name="not_good_for_me_description">Ezen a napon nem érek rá</string>
-    <string name="event">Esemény</string>
+    <string name="availability">Elérhetőség</string>
     <string name="everybody_is_free">Mindenki szabad ezen a napon.</string>
     <string name="somebody_is_busy">Valaki elfoglalt ezen a napon.</string>
     <string name="they_are_busy">Ki nem ér rá</string>

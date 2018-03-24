@@ -25,6 +25,7 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
 
     companion object {
         private var Bundle.day by BundleArgumentDelegate.Parcelable<Day>("day")
+        private const val CUSTOM_TYPE = -4
 
         fun show(fragmentManager: FragmentManager, day: Day) {
             DayDetailBottomSheetFragment().setArguments {
@@ -58,6 +59,7 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
                             R.string.everybody_is_free
                         }
                     } else {
+                        binding.status.setTextColor(context.color(R.color.primary))
                         R.string.they_are_busy
                     }
                 )
@@ -90,7 +92,7 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
                 }
                 viewModel.goodForMe.onPropertyChanged { isItGoodForMe ->
                     arguments?.day?.let {
-                        onDialogItemSelectedListener?.onItemClicked(-5, it.apply {
+                        onDialogItemSelectedListener?.onItemClicked(CUSTOM_TYPE, it.apply {
                             userRepository.getSignedInUser()?.let { me ->
                                 val currentItems = it.notGoodFor ?: listOf()
                                 if (isItGoodForMe) {
@@ -118,7 +120,13 @@ class DayDetailBottomSheetFragment : AppCompatDialogFragment() {
     } ?: super.onCreateDialog(savedInstanceState)
 
     private fun handleClick(type: Int) {
-        arguments?.day?.let { onDialogItemSelectedListener?.onItemClicked(type, it) }
+        arguments?.day?.let {
+            if (type == Day.EMPTY && (it.notGoodFor?.isEmpty() == false)) {
+                onDialogItemSelectedListener?.onItemClicked(Day.BUSY, it)
+            } else {
+                onDialogItemSelectedListener?.onItemClicked(type, it)
+            }
+        }
         dismiss()
     }
 

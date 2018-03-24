@@ -27,46 +27,15 @@
                 android:id="@+id/label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/content_padding"
+                android:layout_margin="@dimen/large_content_padding"
                 android:fontFamily="sans-serif-medium"
-                android:padding="@dimen/content_padding"
                 android:textColor="@color/primary"
                 tools:text="Date" />
-
-            <android.support.v7.widget.SwitchCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="@={viewModel.goodForMe}"
-                android:gravity="center_vertical"
-                android:minHeight="@dimen/touch_target"
-                android:paddingEnd="@dimen/large_content_padding"
-                android:paddingStart="@dimen/large_content_padding"
-                app:description="@{viewModel.goodForMe ? @string/good_for_me_description : @string/not_good_for_me_description}"
-                app:title="@{@string/good_for_me_title}"
-                tools:text="@string/good_for_me_title" />
-
-            <TextView
-                android:id="@+id/status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/content_padding"
-                android:layout_marginStart="@dimen/content_padding"
-                android:fontFamily="sans-serif-medium"
-                android:padding="@dimen/content_padding"
-                android:textColor="@color/primary"
-                tools:text="@string/everybody_is_free" />
-
-            <LinearLayout
-                android:id="@+id/busy_users_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
 
             <TextView
                 android:id="@+id/empty"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/touch_target"
-                android:layout_marginTop="@dimen/content_padding"
                 android:background="?attr/selectableItemBackground"
                 android:drawablePadding="@dimen/drawable_padding"
                 android:drawableStart="@drawable/ic_day_empty_24dp"
@@ -110,6 +79,47 @@
                 android:paddingEnd="@dimen/large_content_padding"
                 android:paddingStart="@dimen/large_content_padding"
                 android:text="@string/meetup" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/content_padding"
+                android:layout_marginEnd="@dimen/large_content_padding"
+                android:layout_marginStart="@dimen/large_content_padding"
+                android:layout_marginTop="@dimen/large_content_padding"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/availability"
+                android:textColor="@color/primary" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/content_padding"
+                android:checked="@={viewModel.goodForMe}"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/touch_target"
+                android:paddingEnd="@dimen/large_content_padding"
+                android:paddingStart="@dimen/large_content_padding"
+                app:description="@{viewModel.goodForMe ? @string/good_for_me_description : @string/not_good_for_me_description}"
+                app:title="@{@string/good_for_me_title}"
+                tools:text="@string/good_for_me_title" />
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/content_padding"
+                android:layout_marginStart="@dimen/content_padding"
+                android:layout_marginTop="@dimen/content_padding"
+                android:fontFamily="sans-serif-medium"
+                android:padding="@dimen/content_padding"
+                tools:text="@string/everybody_is_free" />
+
+            <LinearLayout
+                android:id="@+id/busy_users_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
         </LinearLayout>
 

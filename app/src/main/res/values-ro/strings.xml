@@ -84,7 +84,7 @@
     <string name="good_for_me_title">Ok pentru mine</string>
     <string name="good_for_me_description">Sunt liber pe data asta</string>
     <string name="not_good_for_me_description">Nu sunt liber pe data asta</string>
-    <string name="event">Eveniment</string>
+    <string name="availability">Disponibilitate</string>
     <string name="everybody_is_free">Toate lumea este liber.</string>
     <string name="somebody_is_busy">Cineva are alt program.</string>
     <string name="they_are_busy">Cine are alt program</string>

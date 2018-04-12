@@ -52,18 +52,18 @@ class CreatePollActivity : KhameleonActivity<CreatePollActivityBinding>(R.layout
                     RESULT_OK, Intent().putExtra(
                         RESULT_MESSAGE, Message(
                             UUID.randomUUID().toString(),
-                            viewModel.question.get(),
+                            viewModel.question.get() ?: "",
                             user,
                             false,
                             null,
                             null,
                             null,
                             listOf(
-                                PollOption(viewModel.option1.get()),
-                                PollOption(viewModel.option2.get()),
-                                PollOption(viewModel.option3.get()),
-                                PollOption(viewModel.option4.get()),
-                                PollOption(viewModel.option5.get())
+                                PollOption(viewModel.option1.get() ?: ""),
+                                PollOption(viewModel.option2.get() ?: ""),
+                                PollOption(viewModel.option3.get() ?: ""),
+                                PollOption(viewModel.option4.get() ?: ""),
+                                PollOption(viewModel.option5.get() ?: "")
                             )
                         )
                     )

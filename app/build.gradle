@@ -63,7 +63,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Kotlin
-    kapt "com.android.databinding:compiler:$rootProject.buildToolsVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$rootProject.kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19.2"
 
@@ -71,7 +70,7 @@ dependencies {
     implementation "org.koin:koin-android:0.8.0"
 
     // Support library
-    final supportLibraryVersion = "27.1.0"
+    final supportLibraryVersion = "27.1.1"
     implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
     implementation "com.android.support:support-v4:$supportLibraryVersion"
     implementation "com.android.support:design:$supportLibraryVersion"
@@ -80,7 +79,7 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:1.0.2"
 
     // Firebase
-    final firebaseVersion = "12.0.0"
+    final firebaseVersion = "12.0.1"
     compile "com.google.firebase:firebase-core:$firebaseVersion"
     compile "com.google.firebase:firebase-auth:$firebaseVersion"
     compile "com.google.firebase:firebase-database:$firebaseVersion"

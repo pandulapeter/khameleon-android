@@ -55,5 +55,5 @@ class CreatePollViewModel {
         }
     }
 
-    fun isValidInput() = question.get().isNotEmpty() && option1.get().isNotEmpty() && option2.get().isNotEmpty()
+    fun isValidInput() = (question.get() ?: "").isNotEmpty() && (option1.get() ?: "").isNotEmpty() && (option2.get() ?: "").isNotEmpty()
 }

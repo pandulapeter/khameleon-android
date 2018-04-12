@@ -61,7 +61,7 @@ inline fun <T> ObservableField<T>.onPropertyChanged(fragment: Fragment? = null, 
     addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
             if (fragment?.isAdded != false) {
-                callback(get())
+                callback(get()!!)
             }
         }
     })

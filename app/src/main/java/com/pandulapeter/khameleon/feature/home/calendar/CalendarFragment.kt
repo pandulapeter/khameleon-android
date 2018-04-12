@@ -4,7 +4,6 @@ import android.app.TimePickerDialog
 import android.os.Bundle
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
-import android.text.style.AbsoluteSizeSpan
 import android.text.style.TextAppearanceSpan
 import android.view.Menu
 import android.view.MenuInflater
@@ -77,7 +76,6 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
                 widget.clearSelection()
             }
         }
-        val sizeSpan = AbsoluteSizeSpan(0)
 
         fun getDayType(day: CalendarDay?) = events.find { it.timestamp.normalize() == day?.calendar?.timeInMillis?.normalize() }?.type ?: Day.EMPTY
 
@@ -89,7 +87,6 @@ class CalendarFragment : KhameleonFragment<CalendarFragmentBinding, CalendarView
             override fun shouldDecorate(day: CalendarDay) = shouldDecorateCallback(day)
 
             override fun decorate(view: DayViewFacade) = view.run {
-                addSpan(sizeSpan)
                 addSpan(span)
             }
         }

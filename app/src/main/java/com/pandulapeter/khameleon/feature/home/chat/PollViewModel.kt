@@ -21,11 +21,11 @@ class PollViewModel(private val model: Message, private val vote: (Message, Int)
     val option3 = if (model.poll?.size ?: 0 >= 3 && model.poll?.get(2)?.optionName?.isNotEmpty() == true) model.poll[2] else null
     val option4 = if (model.poll?.size ?: 0 >= 4 && model.poll?.get(3)?.optionName?.isNotEmpty() == true) model.poll[3] else null
     val option5 = if (model.poll?.size ?: 0 >= 5 && model.poll?.get(4)?.optionName?.isNotEmpty() == true) model.poll[4] else null
-    private val option1Voters = option1?.voters?.joinToString(",") { it.getFormattedName() } ?: ""
-    private val option2Voters = option2?.voters?.joinToString(",") { it.getFormattedName() } ?: ""
-    private val option3Voters = option3?.voters?.joinToString(",") { it.getFormattedName() } ?: ""
-    private val option4Voters = option4?.voters?.joinToString(",") { it.getFormattedName() } ?: ""
-    private val option5Voters = option5?.voters?.joinToString(",") { it.getFormattedName() } ?: ""
+    private val option1Voters = option1?.voters?.joinToString(", ") { it.getFormattedName() } ?: ""
+    private val option2Voters = option2?.voters?.joinToString(", ") { it.getFormattedName() } ?: ""
+    private val option3Voters = option3?.voters?.joinToString(", ") { it.getFormattedName() } ?: ""
+    private val option4Voters = option4?.voters?.joinToString(", ") { it.getFormattedName() } ?: ""
+    private val option5Voters = option5?.voters?.joinToString(", ") { it.getFormattedName() } ?: ""
     val option1Text = getFormattedString(option1?.optionName ?: "", option1Voters)
     val option2Text = getFormattedString(option2?.optionName ?: "", option2Voters)
     val option3Text = getFormattedString(option3?.optionName ?: "", option3Voters)

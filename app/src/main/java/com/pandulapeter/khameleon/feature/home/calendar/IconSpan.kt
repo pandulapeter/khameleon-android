@@ -8,7 +8,6 @@ import android.text.style.LineBackgroundSpan
 
 class IconSpan(private val drawable: Drawable) : LineBackgroundSpan {
 
-
     override fun drawBackground(
         canvas: Canvas, paint: Paint,
         left: Int, right: Int, top: Int, baseline: Int, bottom: Int,
@@ -17,10 +16,10 @@ class IconSpan(private val drawable: Drawable) : LineBackgroundSpan {
     ) {
         drawable.run {
             setBounds(
-                (right / 2) - (intrinsicWidth / 2),
-                (bottom / 2) - (intrinsicHeight / 2),
-                (right / 2) + (intrinsicWidth / 2),
-                (bottom / 2) + (intrinsicHeight / 2)
+                (right / 2) - (intrinsicWidth / 4),
+                bottom,
+                (right / 2) + (intrinsicWidth / 4),
+                bottom + (intrinsicHeight / 2)
             )
             draw(canvas)
         }

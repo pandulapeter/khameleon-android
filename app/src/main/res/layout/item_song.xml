@@ -17,18 +17,18 @@
         android:layout_height="wrap_content"
         android:foreground="?attr/selectableItemBackground"
         app:cardBackgroundColor="@{viewModel.song.isHighlighted ? @color/accent : @color/white}"
+        app:contentPadding="@dimen/content_padding"
         tools:cardBackgroundColor="@color/white">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/content_padding">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/drag_handle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/small_content_padding"
+                android:padding="@dimen/content_padding"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -39,11 +39,11 @@
                 android:id="@+id/play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/small_content_padding"
                 android:alpha="@{viewModel.song.isArchived ? 0.5f : 1f}"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/play"
                 android:onClick="@{() -> viewModel.onPlayButtonClicked(context)}"
+                android:padding="@dimen/content_padding"
                 android:tint="@{viewModel.song.isArchived ? @color/light : @color/primary}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -54,11 +54,11 @@
                 android:id="@+id/lyrics"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/content_padding"
                 android:alpha="@{viewModel.song.isArchived ? 0.5f : 1f}"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/lyrics"
                 android:onClick="@{() -> viewModel.onLyricsButtonClicked(context)}"
+                android:padding="@dimen/content_padding"
                 android:tint="@{viewModel.song.isArchived ? @color/light : @color/primary}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/play"
@@ -70,6 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/content_padding"
+                android:padding="@dimen/content_padding"
                 android:alpha="@{viewModel.song.isArchived ? 0.5f : 1f}"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"

@@ -30,7 +30,7 @@ fun setBackground(view: View, @ColorRes color: Int) {
 }
 
 @BindingAdapter("avatar")
-fun setAvatar(view: ImageView, url: String) {
+fun setAvatar(view: ImageView, url: String?) {
     Glide.with(view)
         .load(url)
         .apply(RequestOptions.circleCropTransform())
@@ -39,7 +39,7 @@ fun setAvatar(view: ImageView, url: String) {
 }
 
 @BindingAdapter("imageUrl")
-fun setImage(view: ImageView, url: String) {
+fun setImage(view: ImageView, url: String?) {
     Glide.with(view.context)
         .load(Uri.parse(url))
         .into(view)
